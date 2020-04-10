@@ -5,7 +5,7 @@ import Main from "./components/Main";
 import Footer from "./components/Footer";
 import LoginPage from "./components/LoginPage";
 import ProfilePage from "./components/ProfilePage";
-// import ProfilePage from "./components/ProfilePage";
+import WatchedMovies from "./components/WatchedMovies";
 import "./assets/css/main.css";
 
 class App extends Component {
@@ -13,6 +13,9 @@ class App extends Component {
 		return (
 			<Router>
 				<Route path="/login/" component={LoginPage} />
+				<Route path="/profile/" component={ProfilePage} />
+				<Route path="/" component={Main} />
+				<Route path="/watched/" component={WatchedMovies} />
 				<Route path="/profile/" component={ProfilePage} />
 			</Router>
 		);
