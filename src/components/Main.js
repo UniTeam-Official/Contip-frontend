@@ -5,9 +5,11 @@ import MovieList from "./MovieList";
 class Main extends Component {
   render() {
     return (
-      <div class="inner">
-        <RecommendationHeader />
-        <MovieList />
+      <div id = "main">
+        <div class="inner">
+          <RecommendationHeader />
+          <MovieList />
+        </div>
       </div>
     );
   }
