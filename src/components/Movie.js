@@ -7,10 +7,10 @@ class Movie extends Component {
   render() {
     return (
       <article id="film square" class="style1">
-        <MovieImageButton />
-        <a href="film_page.html">
-          <MovieTitle />
-          <MovieDetails name="fuck you"/>
+        <a href={this.props.link}>
+          <MovieImageButton image={this.props.image} alt={this.props.title} />
+          <MovieTitle title={this.props.title} />
+          <MovieDetails year={this.props.year} desc={this.props.desc} />
         </a>
       </article>
     );

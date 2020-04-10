@@ -4,8 +4,8 @@ import { render } from "react-dom";
 class MovieImageButton extends Component {
   render() {
     return (
-      <span class="image">
-        <img src="images/pic01.jpg" alt="" />
+      <span class="image left">
+        <img src={this.props.image} alt={this.props.alt} />
       </span>
     );
   }

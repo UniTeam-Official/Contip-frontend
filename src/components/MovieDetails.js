@@ -6,8 +6,10 @@ class MovieDetails extends Component {
   render() {
     return (
       <div class="content">
-        <p>*{this.props.name}*<br />
-          *Year*</p>
+        <h3> Description: </h3>
+        <p>{this.props.desc}</p>
+        <h3> Year of release: </h3>
+        <p>{this.props.year}</p>
       </div>
     );
   }

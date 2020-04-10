@@ -5,7 +5,7 @@ import { render } from "react-dom";
 class MovieTitle extends Component {
   render() {
     return (
-      <h2>*Movie Title*</h2>
+      <h2>{this.props.title}</h2>
     );
   }
 }
