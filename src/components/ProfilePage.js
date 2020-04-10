@@ -5,13 +5,13 @@ import Footer from "./Footer";
 
 class ProfilePage extends Component {
   render() {
-    return (
-	<div id="wrapper">
-	    <Header />
-	    <ProfileForm />
-	    <Footer />
-	</div>
-    );
+  return (
+  <div id="wrapper">
+    <Header />
+    <ProfileForm />
+    <Footer />
+  </div>
+  );
   }
 }
 

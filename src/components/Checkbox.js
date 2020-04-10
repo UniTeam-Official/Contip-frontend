@@ -2,12 +2,22 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 
 class Checkbox extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { checked: false }
+    this.handleCheck = this.handleCheck.bind(this);
+  }
+  handleCheck(e){
+    this.setState({
+     checked: e.target.checked
+    })
+  }
   render() {
     return (
-	<div>
-	  <input id="checkbox" type="checkbox" name="genre1" />
-	  <label for="genre1">First Genre</label>
-	</div>
+      <div>
+        <input id={this.props.name} type="checkbox" name={this.props.name} checked={this.state.checked} onChange={this.handleCheck} />
+        <label for={this.props.name}>{this.props.text}</label>
+      </div>
     );
   }
 }
