@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import Header from "./Header";
-import MovieList from "./MovieList";
+import WatchedMovieList from "./WatchedMovieList";
 import Footer from "./Footer";
 
-class WatchedMovies extends Component {
+class WatchedMoviesPage extends Component {
   render() {
     return (
 	<div>
 	    <Header />
-	    <MovieList />
+	    <WatchedMovieList />
 	    <Footer />
 	</div>
     );
   }
 }
 
-export default ProfilePage;
+export default WatchedMoviesPage;
