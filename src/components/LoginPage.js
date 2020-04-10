@@ -6,7 +6,7 @@ import Copyrights from "./Copyrights";
 class LoginPage extends Component {
   render() {
     return (
-	<div>
+	<div id="wrapper">
 	    <LoginHeader />
 	    <LoginForm />
 	    <Copyrights />

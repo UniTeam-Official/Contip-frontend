@@ -6,7 +6,7 @@ import Footer from "./Footer";
 class WatchedMoviesPage extends Component {
   render() {
     return (
-	<div>
+	<div id="wrapper">
 	    <Header />
 	    <WatchedMovieList />
 	    <Footer />

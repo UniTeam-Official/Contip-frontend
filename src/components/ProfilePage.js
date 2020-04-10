@@ -6,7 +6,7 @@ import Footer from "./Footer";
 class ProfilePage extends Component {
   render() {
     return (
-	<div>
+	<div id="wrapper">
 	    <Header />
 	    <ProfileForm />
 	    <Footer />
