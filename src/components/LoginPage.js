@@ -9,7 +9,6 @@ class LoginPage extends Component {
 	<div id="wrapper">
 	    <LoginHeader />
 	    <LoginForm />
-	    <Copyrights />
 	</div>
     );
   }

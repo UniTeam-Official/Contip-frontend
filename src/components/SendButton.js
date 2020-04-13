@@ -5,7 +5,7 @@ import { render } from "react-dom";
 class SendButton extends Component {
   render() {
     return (
-      <input type="submit" value="Submit" class="primary" />
+      <button type="submit" value="Submit" class="primary">{this.props.buttonName}</button>
     );
   }
 }

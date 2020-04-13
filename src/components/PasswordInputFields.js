@@ -5,7 +5,7 @@ import { render } from "react-dom";
 class PasswordInputField extends Component {
   render() {
     return (
-	<input type="password" name="user-password" id="password" value="" placeholder="Your Password" />
+	<input type="password" name="user-password" id="password" placeholder="Your Password" />
     );
   }
 }
