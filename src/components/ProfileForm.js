@@ -34,7 +34,7 @@ class ProfilePage extends Component {
             <div class="col-12">
               <ul class="actions">
                 <li id="sendButton">
-                  <SendButton />
+                  <SendButton buttonName="Submit" />
                 </li>
               </ul>
             </div>
@@ -49,7 +49,7 @@ class ProfilePage extends Component {
               <div class="col-12">
                 <ul class="actions">
                   <li id="sendButton">
-                    <SendButton />
+                    <SendButton buttonName="Submit" />
                   </li>
                 </ul>
               </div>
@@ -65,14 +65,14 @@ class ProfilePage extends Component {
             <div class="col-12">
               <ul class="actions">
                 <li id="sendButton">
-                  <SendButton />
+                  <SendButton buttonName="Submit" />
                 </li>
               </ul>
             </div>
           </div>
         </form>
         <div class="row">
-          <DeleteProfileButton />
+          <DeleteProfileButton buttonName="Delete" />
         </div>
       </section>
     </div>
