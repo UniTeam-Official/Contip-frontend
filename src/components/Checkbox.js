@@ -4,7 +4,7 @@ import { render } from "react-dom";
 class Checkbox extends Component {
   constructor(props) {
     super(props);
-    this.state = { checked: false }
+    this.state = { checked: this.props.checked == "true" }
     this.handleCheck = this.handleCheck.bind(this);
   }
   handleCheck(e){
@@ -14,10 +14,10 @@ class Checkbox extends Component {
   }
   render() {
     return (
-      <div>
+//      <div>
         <input id={this.props.name} type="checkbox" name={this.props.name} checked={this.state.checked} onChange={this.handleCheck} />
-        <label for={this.props.name}>{this.props.text}</label>
-      </div>
+//        <label for={this.props.name}>{this.props.text}</label>
+//      </div>
     );
   }
 }

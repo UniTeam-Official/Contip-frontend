@@ -18,8 +18,18 @@ class ProfilePage extends Component {
         <form method="post" action="#">
           <div class="row gtr-uniform">
             <div class="col-6 col-12-small">
-              <Checkbox name="genre1" text="First Genre" checked="false" />
-              <Checkbox name="genre2" text="Second Genre" checked="true" />
+              <Checkbox name="genre1" checked="false" />
+              <label for="genre1">First Genre</label>
+              <Checkbox name="genre2" checked="true" />
+              <label for="genre2">Second Genre</label>
+              <Checkbox name="genre3" checked="false" />
+              <label for="genre3">Third Genre</label>
+              <Checkbox name="genre4" checked="true" />
+              <label for="genre4">Fourth Genre</label>
+              <Checkbox name="genre5" checked="false" />
+              <label for="genre5">Fifth Genre</label>
+              <Checkbox name="genre6" checked="true" />
+              <label for="genre6">Sixth Genre</label>
             </div>
             <div class="col-12">
               <ul class="actions">
