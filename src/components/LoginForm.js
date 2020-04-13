@@ -24,6 +24,15 @@ class LoginForm extends Component {
 									<li id="sendButton">
 										<SendButton buttonName="Login" />
 									</li>
+									<li>
+										<a href="#">Forgot password?</a>
+									</li>
+								</ul>
+								<h3><br></br>Dont have account? Create new one!</h3>
+								<ul class="actions">
+									<li id="sendButton">
+										<SendButton buttonName="Sign Up" />
+									</li>
 								</ul>
 							</div>
 						</div>
