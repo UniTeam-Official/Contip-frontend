@@ -51,8 +51,9 @@ class ProfilePage extends Component {
 		  <div class="row gtr-uniform">
 		    <div class="col-6 col-12-small">
 			{this.state.data.map(genre => {
+			    let genre_name = "genre" + genre.id; 
 			    return (
-				<Checkbox name="genre1" text={genre.name} checked="false" />
+				<Checkbox name={genre_name} text={genre.name} checked="false" />
 			    );
 			})}
 		    </div>
