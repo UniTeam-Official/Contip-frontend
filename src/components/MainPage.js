@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Main from "./Main";
+import RecommendationHeader from "./RecommendationHeader";
+import MovieList from "./MovieList";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -8,7 +9,12 @@ class MainPage extends Component {
 		return (
 			<div id="wrapper">
 				<Header />
-				<Main />
+				<div id="main">
+					<div class="inner">
+						<RecommendationHeader />
+						<MovieList />
+					</div>
+				</div>
 				<Footer />
 			</div>
 		);
