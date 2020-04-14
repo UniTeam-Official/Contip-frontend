@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import MovieTitle from "./MovieTitle";
-
 class RecommendationFilm extends Component {
 	render() {
         return(
@@ -10,8 +8,7 @@ class RecommendationFilm extends Component {
                     <img src={this.props.image} alt="" />
                 </span>
                 <a href="/">
-
-                    <MovieTitle title={this.props.title}/>
+                    <h2>{this.props.title}</h2>
                     <div class="content">
                         <p>Genre: {this.props.genre}<br />Year: {this.props.year}</p>
                     </div>
