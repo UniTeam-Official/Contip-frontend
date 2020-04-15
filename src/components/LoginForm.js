@@ -28,15 +28,17 @@ class LoginForm extends Component {
 										<a href="#">Forgot password?</a>
 									</li>
 								</ul>
-								<h3><br></br>Dont have account? Create new one!</h3>
-								<ul class="actions">
-									<li id="sendButton">
-										<SendButton buttonName="Sign Up" />
-									</li>
-								</ul>
 							</div>
 						</div>
 					</form>
+                    <h3><br></br>Dont have account? Create new one!</h3>
+                    <ul class="actions">
+                    <a href="/signup/">
+                        <li id="sendButton">
+                            <SendButton buttonName="Sign Up" />
+                        </li>
+                    </a>
+                    </ul>
 				</div>
 			</div>
 		);
