@@ -12,7 +12,7 @@ class App extends Component {
 		return (
 			<Router>
 				<Route path="/login/" component={LoginPage} />
-                <Route path="/signup/" component={SignUpPage} />
+        <Route path="/signup/" component={SignUpPage} />
 				<Route path="/profile/" component={ProfilePage} />
 				<Route exact path="/" component={MainPage} />
 				<Route path="/watched/" component={WatchedMoviesPage} />

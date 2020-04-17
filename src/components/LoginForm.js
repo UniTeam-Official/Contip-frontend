@@ -4,8 +4,25 @@ import TextInputField from "./TextInputField";
 import SendButton from "./SendButton";
 
 class LoginForm extends Component {
+	constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+    }
+  }
+  handleUsernameChange = event => {
+    this.setState({
+      username: event.target.value
+    })
+  }
+  handlePasswordChange = event => {
+    this.setState({
+      password: event.target.value
+    })
+  }
 	handleSubmit(event) {
-		alert("Submit handled")
+		alert('Submit handled');
 		event.preventDefault()
 	}
 	render() {
@@ -16,13 +33,13 @@ class LoginForm extends Component {
 					<form method="post" onSubmit={this.handleSubmit}>
 						<div class="row gtr-uniform">
 							<div id="text-input-field" class="col-6 col-12-xsmall">
-								<TextInputField />
-								<PasswordInputField />
+								<TextInputField name="username" id="username" value={this.state.username} onChange={this.handleUsernameChange} placeholder="Username" />
+								<PasswordInputField name="password" id="password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="Password" />
 							</div>
 							<div class="col-12">
 								<ul class="actions">
 									<li id="sendButton">
-										<SendButton buttonName="Login" />
+										<SendButton buttonName="Login" onClick={this.handleSubmit} />
 									</li>
 									<li>
 										<a href="#">Forgot password?</a>
@@ -31,14 +48,14 @@ class LoginForm extends Component {
 							</div>
 						</div>
 					</form>
-                    <h3><br></br>Dont have account? Create new one!</h3>
-                    <ul class="actions">
-                    <a href="/signup/">
-                        <li id="sendButton">
-                            <SendButton buttonName="Sign Up" />
-                        </li>
-                    </a>
-                    </ul>
+					<h3><br />Dont have account? Create new one!</h3>
+					<ul class="actions">
+						<a href="/signup/">
+							<li id="sendButton">
+								<SendButton buttonName="Sign Up" />
+							</li>
+						</a>
+					</ul>
 				</div>
 			</div>
 		);
