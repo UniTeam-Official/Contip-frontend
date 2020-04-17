@@ -4,62 +4,83 @@ import TextInputField from "./TextInputField";
 import SendButton from "./SendButton";
 
 class LoginForm extends Component {
-	constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+        }
     }
-  }
-  handleUsernameChange = event => {
-    this.setState({
-      username: event.target.value
-    })
-  }
-  handlePasswordChange = event => {
-    this.setState({
-      password: event.target.value
-    })
-  }
-	handleSubmit(event) {
-		alert('Submit handled');
-		event.preventDefault()
-	}
-	render() {
-		return (
-			<div id="main">
-				<div class="inner">
-					<h1>Login Page</h1>
-					<form method="post" onSubmit={this.handleSubmit}>
-						<div class="row gtr-uniform">
-							<div id="text-input-field" class="col-6 col-12-xsmall">
-								<TextInputField name="username" id="username" value={this.state.username} onChange={this.handleUsernameChange} placeholder="Username" />
-								<PasswordInputField name="password" id="password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="Password" />
-							</div>
-							<div class="col-12">
-								<ul class="actions">
-									<li id="sendButton">
-										<SendButton buttonName="Login" onClick={this.handleSubmit} />
-									</li>
-									<li>
-										<a href="#">Forgot password?</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</form>
-					<h3><br />Dont have account? Create new one!</h3>
-					<ul class="actions">
-						<a href="/signup/">
-							<li id="sendButton">
-								<SendButton buttonName="Sign Up" />
-							</li>
-						</a>
-					</ul>
-				</div>
-			</div>
-		);
-	}
+
+    handleUsernameChange = event => {
+        this.setState({
+            username: event.target.value
+        })
+    }
+
+    handlePasswordChange = event => {
+        this.setState({
+            password: event.target.value
+        })
+    }
+
+    handleSubmit = event => {
+        event.preventDefault()
+        let options = {
+            method: "POST",
+            body: JSON.stringify(this.state),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
+
+        fetch('http://localhost:8000/api/v1/auth/login/', options)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                localStorage.setItem('jwt', data.token)
+            });
+
+        alert('Submit handled');
+
+    }
+
+    render() {
+        return (
+            <div id="main">
+                <div class="inner">
+                    <h1>Login Page</h1>
+                    <form method="post" onSubmit={this.handleSubmit}>
+                        <div class="row gtr-uniform">
+                            <div id="text-input-field" class="col-6 col-12-xsmall">
+                                <TextInputField name="username" id="username" value={this.state.username} onChange={this.handleUsernameChange} placeholder="Username" />
+                                <PasswordInputField name="password" id="password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="Password" />
+                            </div>
+                            <div class="col-12">
+                                <ul class="actions">
+                                    <li id="sendButton">
+                                        <SendButton buttonName="Login" onClick={this.handleSubmit} />
+                                    </li>
+                                    <li>
+                                        <a href="#">Forgot password?</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                    <h3><br />Dont have account? Create new one!</h3>
+                    <ul class="actions">
+                        <a href="/signup/">
+                            <li id="sendButton">
+                                <SendButton buttonName="Sign Up" />
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default LoginForm;
