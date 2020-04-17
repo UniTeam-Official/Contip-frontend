@@ -8,17 +8,17 @@ import SignUpPage from "./components/SignUpPage";
 import "./assets/css/main.css";
 
 class App extends Component {
-	render() {
-		return (
-			<Router>
-				<Route path="/login/" component={LoginPage} />
+  render() {
+    return (
+      <Router>
+        <Route path="/login/" component={LoginPage} />
         <Route path="/signup/" component={SignUpPage} />
-				<Route path="/profile/" component={ProfilePage} />
-				<Route exact path="/" component={MainPage} />
-				<Route path="/watched/" component={WatchedMoviesPage} />
-			</Router>
-		);
-	}
+        <Route path="/profile/" component={ProfilePage} />
+        <Route exact path="/" component={MainPage} />
+        <Route path="/watched/" component={WatchedMoviesPage} />
+      </Router>
+    );
+  }
 }
 
 export default App;
