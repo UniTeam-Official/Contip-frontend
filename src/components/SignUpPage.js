@@ -7,11 +7,10 @@ class SignUpPage extends Component{
   constructor(props) {
     super(props);
     this.state = {
+      email: '',
       username: '',
       password: '',
-      email: '',
-      confirmPassword: '',
-      birthDate: ''
+      re_password: '',
     }
   }
   handleUsernameChange = event => {
@@ -31,7 +30,7 @@ class SignUpPage extends Component{
   }
   handleConfirmPasswordChange = event => {
     this.setState({
-      confirmPassword: event.target.value
+      re_password: event.target.value
     })
   }
   handleBirthDateChange = event => {
@@ -40,10 +39,25 @@ class SignUpPage extends Component{
     })
   }
   handleSubmit = event => {
-    if (this.state.password == this.state.confirmPassword) {
+    if (this.state.password == this.state.re_password) {
       alert('Success! Authenticate me!');
       event.preventDefault();
       // Authenticate User
+      let options = {
+          method: "POST",
+          body: JSON.stringify(this.state),
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          }
+      }
+      fetch('http://yyr3ll.pythonanywhere.com/api/v1/account/users/', options)
+          .then(res => {
+              console.log(res);
+              if (res.status != 201)
+                  alert("Something went wrong");
+              return res.json();
+          });
     }
     else {
       alert('Error: Passwords do not match.');
@@ -62,9 +76,8 @@ class SignUpPage extends Component{
                   <div class="col-6 col-12-xsmall">
                     <TextInputField name="username" id="username" value={this.state.username} onChange={this.handleUsernameChange} placeholder="Username" />
                     <input type="email" name="demo-email" id="demo-email" value={this.state.email} onChange={this.handleEmailChange} placeholder="Email" />
-                    <TextInputField name="birth-date" id="birth-date" value={this.state.birthDate} onChange={this.handleBirthDateChange} placeholder="Date of Birth(DD-MM-YYYY)" />
                     <PasswordInputField name="demo-password" id="demo-password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="Password" />
-                    <PasswordInputField name="confirm-password" id="confirm-password" value={this.state.confirmPassword} onChange={this.handleConfirmPasswordChange} placeholder="Confirm Your Password" />
+                    <PasswordInputField name="confirm-password" id="confirm-password" value={this.state.re_password} onChange={this.handleConfirmPasswordChange} placeholder="Confirm Your Password" />
                     <br />
                     {/* <h3>Choose Your Favorite Genres</h3>
                     <form method="post" action="#">
