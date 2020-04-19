@@ -35,21 +35,24 @@ class LoginForm extends Component {
             }
         }
 
-        fetch('http://localhost:8000/api/v1/auth/login/', options)
-            .then(res => res.json())
+        fetch('http://yyr3ll.pythonanywhere.com/api/v1/auth/login/', options)
+            .then(res => {
+                console.log(res);
+                if (res.status != 200)
+                    alert("wrong credentials");
+                return res.json();
+            })
             .then(data => {
                 console.log(data);
                 localStorage.setItem('jwt', data.token)
             });
-
-        alert('Submit handled');
-
     }
 
     render() {
         return (
             <div id="main">
                 <div class="inner">
+
                     <h1>Login Page</h1>
                     <form method="post" onSubmit={this.handleSubmit}>
                         <div class="row gtr-uniform">
