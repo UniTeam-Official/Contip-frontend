@@ -6,11 +6,12 @@ import ProfilePage from "./components/ProfilePage";
 import WatchedMoviesPage from "./components/WatchedMoviesPage";
 import SignUpPage from "./components/SignUpPage";
 import "./assets/css/main.css";
+import history from './components/history';
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <Route path="/login/" component={LoginPage} />
         <Route path="/signup/" component={SignUpPage} />
         <Route path="/profile/" component={ProfilePage} />

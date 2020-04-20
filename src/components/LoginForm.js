@@ -3,6 +3,9 @@ import PasswordInputField from "./PasswordInputFields";
 import TextInputField from "./TextInputField";
 import SendButton from "./SendButton";
 
+import history from './history';
+
+
 class LoginForm extends Component {
     constructor(props) {
         super(props);
@@ -38,14 +41,22 @@ class LoginForm extends Component {
         fetch('http://yyr3ll.pythonanywhere.com/api/v1/auth/login/', options)
             .then(res => {
                 console.log(res);
-                if (res.status != 200)
+                if (res.status != 200){
                     alert("wrong credentials");
+                }
+                else{
+                    this.props.history.push("/profile/");
+                }
                 return res.json();
+
             })
             .then(data => {
                 console.log(data);
-                localStorage.setItem('jwt', data.token)
+                localStorage.setItem('jwt', data.token);
             });
+
+
+
     }
 
     render() {

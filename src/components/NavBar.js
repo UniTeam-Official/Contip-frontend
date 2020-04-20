@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 class NavBar extends Component {
 	render() {
 		return (
 			<ul id="desktop_menu">
-				<li id="desktop_navbarbutton"><a href="search">Search</a></li>
-				<li id="desktop_navbarbutton"><a href="/">Recommendations</a></li>
-				<li id="desktop_navbarbutton"><a href="profile">Profile</a></li>
-				<li id="desktop_navbarbutton"><a href="watched">Watched Movies</a></li>
-				<li id="desktop_navbarbutton"><a href="login">Log Out</a></li>
+				<li id="desktop_navbarbutton"><Link to='/search'>Search</Link></li>
+				<li id="desktop_navbarbutton"><Link to='/'>Recommendations</Link></li>
+				<li id="desktop_navbarbutton"><Link to='/profile'>Profile</Link></li>
+				<li id="desktop_navbarbutton"><Link to='/watched'>Watched Movies</Link></li>
+				<li id="desktop_navbarbutton"><Link to='/login'>Log Out</Link></li>
 			</ul>
 		);
 	}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PasswordInputField from "./PasswordInputFields";
 import TextInputField from "./TextInputField";
 import SendButton from "./SendButton";
+import history from './history';
 
 class SignUpPage extends Component{
   constructor(props) {
@@ -54,8 +55,12 @@ class SignUpPage extends Component{
       fetch('http://yyr3ll.pythonanywhere.com/api/v1/account/users/', options)
           .then(res => {
               console.log(res);
-              if (res.status != 201)
+              if (res.status != 201){
                   alert("Something went wrong");
+              }
+              else {
+                  this.props.history.push("/login/");
+              }
               return res.json();
           });
     }
@@ -63,6 +68,8 @@ class SignUpPage extends Component{
       alert('Error: Passwords do not match.');
       event.preventDefault();
     }
+
+
   }
   render(){
     return(
