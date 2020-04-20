@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Checkbox from "./Checkbox";
+import PasswordInputField from "./PasswordInputFields";
 import SendButton from "./SendButton";
 import DeleteProfileButton from "./DeleteProfileButton";
 import InfoText from "./InfoText";
@@ -8,10 +9,50 @@ class ProfilePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            email: '',
+            password: '',
+            confirmPassword: '',
             data: [],
             loaded: false,
             placeholder: "Loading"
         };
+    }
+    
+    handleEmailChange = event => {
+        this.setState({
+            email: event.target.value
+        })
+    }
+    handlePasswordChange = event => {
+        this.setState({
+            password: event.target.value
+        })
+    }
+    handleConfirmPasswordChange = event => {
+        this.setState({
+            confirmPassword: event.target.value
+        })
+    }
+    handleGenreSubmit = event => {
+        alert("Genre change submitted!");
+        event.preventDefault();
+    }
+    handleEmailSubmit = event => {
+        alert("Email change submitted!");
+        event.preventDefault();
+    }
+    handlePasswordSubmit = event => {
+        if (this.state.password == this.state.confirmPassword) {
+            alert("Password change submitted!");
+            event.preventDefault();
+        }
+        else {
+            alert("Passwords do not match!");
+            event.preventDefault();
+        }
+    }
+    handleDeleteProfile = event => {
+        alert("Profile deletion request submitted!");
     }
 
     componentDidMount() {
@@ -71,7 +112,7 @@ class ProfilePage extends Component {
                                 <div class="col-12">
                                     <ul class="actions">
                                         <li id="sendButton">
-                                            <SendButton buttonName="Submit" />
+                                            <SendButton buttonName="Submit" onClick={this.handleGenreSubmit} />
                                         </li>
                                     </ul>
                                 </div>
@@ -82,12 +123,12 @@ class ProfilePage extends Component {
                         
                         <h3>Change Email</h3> <form method="post" action="#"> <div class="row gtr-uniform">
                             <div id="text-input-field" class="col-6 col-12-xsmall">
-                                <input type="email" name="profile_email" id="profile_email" placeholder="New Email" />
+                                <input type="email" name="profile_email" id="profile_email" value={this.state.email} onChange={this.handleEmailChange} placeholder="New Email" />
                             </div>
                             <div class="col-12">
                                 <ul class="actions">
                                     <li id="sendButton">
-                                        <SendButton buttonName="Submit" />
+                                        <SendButton buttonName="Submit" onClick={this.handleEmailSubmit} />
                                     </li>
                                 </ul>
                             </div>
@@ -100,20 +141,20 @@ class ProfilePage extends Component {
                         <form method="post" action="#">
                             <div class="row gtr-uniform">
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="password" name="profile_password" id="profile_password" placeholder="New Password" />
-                                    <input type="password" name="profile_confirm_password" id="profile_confirm_password" placeholder="Confirm New Password" />
+                                    <PasswordInputField name="profile_password" id="profile_password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="New Password" />
+                                    <PasswordInputField name="profile_confirm_password" id="profile_confirm_password" value={this.state.confirmPassword} onChange={this.handleConfirmPasswordChange} placeholder="Confirm New Password" />
                                 </div>
                                 <div class="col-12">
                                     <ul class="actions">
                                         <li id="sendButton">
-                                            <SendButton buttonName="Submit" />
+                                            <SendButton buttonName="Submit" onClick={this.handlePasswordSubmit} />
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </form>
                         <div class="row">
-                            <DeleteProfileButton buttonName="Delete" />
+                            <DeleteProfileButton buttonName="Delete" onClick={this.handleDeleteProfile} />
                         </div>
                     </section>
                 </div>
