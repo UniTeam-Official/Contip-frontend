@@ -4,6 +4,7 @@ import MainPage from "./components/MainPage";
 import LoginPage from "./components/LoginPage";
 import ProfilePage from "./components/ProfilePage";
 import WatchedMoviesPage from "./components/WatchedMoviesPage";
+import SearchPage from "./components/SearchPage";
 import SignUpPage from "./components/SignUpPage";
 import "./assets/css/main.css";
 
@@ -16,6 +17,7 @@ class App extends Component {
         <Route path="/profile/" component={ProfilePage} />
         <Route exact path="/" component={MainPage} />
         <Route path="/watched/" component={WatchedMoviesPage} />
+        <Route path="/search/" component={SearchPage} />
       </Router>
     );
   }

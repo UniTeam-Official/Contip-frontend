@@ -48,7 +48,7 @@ class ProfilePage extends Component {
     render() {
         return (
             <div id="main">
-                <div class="inner">
+                <div className="inner">
                     <h1>My Profile</h1>
                     <section>
                         <h2>User Info</h2>
@@ -59,8 +59,8 @@ class ProfilePage extends Component {
                         {/* GENRES */}
 
                         <form method="post" action="#">
-                            <div class="row gtr-uniform">
-                                <div class="col-6 col-12-small">
+                            <div className="row gtr-uniform">
+                                <div className="col-6 col-12-small">
                                     {this.state.data.map(genre => {
                                         let genre_name = "genre" + genre.id;
                                         return (
@@ -68,8 +68,8 @@ class ProfilePage extends Component {
                                         );
                                     })}
                                 </div>
-                                <div class="col-12">
-                                    <ul class="actions">
+                                <div className="col-12">
+                                    <ul className="actions">
                                         <li id="sendButton">
                                             <SendButton buttonName="Submit" />
                                         </li>
@@ -80,12 +80,12 @@ class ProfilePage extends Component {
 
                         {/* CHANGE EMAIL */}
                         
-                        <h3>Change Email</h3> <form method="post" action="#"> <div class="row gtr-uniform">
-                            <div id="text-input-field" class="col-6 col-12-xsmall">
+                        <h3>Change Email</h3> <form method="post" action="#"> <div className="row gtr-uniform">
+                            <div id="text-input-field" className="col-6 col-12-xsmall">
                                 <input type="email" name="profile_email" id="profile_email" placeholder="New Email" />
                             </div>
-                            <div class="col-12">
-                                <ul class="actions">
+                            <div className="col-12">
+                                <ul className="actions">
                                     <li id="sendButton">
                                         <SendButton buttonName="Submit" />
                                     </li>
@@ -98,13 +98,13 @@ class ProfilePage extends Component {
                         </form>
                         <h3>Change Password</h3>
                         <form method="post" action="#">
-                            <div class="row gtr-uniform">
-                                <div class="col-6 col-12-xsmall">
+                            <div className="row gtr-uniform">
+                                <div className="col-6 col-12-xsmall">
                                     <input type="password" name="profile_password" id="profile_password" placeholder="New Password" />
                                     <input type="password" name="profile_confirm_password" id="profile_confirm_password" placeholder="Confirm New Password" />
                                 </div>
-                                <div class="col-12">
-                                    <ul class="actions">
+                                <div className="col-12">
+                                    <ul className="actions">
                                         <li id="sendButton">
                                             <SendButton buttonName="Submit" />
                                         </li>
@@ -112,7 +112,7 @@ class ProfilePage extends Component {
                                 </div>
                             </div>
                         </form>
-                        <div class="row">
+                        <div className="row">
                             <DeleteProfileButton buttonName="Delete" />
                         </div>
                     </section>

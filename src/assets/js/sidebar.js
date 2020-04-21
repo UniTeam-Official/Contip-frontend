@@ -1,7 +1,7 @@
-function openSidebar() {
+export function openSidebar() {
     document.getElementById("filterSidebar").style.width = "250px";
 }
   
-function closeSidebar() {
+export function closeSidebar() {
     document.getElementById("filterSidebar").style.width = "0";
 }

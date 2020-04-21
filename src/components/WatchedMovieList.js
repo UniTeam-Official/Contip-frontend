@@ -5,7 +5,7 @@ class WatchedMovieList extends Component {
 	render() {
 		return (
 			<div id="main">
-				<div class="inner">
+				<div className="inner">
 					<h1>Watched Movies</h1>
 					<ul>
 						<li>

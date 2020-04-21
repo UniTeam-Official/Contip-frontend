@@ -51,17 +51,17 @@ class LoginForm extends Component {
     render() {
         return (
             <div id="main">
-                <div class="inner">
+                <div className="inner">
 
                     <h1>Login Page</h1>
                     <form method="post" onSubmit={this.handleSubmit}>
-                        <div class="row gtr-uniform">
-                            <div id="text-input-field" class="col-6 col-12-xsmall">
+                        <div className="row gtr-uniform">
+                            <div id="text-input-field" className="col-6 col-12-xsmall">
                                 <TextInputField name="username" id="username" value={this.state.username} onChange={this.handleUsernameChange} placeholder="Username" />
                                 <PasswordInputField name="password" id="password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="Password" />
                             </div>
-                            <div class="col-12">
-                                <ul class="actions">
+                            <div className="col-12">
+                                <ul className="actions">
                                     <li id="sendButton">
                                         <SendButton buttonName="Login" onClick={this.handleSubmit} />
                                     </li>
@@ -73,7 +73,7 @@ class LoginForm extends Component {
                         </div>
                     </form>
                     <h3><br />Dont have account? Create new one!</h3>
-                    <ul class="actions">
+                    <ul className="actions">
                         <a href="/signup/">
                             <li id="sendButton">
                                 <SendButton buttonName="Sign Up" />
