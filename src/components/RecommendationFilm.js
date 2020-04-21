@@ -7,10 +7,10 @@ class RecommendationFilm extends Component {
                 <span className="image">
                     <img src={this.props.image} alt="" />
                 </span>
-                <a href="/">
+                <a href={this.props.href}>
                     <h2>{this.props.title}</h2>
                     <div className="content">
-                        <p>Genre: {this.props.genre}<br />Year: {this.props.year}</p>
+                        <p>Genre: {this.props.genre}</p>
                     </div>
                 </a>
             </article>
