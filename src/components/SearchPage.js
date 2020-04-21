@@ -19,8 +19,8 @@ class SearchPage extends Component {
                 <div id="filterSidebar" className="filter-sidebar">
                     <a className="closebtn" href="javascript:void(0)" onClick={closeSidebar}>×</a>
                     <div className="accordion">
-                        <Accordion accordionHeader="genres" />
-                        <Accordion accordionHeader="sorting" />
+                        <Accordion accordionHeader="genres" namePrefix="sidebarGenres" />
+                        <Accordion accordionHeader="sorting" namePrefix="sidebarSorting" />
                     </div>
                 </div>
 				<Header />
@@ -30,8 +30,8 @@ class SearchPage extends Component {
                         <div className="sections-double">
                             <div id="filters" className="filters-section">
                                 <div id="filter-box" className="accordion">
-                                    <Accordion accordionHeader="genres" />
-                                    <Accordion accordionHeader="sorting" />
+                                    <Accordion accordionHeader="genres" namePrefix="genres" />
+                                    <Accordion accordionHeader="sorting" namePrefix="sorting" />
                                 </div>
                             </div>
                             <section className="tiles-section">

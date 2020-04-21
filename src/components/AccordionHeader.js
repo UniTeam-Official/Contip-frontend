@@ -1,6 +1,17 @@
 import React, { Component } from "react";
 
 class AccordionHeader extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+            loaded: false,
+            placeholder: "Loading"
+        };
+
+        this.accordionName = null;
+    }
+
 	render() {
 		return (
 			<header className="accordion-header">
