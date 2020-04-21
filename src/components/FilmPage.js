@@ -41,30 +41,34 @@ class FilmPage extends Component{
 			});
 	}
 
-    render(){
-        console.log(this.state.data);
-        let movie = <div className="inner">
-                        <h1 id="main-film-title">TITLE</h1>
-                        <span id="main-film-image" className="image main"><img src="image" alt="IMAGE" /></span>
-                        <a href='/'>IMDB Link</a>
-                        <h3>Film description:</h3>
-                        <p id="film-description">DESCRIPTION</p>
-                    </div>
-        if(this.state && this.state.data) {
-            movie = <div className="inner">
-                        <h1 id="main-film-title">{this.state.data.title}</h1>
-                        <span id="main-film-image" className="image main"><img src={this.state.data.image} alt="GET IMAGE FROM IMDB" /></span>
-                        <a href={`https://www.imdb.com/title/tt0${this.state.data.imdb}`}>IMDB Link</a>
-                        <h3>Film description:</h3>
-                        <p id="film-description">GET DESCRIPTION FROM IMDB</p>
-                    </div>
-        }
-        return(
-            <div id="main">
-                {movie}
-            </div>
-        )
-    }
+	render(){
+		console.log(this.state.data);
+		let movie = <div className="inner">
+									<h1 id="main-film-title">TITLE</h1>
+									<span id="main-film-image" className="image main"><img src="image" alt="IMAGE" /></span>
+									<a href='/'>IMDB Link</a>
+									<h3>Film description:</h3>
+									<p id="film-description">DESCRIPTION</p>
+								</div>
+		if(this.state && typeof(this.state.data.title) != 'undefined') {
+			movie = <div className="inner">
+								<h1 id="main-film-title">{this.state.data.title}</h1>
+								<h3><a href={`https://www.imdb.com/title/tt0${this.state.data.imdb}`}>IMDB Link</a></h3>
+								<span id="main-film-image" className="image main"><img src={this.state.data.image} alt="GET IMAGE FROM IMDB" /></span>
+								<h3>Film description:</h3>
+								<p id="film-description">GET DESCRIPTION FROM IMDB</p>
+								<h3>Genres: </h3>
+								<ul>
+									{this.state.data.genre.map(genre => {return(<li>{genre.name}</li>)})}
+								</ul>
+							</div>
+		}
+		return(
+			<div id="main">
+				{movie}
+			</div>
+		)
+	}
 }
 
 export default FilmPage;

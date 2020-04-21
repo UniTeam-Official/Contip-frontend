@@ -44,20 +44,11 @@ class MovieList extends Component {
 	}
 
 	render() {
-		console.log(`TYPE OF this.state.data: ${typeof(this.state.data)}`);
-		console.log(`TYPE OF this.state.data.results: ${typeof(this.state.data.results)}`);
-		console.log(`LENGTH OF this.state.data: ${this.state.data.length}`);
-		if (typeof(this.state.data.results) != 'undefined') {
-			console.log(`LENGTH OF this.state.data.results: ${this.state.data.results.length}`);
-		}
-		console.log()
-		let films = <span></span>
+		let films = <span></span>;
 		if (this.state && typeof(this.state.data.results) != 'undefined' && this.state.data.results.length > 0){
 			films = this.state.data.results.map(film => {
-				console.log(`TYPE OF DATA: ${typeof(this.state.data)}`);
-				console.log(`ID: ${film.id}`);
 				return (
-					<RecommendationFilm href={`/film/${film.id}`} title={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre="Multiple" />
+					<RecommendationFilm href={`/film/${film.id}`} title={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => {return(genre.name + ' ')})} />
 				);
 			})
 		}
