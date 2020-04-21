@@ -9,7 +9,7 @@ class Movie extends Component {
 				<a href={this.props.link}>
 					<MovieImageButton image={this.props.image} alt={this.props.title} />
 					<h2>{this.props.title}</h2>
-					<MovieDetails year={this.props.year} desc={this.props.desc} />
+					<MovieDetails genre={this.props.genre} desc={this.props.desc} />
 				</a>
 			</article>
 		);
