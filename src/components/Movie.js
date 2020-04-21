@@ -5,7 +5,7 @@ import MovieImageButton from "./MovieImageButton";
 class Movie extends Component {
 	render() {
 		return (
-			<article id="film square" class="style1">
+			<article id="film square" className="style1">
 				<a href={this.props.link}>
 					<MovieImageButton image={this.props.image} alt={this.props.title} />
 					<h2>{this.props.title}</h2>

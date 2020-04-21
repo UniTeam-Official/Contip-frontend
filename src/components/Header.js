@@ -14,13 +14,13 @@ class Header extends Component {
 	render() {
 		return (
 			<header id="header">
-				<nav id="meny" class="meny">
+				<nav id="meny" className="meny">
 					<NavBar />
 				</nav>
-				<a href="#" class="icon" onClick={this.navBarFunc}>
-					<i class="nav-button fa fa-bars"></i>
+				<a href="#" className="icon" onClick={this.navBarFunc}>
+					<i className="nav-button fa fa-bars"></i>
 				</a>
-				<div class="inner">
+				<div className="inner">
 					<TitleIcon />
 				</div>
 			</header>

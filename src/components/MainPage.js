@@ -10,7 +10,7 @@ class MainPage extends Component {
 			<div id="wrapper">
 				<Header />
 				<div id="main">
-					<div class="inner">
+					<div className="inner">
 						<RecommendationHeader />
 						<MovieList />
 					</div>

@@ -7,7 +7,7 @@ class Footer extends Component {
 	render() {
 		return (
 			<footer id="footer">
-				<div class="inner">
+				<div className="inner">
 					<SuggestForm />
 					<SocMediaBar />
 					<Copyrights />

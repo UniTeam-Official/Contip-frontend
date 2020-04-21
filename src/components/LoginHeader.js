@@ -5,7 +5,7 @@ class LoginHeader extends Component {
 	render() {
 		return (
 			<header id="header">
-				<div class="inner">
+				<div className="inner">
 					<TitleIcon />
 				</div>
 			</header>

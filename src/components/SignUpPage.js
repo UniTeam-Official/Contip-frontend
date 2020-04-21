@@ -75,12 +75,12 @@ class SignUpPage extends Component{
     return(
       <div id="wrapper">
         <div id="main">
-          <div class="inner">
+          <div className="inner">
             <h1>Register</h1>
             <section>
               <form method="post" action="#">
-                <div class="row gtr-uniform">
-                  <div class="col-6 col-12-xsmall">
+                <div className="row gtr-uniform">
+                  <div className="col-6 col-12-xsmall">
                     <TextInputField name="username" id="username" value={this.state.username} onChange={this.handleUsernameChange} placeholder="Username" />
                     <input type="email" name="demo-email" id="demo-email" value={this.state.email} onChange={this.handleEmailChange} placeholder="Email" />
                     <PasswordInputField name="demo-password" id="demo-password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="Password" />
@@ -88,16 +88,16 @@ class SignUpPage extends Component{
                     <br />
                     {/* <h3>Choose Your Favorite Genres</h3>
                     <form method="post" action="#">
-                      <div class="row gtr-uniform">
-                        <div class="col-6 col-12-small">
+                      <div className="row gtr-uniform">
+                        <div className="col-6 col-12-small">
                           <Checkbox name="genre_name" text="genre.name" checked="false" />
                           <br></br>
                           <br></br>
                         </div>
                       </div>
                     </form> */}
-                    <div class="col-12">
-                      <ul class="actions">
+                    <div className="col-12">
+                      <ul className="actions">
                         <li><SendButton buttonName="Sign Up" onClick={this.handleSubmit} /></li>
                       </ul>
                     </div>
