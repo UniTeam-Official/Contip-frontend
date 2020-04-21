@@ -5,7 +5,7 @@ import SendButton from "./SendButton";
 import DeleteProfileButton from "./DeleteProfileButton";
 import InfoText from "./InfoText";
 
-class ProfilePage extends Component {
+class ProfileForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -163,4 +163,4 @@ class ProfilePage extends Component {
     }
 }
 
-export default ProfilePage;
+export default ProfileForm;
