@@ -1,24 +1,55 @@
 import React, { Component } from "react";
+import SendButton from "./SendButton";
+import TextInputField from "./TextInputField";
 
 class SuggestForm extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			movie: '',
+			rating: '',
+			link: ''
+		};
+	}
+
+	handleMovieChange = event => {
+		this.setState({
+			movie: event.target.value
+		})
+	}
+	handleRatingChange = event => {
+		this.setState({
+			rating: event.target.value
+		})
+	}
+	handleLinkChange = event => {
+		this.setState({
+			link: event.target.value
+		})
+	}
+	handleSuggestSubmit = event => {
+		alert("Movie suggestion submitted!");
+		event.preventDefault();
+	}
+
 	render() {
 		return (
 			<section>
 				<h2>You Think We Don't Know That One Unique, Artistic, Extraordinary Movie?<br />Recommend It To Us!</h2>
 				<form method="post" action="#">
-					<div className="fields">
-						<div className="field half">
-							<input type="text" name="footer_name" id="footer_name_input_field" placeholder="Movie We Have To Check Out!" />
+					<div class="fields">
+						<div class="field half">
+							<TextInputField name="footer_movie" id="footer_movie" onChange={this.handleMovieChange} value={this.state.movie} placeholder="Movie We Have To Check Out!" />
 						</div>
-						<div className="field half">
-							<input type="email" name="footer_email" id="footer_email_input_field" placeholder="How Much Will We Like It/10?" />
+						<div class="field half">
+							<TextInputField name="footer_rating" id="footer_rating" onChange={this.handleRatingChange} value={this.state.rating} placeholder="How Much Will We Like It/10?" />
 						</div>
-						<div className="field">
-							<textarea name="footer_message" id="footer_message_input_field" placeholder="Imdb Link"></textarea>
+						<div class="field">
+							<textarea name="footer_link" id="footer_link" onChange={this.handleLinkChange} value={this.state.link}  placeholder="Imdb Link"></textarea>
 						</div>
 					</div>
-					<ul className="actions">
-						<li><input type="submit" id="footer_send_button" value="Send" className="primary" /></li>
+					<ul class="actions">
+						<li><SendButton buttonName="Submit" onClick={this.handleSuggestSubmit} /></li>
 					</ul>
 				</form>
 			</section>
