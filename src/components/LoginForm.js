@@ -43,16 +43,15 @@ class LoginForm extends Component {
                 console.log(res);
                 if (res.status != 200){
                     alert("wrong credentials");
-                }
-                else{
-                    this.props.history.push("/profile/");
+                    return {username: '',password: ''};
                 }
                 return res.json();
 
             })
-            .then(data => {
+            .then(data => {    
                 console.log(data);
                 localStorage.setItem('jwt', data.token);
+                this.props.history.push("/profile/");
             });
 
 
