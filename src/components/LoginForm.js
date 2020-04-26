@@ -27,7 +27,7 @@ class LoginForm extends Component {
         })
     }
 
-    handleSubmit = event => {
+    handleSubmit = async(event) => {
         event.preventDefault()
         let options = {
             method: "POST",
@@ -38,26 +38,20 @@ class LoginForm extends Component {
             }
         }
 
-        fetch('http://yyr3ll.pythonanywhere.com/api/v1/auth/login/', options)
-            .then(res => {
-                console.log(res);
-                if (res.status != 200){
-                    alert("wrong credentials");
-                    return false;
-                }
-                return res.json();
+        const response = await fetch('http://yyr3ll.pythonanywhere.com/api/v1/auth/login/', options);
 
+        if (response.status==400)
+            alert("Wrong credentials")
+        else {
 
-            })
-            .then(data => {
-                if(data){
-                    console.log(data);
-                    localStorage.setItem('jwt', data.token);
-                    this.props.history.push("/profile/");
-                }
-            });
+            const json = await response.json();
+            
+            localStorage.setItem('jwt', json.access);
+            localStorage.setItem('refresh', json.refresh);
+            
+            this.props.history.push("/profile/");
 
-
+        }
 
     }
 
