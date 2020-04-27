@@ -17,7 +17,7 @@ class ProfileForm extends Component {
             placeholder: "Loading"
         };
     }
-    
+
     handleEmailChange = event => {
         this.setState({
             email: event.target.value
@@ -56,13 +56,13 @@ class ProfileForm extends Component {
     }
 
     componentDidMount() {
-		const token = localStorage.getItem('jwt');
+		const access_token = localStorage.getItem('jwt access');
         const options = {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'Authorization': `JWT ${token}`
+				'Authorization': `JWT ${access_token}`
             }
         }
         fetch("http://yyr3ll.pythonanywhere.com/api/v1/app/genre/list/", options)
@@ -120,7 +120,7 @@ class ProfileForm extends Component {
                         </form>
 
                         {/* CHANGE EMAIL */}
-                        
+
                         <h3>Change Email</h3> <form method="post" action="#"> <div className="row gtr-uniform">
                             <div id="text-input-field" className="col-6 col-12-xsmall">
                                 <input type="email" name="profile_email" id="profile_email" value={this.state.email} onChange={this.handleEmailChange} placeholder="New Email" />
@@ -135,7 +135,7 @@ class ProfileForm extends Component {
                         </div>
 
                         {/* CHANGE PASS */}
-                        
+
                         </form>
                         <h3>Change Password</h3>
                         <form method="post" action="#">

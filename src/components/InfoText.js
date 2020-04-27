@@ -11,13 +11,13 @@ class InfoText extends Component {
 	}
 
 	componentDidMount() {
-		const token = localStorage.getItem('jwt');
+		const access_token = localStorage.getItem('jwt access');
         const options = {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'Authorization': `JWT ${token}`
+				'Authorization': `JWT ${access_token}`
             }
         }
 		fetch("http://yyr3ll.pythonanywhere.com/api/v1/account/users/me/", options)
