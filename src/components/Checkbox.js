@@ -16,7 +16,7 @@ class Checkbox extends Component {
 		return (
 			<div style={{ display: "inline-block" }}>
 				<input id={this.props.name} type="checkbox" name={this.props.name} checked={this.state.checked} onChange={this.handleCheck} />
-				<label for={this.props.name}>{this.props.text}</label>
+				<label htmlFor={this.props.name}>{this.props.text}</label>
 			</div>
 		);
 	}

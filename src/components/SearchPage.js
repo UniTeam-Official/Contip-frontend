@@ -12,7 +12,7 @@ class SearchPage extends Component {
     componentDidMount() {
         accordionButtonListener();
     }
-    
+
 	render() {
 		return (
 			<div id="wrapper">
@@ -49,7 +49,7 @@ class SearchPage extends Component {
 			</div>
         );
     }
-    
+
 }
 
 export default SearchPage;
