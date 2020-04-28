@@ -9,15 +9,22 @@ class ProfileForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            genres: {},
             email: '',
             password: '',
             confirmPassword: '',
+            deletePassword: '',
             data: [],
+            preferences: [],
             loaded: false,
             placeholder: "Loading"
         };
     }
 
+    handleGenreChange = event => {
+        const genre = event.target.name;
+        this.state.genres[genre] = !this.state.genres[genre];
+    }
     handleEmailChange = event => {
         this.setState({
             email: event.target.value
@@ -33,18 +40,100 @@ class ProfileForm extends Component {
             confirmPassword: event.target.value
         })
     }
+    handleCurrentPasswordChange = event => {
+        this.setState({
+            currentPassword: event.target.value
+        })
+    }
+    handleDeletePasswordChange = event => {
+        this.setState({
+            deletePassword: event.target.value
+        })
+    }
     handleGenreSubmit = event => {
         alert("Genre change submitted!");
         event.preventDefault();
+        // Update user genres
+        const access_token = localStorage.getItem('jwt access');
+        const prefs = [];
+        for (const key of Object.keys(this.state.genres)) {
+            if (this.state.genres[key]) {
+                prefs.push(parseInt(key.substring(5, 10)));
+            }
+        }
+        let options = {
+            method: "PUT",
+            body: JSON.stringify({genre_preference: prefs}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+				'Authorization': `JWT ${access_token}`
+            }
+        }
+        fetch('http://yyr3ll.pythonanywhere.com/api/v1/app/preferences/set/', options)
+            .then(res => {
+                console.log(res);
+                if (res.status != 200){
+                    alert("Something went wrong");
+                }
+                else {
+                    this.props.history.push("/profile/");
+                }
+                return res.json();
+            });
     }
     handleEmailSubmit = event => {
         alert("Email change submitted!");
         event.preventDefault();
+        // Update user email
+		const access_token = localStorage.getItem('jwt access');
+        let options = {
+            method: "PATCH",
+            body: JSON.stringify({email: this.state.email}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+				'Authorization': `JWT ${access_token}`
+            }
+        }
+        fetch('http://yyr3ll.pythonanywhere.com/api/v1/account/users/me/', options)
+            .then(res => {
+                console.log(res);
+                if (res.status != 200){
+                    alert("Something went wrong");
+                }
+                else {
+                    this.props.history.push("/profile/");
+                }
+                return res.json();
+            });
     }
     handlePasswordSubmit = event => {
         if (this.state.password == this.state.confirmPassword) {
             alert("Password change submitted!");
             event.preventDefault();
+            // Update user password
+            const access_token = localStorage.getItem('jwt access');
+            let options = {
+                method: "POST",
+                body: JSON.stringify({new_password: this.state.password, re_new_password: this.state.confirmPassword, current_password: this.state.currentPassword}),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `JWT ${access_token}`
+                }
+            }
+            fetch('http://yyr3ll.pythonanywhere.com/api/v1/account/users/set_password/', options)
+                .then(res => {
+                    console.log(res);
+                    if (res.status != 204){
+                        alert("Something went wrong");
+                    }
+                    else {
+                        this.props.history.push("/login/");
+                    }
+                    return res.json();
+                });
         }
         else {
             alert("Passwords do not match!");
@@ -53,6 +142,34 @@ class ProfileForm extends Component {
     }
     handleDeleteProfile = event => {
         alert("Profile deletion request submitted!");
+        // Delete user
+        const access_token = localStorage.getItem('jwt access');
+        let options = {
+            method: "DELETE",
+            body: JSON.stringify({current_password: this.state.deletePassword}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${access_token}`
+            }
+        }
+        fetch('http://yyr3ll.pythonanywhere.com/api/v1/account/users/me/', options)
+            .then(res => {
+                console.log(res);
+                if (res.status != 204){
+                    alert("Something went wrong");
+                }
+                else {
+                    this.props.history.push("/signup/");
+                }
+                return res.json();
+            });
+    }
+
+    setGenres() {
+        for (const genre of this.state.data) {
+            this.state.genres["genre"+genre.id] = (genre.id in this.state.preferences.genre_preference);
+        }
     }
 
     componentDidMount() {
@@ -84,6 +201,25 @@ class ProfileForm extends Component {
                     };
                 });
             });
+        fetch("http://yyr3ll.pythonanywhere.com/api/v1/app/preferences/set/", options)
+            .then(response => {
+                console.log(response);
+                if (response.status > 400) {
+                    return this.setState(() => {
+                        return { placeholder: "Something went wrong!" };
+                    });
+                }
+                return response.json();
+            })
+            .then(preferences => {
+                console.log(preferences);
+                this.setState(() => {
+                    return {
+                        preferences
+                    };
+                });
+                this.setGenres();
+            });
     }
 
     render() {
@@ -102,10 +238,11 @@ class ProfileForm extends Component {
                         <form method="post" action="#">
                             <div className="row gtr-uniform">
                                 <div className="col-6 col-12-small">
+                                    <h4>Checkboxes that SHOULD be checked: {this.state.preferences["genre_preference"]}</h4>
                                     {this.state.data.map(genre => {
                                         let genre_name = "genre" + genre.id;
                                         return (
-                                            <Checkbox name={genre_name} text={genre.name} checked="false" />
+                                            <Checkbox name={genre_name} text={genre.name} checked={this.state.genres[genre_name]} onChange={this.handleGenreChange.bind(this)} />
                                         );
                                     })}
                                 </div>
@@ -141,6 +278,7 @@ class ProfileForm extends Component {
                         <form method="post" action="#">
                             <div className="row gtr-uniform">
                                 <div className="col-6 col-12-xsmall">
+                                    <PasswordInputField name="profile_current_password" id="profile_current_password" value={this.state.currentPassword} onChange={this.handleCurrentPasswordChange} placeholder="Current Password" />
                                     <PasswordInputField name="profile_password" id="profile_password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="New Password" />
                                     <PasswordInputField name="profile_confirm_password" id="profile_confirm_password" value={this.state.confirmPassword} onChange={this.handleConfirmPasswordChange} placeholder="Confirm New Password" />
                                 </div>
@@ -153,9 +291,17 @@ class ProfileForm extends Component {
                                 </div>
                             </div>
                         </form>
+                        <form method="post" action="#">
+                        <div className="row gtr-uniform">
+                            <div className="col-6 col-12-xsmall">
+                                <PasswordInputField name="profile_delete_password" id="profile_delete_password" value={this.state.deletePassword} onChange={this.handleDeletePasswordChange} placeholder="Password" />
+                            </div>
+                        </div>
+                        <br />
                         <div className="row">
                             <DeleteProfileButton buttonName="Delete" onClick={this.handleDeleteProfile} />
                         </div>
+                        </form>
                     </section>
                 </div>
             </div>
