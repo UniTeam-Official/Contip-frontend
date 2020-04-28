@@ -28,6 +28,7 @@ class LoginForm extends Component {
     }
 
     handleSubmit = event => {
+        localStorage.clear();
         event.preventDefault()
         let options = {
             method: "POST",

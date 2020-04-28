@@ -7,20 +7,21 @@ import SearchBar from "./SearchBar";
 import Accordion from "./Accordion";
 import { closeSidebar } from "../assets/js/sidebar";
 import { accordionButtonListener } from "../assets/js/accordion";
+import history from './history';
 
 class SearchPage extends Component {
     componentDidMount() {
         accordionButtonListener();
     }
-    
+
 	render() {
 		return (
 			<div id="wrapper">
                 <div id="filterSidebar" className="filter-sidebar">
                     <a className="closebtn" href="javascript:void(0)" onClick={closeSidebar}>×</a>
                     <div className="accordion">
-                        <Accordion accordionHeader="genres" namePrefix="sidebarGenres" />
-                        <Accordion accordionHeader="sorting" namePrefix="sidebarSorting" />
+                        <Accordion accordionHeader="genres" namePrefix="sidebarGenres" history={this.props.history}/>
+                        <Accordion accordionHeader="sorting" namePrefix="sidebarSorting" history={this.props.history}/>
                     </div>
                 </div>
 				<Header />
@@ -30,8 +31,8 @@ class SearchPage extends Component {
                         <div className="sections-double">
                             <div id="filters" className="filters-section">
                                 <div id="filter-box" className="accordion">
-                                    <Accordion accordionHeader="genres" namePrefix="genres" />
-                                    <Accordion accordionHeader="sorting" namePrefix="sorting" />
+                                    <Accordion accordionHeader="genres" namePrefix="genres" history={this.props.history}/>
+                                    <Accordion accordionHeader="sorting" namePrefix="sorting" history={this.props.history}/>
                                 </div>
                             </div>
                             <section className="tiles-section">
@@ -40,7 +41,7 @@ class SearchPage extends Component {
                                         <SearchBar />
                                     </form>
                                 </div>
-                                <MovieList />
+                                <MovieList history={this.props.history}/>
                             </section>
                         </div>
                     </div>
@@ -49,7 +50,7 @@ class SearchPage extends Component {
 			</div>
         );
     }
-    
+
 }
 
 export default SearchPage;
