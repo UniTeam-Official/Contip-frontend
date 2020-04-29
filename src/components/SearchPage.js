@@ -1,9 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import SearchHeader from "./SearchHeader";
-import MovieList from "./MovieList";
-import SearchBar from "./SearchBar";
+import SearchTiles from "./SearchTiles";
 import Accordion from "./Accordion";
 import { closeSidebar } from "../assets/js/sidebar";
 import { accordionButtonListener } from "../assets/js/accordion";
@@ -17,10 +17,10 @@ class SearchPage extends Component {
 		return (
 			<div id="wrapper">
                 <div id="filterSidebar" className="filter-sidebar">
-                    <a className="closebtn" href="javascript:void(0)" onClick={closeSidebar}>×</a>
+                    <a className="closebtn" href="" onClick={closeSidebar}>×</a>
                     <div className="accordion">
-                        <Accordion accordionHeader="genres" namePrefix="sidebarGenres" />
-                        <Accordion accordionHeader="sorting" namePrefix="sidebarSorting" />
+                        <Accordion className="accordion-content content-sidebar" accordionHeader="genres" namePrefix="sidebarGenres" />
+                        <Accordion className="accordion-content content-sidebar" accordionHeader="sorting" namePrefix="sidebarSorting" />
                     </div>
                 </div>
 				<Header />
@@ -30,18 +30,11 @@ class SearchPage extends Component {
                         <div className="sections-double">
                             <div id="filters" className="filters-section">
                                 <div id="filter-box" className="accordion">
-                                    <Accordion accordionHeader="genres" namePrefix="genres" />
-                                    <Accordion accordionHeader="sorting" namePrefix="sorting" />
+                                    <Accordion className="accordion-content" accordionHeader="genres" namePrefix="genres" />
+                                    <Accordion className="accordion-content" accordionHeader="sorting" namePrefix="sorting" />
                                 </div>
                             </div>
-                            <section className="tiles-section">
-                                <div className="controls">
-                                    <form>
-                                        <SearchBar />
-                                    </form>
-                                </div>
-                                <MovieList />
-                            </section>
+                            <SearchTiles />
                         </div>
                     </div>
                 </div>
