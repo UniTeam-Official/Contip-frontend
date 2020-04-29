@@ -6,18 +6,25 @@
 
 /* Filters */
 
-    .filters-section {
-        width: 50%;
-        background-color: #ffffff;
-    }
+    .filters {
+        &-section {
+            width: 50%;
+            background-color: #ffffff;
+            max-width: 244.483px;
+        }
 
-    .filters-title {
-        font-size: 22px;
-        position: relative;
-        text-transform: uppercase;
-        padding: 14px 25px;
-        background-color: rgba(0, 0, 0, .05);
-        font-weight: 800;
+        &-title {
+            font-size: 22px;
+            position: relative;
+            text-transform: uppercase;
+            padding: 14px 25px;
+            background-color: _palette(bg-accent-search);
+            font-weight: 800;
+
+            &.filters-title-sidebar {
+                background-color: rgba(0, 0, 0, .05) !important;
+            }
+        }
     }
 
 /* Filter-sidebar*/
@@ -129,7 +136,11 @@
         overflow: hidden;
         max-height: 1200px;
         @include vendor('transition', 'max-height .4s ease-in-out');
-        background-color: rgba(250, 250, 250, .8);
+        background-color: _palette(bg-accent-search);
+
+        &.content-sidebar {
+            background-color: rgba(250, 250, 250, .8) !important;
+        }
     }
 
     .treeview {
@@ -205,6 +216,7 @@
 
     .tiles-section {
         position: relative;
+        width: 100%;
         
         .tiles {
             margin: 0px;
@@ -259,6 +271,7 @@
             border: none;
             margin: 0;
             padding: 11px 18% 11px 8%;
+            background-color: _palette(bg-accent-search) !important;
         }
     }
 
@@ -277,7 +290,6 @@
         outline: none;
         box-sizing: border-box;
         width: 100%;
-        background-color: rgba(0, 0, 0, .05);
         font-weight: 600;
         box-shadow: none;
         @include vendor('appearance', 'none');
@@ -306,7 +318,7 @@
         }
 
         .search-container {
-            padding: 0 0 0 $gutter;
+            padding: 0;
         }
 
         .controls {
@@ -323,10 +335,6 @@
     @include breakpoint('<=small') {
         $gutter: _size(gutter) * 0.5;
 
-        .search-container {
-            padding: 0 0 0 $gutter;
-        }
-
         .controls {
             .search-input {
                 padding: 11px 24% 11px 13%;
@@ -335,10 +343,6 @@
     }
 
     @include breakpoint('<=xsmall') {
-        .search-container {
-            padding: 0;
-        }
-
         .controls {
             .search-btn {
                 left: 10%;

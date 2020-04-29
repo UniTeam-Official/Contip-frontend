@@ -8,15 +8,13 @@ class AccordionHeader extends Component {
             loaded: false,
             placeholder: "Loading"
         };
-
-        this.accordionName = null;
     }
 
 	render() {
 		return (
 			<header className="accordion-header">
                 <div>
-                    <div className="filters-title" >{this.props.accordionName}</div>
+                    <div className={this.props.className} >{this.props.accordionName}</div>
                 </div>
                 <span className="icon">
                     <div className="circle-plus closed">
