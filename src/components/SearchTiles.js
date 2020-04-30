@@ -55,9 +55,7 @@ class SearchTiles extends Component {
 
 	handleChange(event) {
 		clearTimeout(this.timer);
-
 		this.setState({ search: event.target.value.substr(0, 32) });
-
 		this.timer = setTimeout(this.triggerChange.bind(this), WAIT_INTERVAL);
 	}
 
@@ -69,13 +67,20 @@ class SearchTiles extends Component {
 
 	handleKeyDown(e) {
 		if (e.keyCode === ENTER_KEY) {
-      clearTimeout(this.timer);
-			this.triggerChange();
-    }
+			clearTimeout(this.timer);
+			e.preventDefault();
+			this.handleChange(e);
+    	}
 	}	
 
 	updateResults() {
-		this.fetchFilmsDecorator("http://yyr3ll.pythonanywhere.com/api/v1/app/film/list/?search=" + this.state.search, this.state.options);
+		let searchQuery = this.state.search ? "search=" + this.state.search : "";
+		let filterQuery = this.props.filterQuery;
+		let sortingQuery = this.props.sortingQuery;
+
+		let request = `http://yyr3ll.pythonanywhere.com/api/v1/app/film/list/?${ searchQuery }&${ filterQuery }&${ sortingQuery }`;
+		console.log(request);
+		this.fetchFilmsDecorator(request, this.state.options);
 	}
 
 	render() {
@@ -83,31 +88,30 @@ class SearchTiles extends Component {
 		if (this.state && typeof(this.state.data.results) != 'undefined' && this.state.data.results.length > 0) {
 			filteredFilms = this.state.data.results.map(film => {
 				return (
-					<RecommendationFilm href={`/film/${film.id}`} title={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => {return(genre.name + '  ')})} />
+					<RecommendationFilm href={`/film/${ film.id }`} title={ film.title } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={ film.genre.map(genre => { return(genre.name + '  ') }) } />
 				);
 			})
 		}
 		return (
       <section className="tiles-section">
         <div className="controls">
-          <form>
-            <div id="search_bar" className="search-container">
+			<div id="search_bar" className="search-container">
               <div className="search">
-                <i className="fa fa-filter openbtn" onClick={openSidebar} style={{fontSize:"16px"}}></i>
+                <i className="fa fa-filter openbtn" onClick={ openSidebar } style={{ fontSize:"16px" }}></i>
                 <button id="search_button" className="search-btn" type="button">
                     <i className="fa fa-search"></i>
                 </button>
                 <span id="search_searched_count" className="search-searched-count">142 results</span>
-                <input type="text" className="search-input"
-									value={this.state.value}
-									onChange={this.handleChange.bind(this)}
-									onKeyDown={this.handleKeyDown.bind(this)}></input>
+				<input type="text"
+				  className="search-input"
+				  value={ this.state.value }
+			      onChange={ this.handleChange.bind(this) }
+				  onKeyDown={this.handleKeyDown.bind(this) }></input>
               </div>
             </div>
-          </form>
         </div>
         <section className="tiles">
-          {filteredFilms}
+          { filteredFilms }
         </section>
       </section>
 		);
