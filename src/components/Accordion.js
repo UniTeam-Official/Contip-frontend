@@ -9,11 +9,8 @@ class Accordion extends Component {
         this.state = {
             data: [],
             loaded: false,
-            placeholder: "Loading"
+            placeholder: "Loading",
         };
-
-        this.namePrefix = null;
-        this.accordionHeader = null;
     }
 
     componentDidMount() {
@@ -53,10 +50,16 @@ class Accordion extends Component {
             return (
                 <div>
                     <div className="accordion-btn .active opened active">
-                        <AccordionHeader accordionName="Genres" />
+                        {(() => {
+                            if (this.props.className === "accordion-content content-sidebar") {
+                                return (<AccordionHeader className="filters-title filters-title-sidebar" accordionName="Genres" />);
+                            } else {
+                                return (<AccordionHeader className="filters-title" accordionName="Genres" />);
+                            }
+                        })()}
                     </div>
                     <div className="panel" style={{ maxHeight: "1200px" }}>
-                        <div className="accordion-content">
+                        <div className={this.props.className}>
                             <div className="treeview">
                                 <div className="checkbox-section">
                                     <div className="col-6 col-12-small">
@@ -82,10 +85,16 @@ class Accordion extends Component {
             return (
                 <div>
                     <div className="accordion-btn .active">
-                        <AccordionHeader accordionName="Sorting" />
+                        {(() => {
+                            if (this.props.className === "accordion-content content-sidebar") {
+                                return (<AccordionHeader className="filters-title filters-title-sidebar" accordionName="Sorting" />);
+                            } else {
+                                return (<AccordionHeader className="filters-title" accordionName="Sorting" />);
+                            }
+                        })()}
                     </div>
                     <div className="panel">
-                        <div className="accordion-content">
+                        <div className={this.props.className}>
                             <div className="treeview">
                                 <div className="checkbox-section">
                                     <div className="col-6 col-12-small">

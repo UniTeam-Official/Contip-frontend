@@ -4,9 +4,9 @@ import TitleIcon from "./TitleIcon";
 class LoginHeader extends Component {
 	render() {
 		return (
-			<header id="header">
+			<header id="header" className="no-padding-side">
 				<div className="inner">
-					<TitleIcon />
+					<TitleIcon className="logo no-margin-side"/>
 				</div>
 			</header>
 		);
