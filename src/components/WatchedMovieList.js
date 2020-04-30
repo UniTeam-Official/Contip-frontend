@@ -49,7 +49,7 @@ class WatchedMovieList extends Component {
 		if (this.state && typeof(this.state.data.results) != 'undefined' && this.state.data.results.length > 0){
 			films = this.state.data.results.map(film => {
 				return (
-					<li><Movie link={`/film/${film.id}`} title={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => {return(genre.name + '  ')})} /></li>
+					<li><Movie link={ `/film/${film.id}` } title={ film.title } image="https://avatarfiles.alphacoders.com/139/139764.jpg" desc='GET DESCRIPTION FROM IMDB' genre={ film.genre.map(genre => { return(genre.name + '  ') }) } /></li>
 				);
 			})
 		}
@@ -58,7 +58,7 @@ class WatchedMovieList extends Component {
 				<div className="inner">
 					<h1>Watched Movies</h1>
 					<ul>
-						{films}
+						{ films }
 					</ul>
 				</div>
 			</div>

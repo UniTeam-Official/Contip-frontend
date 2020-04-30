@@ -10,6 +10,12 @@ class Accordion extends Component {
             data: [],
             loaded: false,
             placeholder: "Loading",
+            filterOptions: [],
+            sortingOptions: [],
+            signalFilterOff: false,
+            signalSortingOff: false,
+            writableAsc: true,
+            writableDesc: true,
         };
     }
 
@@ -45,6 +51,56 @@ class Accordion extends Component {
             });
     }
 
+    handleCheckbox(option, checkState) {
+        let filterOptions = this.state.filterOptions;
+        let sortingOptions = this.state.sortingOptions;
+        let signalFilterOff = false;
+        let signalSortingOff = false;
+
+        console.log(`option: ${ option }`);
+        console.log(`checkState: ${ checkState }`);
+
+        if (~option.indexOf("sorting")) {
+            if (checkState) {
+                sortingOptions.push(option);
+
+                signalSortingOff = false;
+            } else {
+                let optionIndexUnchecked = sortingOptions.indexOf(option);
+                if (~optionIndexUnchecked) {
+                    sortingOptions.splice(optionIndexUnchecked, 1);
+                }
+
+                signalSortingOff = true;
+            }
+        } else {
+            if (checkState) {
+                filterOptions.push(option);
+
+                signalFilterOff = false;
+            } else {
+                let optionIndexUnchecked = filterOptions.indexOf(option);
+                if (~optionIndexUnchecked) {
+                    filterOptions.splice(optionIndexUnchecked, 1);
+                }
+
+                signalFilterOff = true;
+            }
+        }
+
+        console.log(`filterOptions: ${ filterOptions }`);
+        console.log(`sortingOptions: ${ sortingOptions }`);
+
+        this.setState({
+            filterOptions: filterOptions,
+            sortingOptions: sortingOptions,
+            signalFilter: signalFilterOff,
+            signalSorting: signalSortingOff,
+        });
+
+        this.props.handleFilterQuery(filterOptions, sortingOptions, signalFilterOff, signalSortingOff);
+    }
+
 	render() {
 		if (this.props.accordionHeader === "genres") {
             return (
@@ -59,7 +115,7 @@ class Accordion extends Component {
                         })()}
                     </div>
                     <div className="panel" style={{ maxHeight: "1200px" }}>
-                        <div className={this.props.className}>
+                        <div className={ this.props.className }>
                             <div className="treeview">
                                 <div className="checkbox-section">
                                     <div className="col-6 col-12-small">
@@ -68,7 +124,7 @@ class Accordion extends Component {
                                                 let genre_name = this.props.namePrefix + "Filter" + genre.id;
                                                 return (
                                                     <li id="check-box" className="list-item">
-                                                        <Checkbox name={genre_name} text={genre.name} checked="false" />
+                                                        <Checkbox name={ genre_name } text={ genre.name } checked="false" writable={ true } handleCheckbox={ this.handleCheckbox.bind(this) } />
                                                     </li>
                                                 );
                                             })}
@@ -94,24 +150,24 @@ class Accordion extends Component {
                         })()}
                     </div>
                     <div className="panel">
-                        <div className={this.props.className}>
+                        <div className={ this.props.className }>
                             <div className="treeview">
                                 <div className="checkbox-section">
                                     <div className="col-6 col-12-small">
                                         <ul className="list">
                                             {(() => {
-                                                let sortingName = this.props.namePrefix + "SortingAsc";
+                                                let sortingName = this.props.namePrefix + "Ascending";
                                                 return(
                                                     <li id="check-box" className="list-item">
-                                                        <Checkbox name={sortingName} text="Alphabetical (A-Z)" checked="false" />
+                                                        <Checkbox name={ sortingName } text="Alphabetical (A-Z)" checked="false" writable={ this.state.writableAsc } handleCheckbox={ this.handleCheckbox.bind(this) } />
                                                     </li>
                                                 );
                                             })()}
                                             {(() => {
-                                                let sortingName = this.props.namePrefix + "SortingDesc";
+                                                let sortingName = this.props.namePrefix + "Descending";
                                                 return(
                                                     <li id="check-box" className="list-item">
-                                                        <Checkbox name={sortingName} text="Alphabetical (A-Z)" checked="false" />
+                                                        <Checkbox name={ sortingName } text="Alphabetical (Z-A)" checked="false" writable={ this.state.writableDesc } handleCheckbox={ this.handleCheckbox.bind(this) } />
                                                     </li>
                                                 );
                                             })()}
