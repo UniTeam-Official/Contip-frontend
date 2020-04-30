@@ -81,10 +81,10 @@ class SignUpPage extends Component{
               <form method="post" action="#">
                 <div className="row gtr-uniform">
                   <div className="col-6 col-12-xsmall">
-                    <TextInputField name="username" id="username" value={this.state.username} onChange={this.handleUsernameChange} placeholder="Username" />
-                    <input type="email" name="demo-email" id="demo-email" value={this.state.email} onChange={this.handleEmailChange} placeholder="Email" />
-                    <PasswordInputField name="demo-password" id="demo-password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="Password" />
-                    <PasswordInputField name="confirm-password" id="confirm-password" value={this.state.re_password} onChange={this.handleConfirmPasswordChange} placeholder="Confirm Your Password" />
+                    <TextInputField name="username" id="username" value={ this.state.username } onChange={ this.handleUsernameChange } placeholder="Username" />
+                    <input type="email" name="demo-email" id="demo-email" value={ this.state.email } onChange={ this.handleEmailChange } placeholder="Email" />
+                    <PasswordInputField name="demo-password" id="demo-password" value={ this.state.password } onChange={ this.handlePasswordChange } placeholder="Password" />
+                    <PasswordInputField name="confirm-password" id="confirm-password" value={ this.state.re_password } onChange={ this.handleConfirmPasswordChange } placeholder="Confirm Your Password" />
                     <br />
                     {/* <h3>Choose Your Favorite Genres</h3>
                     <form method="post" action="#">
@@ -98,7 +98,7 @@ class SignUpPage extends Component{
                     </form> */}
                     <div className="col-12">
                       <ul className="actions">
-                        <li><SendButton buttonName="Sign Up" onClick={this.handleSubmit} /></li>
+                        <li><SendButton buttonName="Sign Up" onClick={ this.handleSubmit } /></li>
                       </ul>
                     </div>
                   </div>

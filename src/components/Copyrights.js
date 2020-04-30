@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
-import SocMediaBar from "./SocMediaBar";
-import SuggestForm from "./SuggestForm";
 
 class Copyrights extends Component {
 	render() {
