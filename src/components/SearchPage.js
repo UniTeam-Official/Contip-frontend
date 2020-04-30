@@ -7,20 +7,21 @@ import SearchTiles from "./SearchTiles";
 import Accordion from "./Accordion";
 import { closeSidebar } from "../assets/js/sidebar";
 import { accordionButtonListener } from "../assets/js/accordion";
+import history from './history';
 
 class SearchPage extends Component {
     componentDidMount() {
         accordionButtonListener();
     }
-    
+
 	render() {
 		return (
 			<div id="wrapper">
                 <div id="filterSidebar" className="filter-sidebar">
                     <a className="closebtn" href="" onClick={closeSidebar}>×</a>
                     <div className="accordion">
-                        <Accordion className="accordion-content content-sidebar" accordionHeader="genres" namePrefix="sidebarGenres" />
-                        <Accordion className="accordion-content content-sidebar" accordionHeader="sorting" namePrefix="sidebarSorting" />
+                        <Accordion className="accordion-content content-sidebar" accordionHeader="genres" namePrefix="sidebarGenres" history={this.props.history} />
+                        <Accordion className="accordion-content content-sidebar" accordionHeader="sorting" namePrefix="sidebarSorting" history={this.props.history} />
                     </div>
                 </div>
 				<Header />
@@ -30,8 +31,8 @@ class SearchPage extends Component {
                         <div className="sections-double">
                             <div id="filters" className="filters-section">
                                 <div id="filter-box" className="accordion">
-                                    <Accordion className="accordion-content" accordionHeader="genres" namePrefix="genres" />
-                                    <Accordion className="accordion-content" accordionHeader="sorting" namePrefix="sorting" />
+                                    <Accordion className="accordion-content" accordionHeader="genres" namePrefix="genres" history={this.props.history} />
+                                    <Accordion className="accordion-content" accordionHeader="sorting" namePrefix="sorting" history={this.props.history} />
                                 </div>
                             </div>
                             <SearchTiles />
@@ -42,7 +43,7 @@ class SearchPage extends Component {
 			</div>
         );
     }
-    
+
 }
 
 export default SearchPage;

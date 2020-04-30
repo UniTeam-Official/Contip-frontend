@@ -4,6 +4,7 @@ import PasswordInputField from "./PasswordInputFields";
 import SendButton from "./SendButton";
 import DeleteProfileButton from "./DeleteProfileButton";
 import InfoText from "./InfoText";
+import history from './history';
 
 class ProfileForm extends Component {
     constructor(props) {
@@ -186,6 +187,7 @@ class ProfileForm extends Component {
             .then(response => {
                 console.log(response);
                 if (response.status > 400) {
+                    this.props.history.push("/login");
                     return this.setState(() => {
                         return { placeholder: "Something went wrong!" };
                     });
