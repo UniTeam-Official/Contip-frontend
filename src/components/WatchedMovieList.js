@@ -52,26 +52,26 @@ class WatchedMovieList extends Component {
 					};
 				});
 			});
-			fetch(`http://yyr3ll.pythonanywhere.com/api/v1/app/rating/list`, options)
-				.then(response => {
-					console.log(response);
-					if (response.status > 400) {
-						//this.props.history.push("/login");
-						return this.setState(() => {
-							return { placeholder: "Something went wrong!" };
-						});
-					}
-					return response.json();
-				})
-				.then(ratings => {
-					console.log(ratings);
-					this.setState(() => {
-						return {
-							ratings,
-							loaded: true
-						};
-					});
-				});
+			// fetch(`http://yyr3ll.pythonanywhere.com/api/v1/app/rating/list`, options)
+			// 	.then(response => {
+			// 		console.log(response);
+			// 		if (response.status > 400) {
+			// 			//this.props.history.push("/login");
+			// 			return this.setState(() => {
+			// 				return { placeholder: "Something went wrong!" };
+			// 			});
+			// 		}
+			// 		return response.json();
+			// 	})
+			// 	.then(ratings => {
+			// 		console.log(ratings);
+			// 		this.setState(() => {
+			// 			return {
+			// 				ratings,
+			// 				loaded: true
+			// 			};
+			// 		});
+			// 	});
 	}
 
 	render() {
