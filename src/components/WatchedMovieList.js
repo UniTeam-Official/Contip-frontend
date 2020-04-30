@@ -1,25 +1,20 @@
 import React, { Component } from "react";
 import Movie from "./Movie";
 import history from './history';
-import TextInputField from "./TextInputField";
-import RateButton from "./RateButton";
 
 class WatchedMovieList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			data: [],
-			ratings: [],
-			movie_rating: "",
 			loaded: false,
 			placeholder: "Loading"
 		};
-	}
-
-	handleRatingChange = event => {
-		this.setState({
-			movie_rating: event.target.value
-		});
+		for (var i=0; i<=100; i++) {
+			this.setState(prevState => ({
+				movie_ratings: {...prevState.movie_ratings, [i]: ""}
+			}));
+		}
 	}
 
 	componentDidMount() {
@@ -52,26 +47,6 @@ class WatchedMovieList extends Component {
 					};
 				});
 			});
-			// fetch(`http://yyr3ll.pythonanywhere.com/api/v1/app/rating/list`, options)
-			// 	.then(response => {
-			// 		console.log(response);
-			// 		if (response.status > 400) {
-			// 			//this.props.history.push("/login");
-			// 			return this.setState(() => {
-			// 				return { placeholder: "Something went wrong!" };
-			// 			});
-			// 		}
-			// 		return response.json();
-			// 	})
-			// 	.then(ratings => {
-			// 		console.log(ratings);
-			// 		this.setState(() => {
-			// 			return {
-			// 				ratings,
-			// 				loaded: true
-			// 			};
-			// 		});
-			// 	});
 	}
 
 	render() {
@@ -80,19 +55,7 @@ class WatchedMovieList extends Component {
 			films = this.state.data.results.map(film => {
 				return (
 					<div>
-						<p><Movie link={`/film/${film.id}`} title={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => {return(genre.name + '  ')})} /></p>
-						<form>
-							<div className="row gtr-uniform">
-								<div id="text-input-field" className="col-6 col-12-xsmall">
-									<TextInputField name={`rating${film.id}`} id={`rating${film.id}`} onChange={this.handleRatingChange} value={this.state.movie_rating} placeholder="Rating 0-100" />
-								</div>
-								<div className="col-12">
-									<ul className="actions">
-										<RateButton film_id={film.id} movie_rating={this.state.movie_rating} />
-									</ul>
-								</div>
-							</div>
-						</form>
+						<p><Movie film_id={film.id} link={`/film/${film.id}`} title={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => {return(genre.name + '  ')})} /></p>
 					</div>
 				);
 			})
