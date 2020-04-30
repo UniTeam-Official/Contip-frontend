@@ -260,22 +260,24 @@ class ProfileForm extends Component {
 
                         {/* CHANGE EMAIL */}
 
-                        <h3>Change Email</h3> <form method="post" action="#"> <div className="row gtr-uniform">
-                            <div id="text-input-field" className="col-6 col-12-xsmall">
-                                <input type="email" name="profile_email" id="profile_email" value={this.state.email} onChange={this.handleEmailChange} placeholder="New Email" />
+                        <h3>Change Email</h3>
+                        <form method="post" action="#">
+                            <div className="row gtr-uniform">
+                                <div id="text-input-field" className="col-6 col-12-xsmall">
+                                    <input type="email" name="profile_email" id="profile_email" value={this.state.email} onChange={this.handleEmailChange} placeholder="New Email" />
+                                </div>
+                                <div className="col-12">
+                                    <ul className="actions">
+                                        <li id="sendButton">
+                                            <SendButton buttonName="Submit" onClick={this.handleEmailSubmit} />
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div className="col-12">
-                                <ul className="actions">
-                                    <li id="sendButton">
-                                        <SendButton buttonName="Submit" onClick={this.handleEmailSubmit} />
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        </form>
 
                         {/* CHANGE PASS */}
 
-                        </form>
                         <h3>Change Password</h3>
                         <form method="post" action="#">
                             <div className="row gtr-uniform">
