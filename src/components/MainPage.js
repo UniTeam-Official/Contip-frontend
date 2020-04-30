@@ -3,6 +3,7 @@ import RecommendationHeader from "./RecommendationHeader";
 import MovieList from "./MovieList";
 import Header from "./Header";
 import Footer from "./Footer";
+import history from './history';
 
 class MainPage extends Component {
 	render() {
@@ -12,7 +13,7 @@ class MainPage extends Component {
 				<div id="main">
 					<div className="inner">
 						<RecommendationHeader />
-						<MovieList />
+						<MovieList history={this.props.history}/>
 					</div>
 				</div>
 				<Footer />

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AccordionHeader from "./AccordionHeader";
 import Checkbox from "./Checkbox";
+import history from './history';
 
 class Accordion extends Component {
     constructor(props) {
@@ -32,6 +33,7 @@ class Accordion extends Component {
             .then(response => {
                 console.log(response);
                 if (response.status > 400) {
+                    this.props.history.push("/login");
                     return this.setState(() => {
                         return { placeholder: "Something went wrong!" };
                     });

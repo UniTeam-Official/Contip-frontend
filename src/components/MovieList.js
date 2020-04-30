@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Redirect } from "react";
 
 import RecommendationFilm from "./RecommendationFilm";
-
+import history from './history';
 class MovieList extends Component {
 	constructor(props) {
 		super(props);
@@ -26,6 +26,8 @@ class MovieList extends Component {
 			.then(response => {
 				console.log(response);
 				if (response.status > 400) {
+                    //<Redirect to="/login" />
+                    this.props.history.push("/login/");
 					return this.setState(() => {
 						return { placeholder: "Something went wrong!" };
 					});

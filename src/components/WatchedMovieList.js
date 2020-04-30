@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Movie from "./Movie";
+import history from './history';
 
 class WatchedMovieList extends Component {
 	constructor(props) {
@@ -25,6 +26,7 @@ class WatchedMovieList extends Component {
 			.then(response => {
 				console.log(response);
 				if (response.status > 400) {
+                    this.props.history.push("/login");
 					return this.setState(() => {
 						return { placeholder: "Something went wrong!" };
 					});
