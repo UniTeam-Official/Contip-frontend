@@ -10,19 +10,21 @@ import { accordionButtonListener } from "../assets/js/accordion";
 import history from './history';
 
 class SearchPage extends Component {
-  constructor(props) {
+    constructor(props) {
       super(props);
       this.state = {
           filterQuery: [],
           sortingQuery: [],
+          genreList: [],
+          closedChipID: null,
       };
-  }
+    }
 
-  componentDidMount() {
+    componentDidMount() {
       accordionButtonListener();
-  }
+    }
 
-  deleteExtraOption(item, arr) {
+    deleteExtraOption(item, arr) {
       if (Array.isArray(arr)) {
           let extraOption = arr.indexOf(item);
 
@@ -32,9 +34,9 @@ class SearchPage extends Component {
       }
 
       return arr;
-  }
+    }
 
-  deleteExtraSortings(item, sortingQuery, sortingOptions) {
+    deleteExtraSortings(item, sortingQuery, sortingOptions) {
       let extraOption;
       if (~item.indexOf("-title")) {
           extraOption = sortingOptions.indexOf("Descending");
@@ -47,9 +49,9 @@ class SearchPage extends Component {
       }
 
       return sortingQuery;
-  }
+    }
 
-  handleFilterQuery(filterOptions, sortingOptions, signalFilterOff, signalSortingOff) {
+    handleFilterQuery(filterOptions, sortingOptions, signalFilterOff, signalSortingOff, genreList) {
       let filterQuery = this.state.filterQuery;
       let sortingQuery = this.state.sortingQuery;
 
@@ -98,26 +100,36 @@ class SearchPage extends Component {
       console.log("-------------------------");
 
       this.setState({
-          filterQuery: filterQuery,
-          sortingQuery: sortingQuery,
+          filterQuery,
+          sortingQuery,
+          genreList,
       })
-  }
+    }
+
+    handleChipClose(chipOptionID) {
+        console.log(`chipOptionID: ${chipOptionID}`);
+        this.setState({ 
+            closedChipID: chipOptionID,
+         })
+    }
     
-	render() {
+    render() {
 		return (
 			<div id="wrapper">
                 <div id="filterSidebar" className="filter-sidebar">
                     <a className="closebtn" href="" onClick={ closeSidebar }>×</a>
                     <div className="accordion">
                       <Accordion className="accordion-content content-sidebar"
-                          accordionHeader="genres"
-                          namePrefix="sidebarGenres"
-                          history={this.props.history}
-                          handleFilterQuery={ this.handleFilterQuery.bind(this) } />
+                        accordionHeader="genres"
+                        namePrefix="sidebarGenres"
+                        history={this.props.history}
+                        closedChipID={ this.state.closedChipID }
+                        handleFilterQuery={ this.handleFilterQuery.bind(this) } />
                       <Accordion className="accordion-content content-sidebar"
                         accordionHeader="sorting"
                         namePrefix="sidebarSorting"
-                         history={this.props.history}
+                        history={this.props.history}
+                        closedChipID={ this.state.closedChipID }
                         handleFilterQuery={ this.handleFilterQuery.bind(this) } />
                     </div>
                 </div>
@@ -129,18 +141,25 @@ class SearchPage extends Component {
                             <div id="filters" className="filters-section">
                                 <div id="filter-box" className="accordion">
                                   <Accordion className="accordion-content"
-                                      accordionHeader="genres"
-                                      namePrefix="genres"
-                                      history={this.props.history}
-                                      handleFilterQuery={ this.handleFilterQuery.bind(this) } />
+                                    accordionHeader="genres"
+                                    namePrefix="genres"
+                                    history={this.props.history}
+                                    closedChipID={ this.state.closedChipID }
+                                    handleFilterQuery={ this.handleFilterQuery.bind(this) } />
                                   <Accordion className="accordion-content"
                                     accordionHeader="sorting"
                                     namePrefix="sorting"
                                     history={this.props.history}
+                                    closedChipID={ this.state.closedChipID }
                                     handleFilterQuery={ this.handleFilterQuery.bind(this) } />
                                 </div>
                             </div>
-                            <SearchTiles filterQuery={ `genre=[${ [...this.state.filterQuery] }]` } sortingQuery={ `ordering=${ this.state.sortingQuery }` } />
+                            <SearchTiles 
+                                filterQuery={ `genre=[${ [...this.state.filterQuery] }]` }
+                                sortingQuery={ `ordering=${ this.state.sortingQuery }` }
+                                chipsOptions={ this.state.filterQuery }
+                                genreList={ this.state.genreList }
+                                handleChipClose={ this.handleChipClose.bind(this) }  />
                         </div>
                     </div>
                 </div>

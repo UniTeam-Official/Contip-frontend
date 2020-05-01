@@ -1,6 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import { openSidebar } from "../assets/js/sidebar";
 import RecommendationFilm from "./RecommendationFilm";
+import Chip from './Chip';
 
 const WAIT_INTERVAL = 1000;
 const ENTER_KEY = 13;
@@ -83,32 +86,67 @@ class SearchTiles extends Component {
 		this.fetchFilmsDecorator(request, this.state.options);
 	}
 
+	handleChipClose(chipOptionID) {
+		// let chipClosedList = this.state.chipClosedList;
+
+		// let optionIndexUnchecked = chipClosedList.indexOf(chipOptionID);
+		// if (~optionIndexUnchecked) {
+		// 	chipClosedList.splice(optionIndexUnchecked, 1);
+		// }
+
+		// chipClosedList.push(chipOptionID);
+		this.props.handleChipClose(chipOptionID);
+
+		// this.setState({
+		// 	chipClosedList
+		// });
+	} 
+
 	render() {
-    let filteredFilms = <span></span>;
+		let filteredFilms = <span></span>;
+		let resCounter = <span></span>;
+		let filterChips = <span></span>
 		if (this.state && typeof(this.state.data.results) != 'undefined' && this.state.data.results.length > 0) {
 			filteredFilms = this.state.data.results.map(film => {
 				return (
 					<RecommendationFilm href={`/film/${ film.id }`} title={ film.title } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={ film.genre.map(genre => { return(genre.name + '  ') }) } />
 				);
-			})
+			});
+
+			resCounter = this.state.data.results.length;
+
+			filterChips = this.props.chipsOptions.map(optionID => {
+				let chipOption = this.props.genreList.find(item => {
+					return item.id == optionID;
+				});
+
+				return (
+					<Chip name={ chipOption.name } id={ chipOption.id } handleChipClose={ this.handleChipClose.bind(this) }/>
+				);
+			});
 		}
+
 		return (
       <section className="tiles-section">
         <div className="controls">
-			<div id="search_bar" className="search-container">
-              <div className="search">
-                <i className="fa fa-filter openbtn" onClick={ openSidebar } style={{ fontSize:"16px" }}></i>
-                <button id="search_button" className="search-btn" type="button">
-                    <i className="fa fa-search"></i>
-                </button>
-                <span id="search_searched_count" className="search-searched-count">142 results</span>
-				<input type="text"
-				  className="search-input"
-				  value={ this.state.value }
-			      onChange={ this.handleChange.bind(this) }
-				  onKeyDown={this.handleKeyDown.bind(this) }></input>
-              </div>
+					<div id="search_bar" className="search-container">
+            <div className="search">
+              <i className="fa fa-filter openbtn" onClick={ openSidebar } style={{ fontSize:"16px" }}></i>
+							<button id="search_button" className="search-btn" type="button">
+									<i className="fa fa-search"></i>
+							</button>
+							<span id="search_searched_count" className="search-searched-count">{ resCounter } results</span>
+							<input type="text"
+								className="search-input"
+								value={ this.state.value }
+								onChange={ this.handleChange.bind(this) }
+								onKeyDown={this.handleKeyDown.bind(this) }>	
+							</input>
             </div>
+        	</div>
+					<div className="chips search-container">
+						{ filterChips }
+					</div>
         </div>
         <section className="tiles">
           { filteredFilms }

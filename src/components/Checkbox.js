@@ -3,7 +3,9 @@ import React, { Component } from "react";
 class Checkbox extends Component {
 	constructor(props) {
 		super(props);
-    this.state = { checked: this.props.checked == "true" }
+    this.state = { 
+			checked: this.props.checked == "true",
+		}
 		this.handleCheck = this.handleCheck.bind(this);
 	}
 	handleCheck(e) {
@@ -25,9 +27,23 @@ class Checkbox extends Component {
 		}
 	}
 	render() {
+		let closed = this.props.closed;
+
+		let input = (() => {
+			if (!closed) {
+				return (
+					<input id={ this.props.name } type="checkbox" name={ this.props.name } checked={ this.state.checked } onChange={ this.handleCheck } />
+				);
+			} else {
+				return (
+					<input id={ this.props.name } type="checkbox" name={ this.props.name } checked={ !closed } onChange={ this.handleCheck } />
+				);
+			}
+		})();
+
 		return (
 			<div style={{ display: "inline-block" }}>
-        <input id={ this.props.name } type="checkbox" name={ this.props.name } checked={ this.state.checked } onChange={ this.handleCheck } />
+				{ input }
 				<label for={ this.props.name }>{ this.props.text }</label>
 			</div>
 		);

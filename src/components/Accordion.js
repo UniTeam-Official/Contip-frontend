@@ -56,6 +56,7 @@ class Accordion extends Component {
         let sortingOptions = this.state.sortingOptions;
         let signalFilterOff = false;
         let signalSortingOff = false;
+        let genreList = this.state.data;
 
         console.log(`option: ${ option }`);
         console.log(`checkState: ${ checkState }`);
@@ -98,7 +99,13 @@ class Accordion extends Component {
             signalSorting: signalSortingOff,
         });
 
-        this.props.handleFilterQuery(filterOptions, sortingOptions, signalFilterOff, signalSortingOff);
+        this.props.handleFilterQuery(
+            filterOptions,
+            sortingOptions,
+            signalFilterOff,
+            signalSortingOff,
+            genreList
+        );
     }
 
 	render() {
@@ -124,7 +131,13 @@ class Accordion extends Component {
                                                 let genre_name = this.props.namePrefix + "Filter" + genre.id;
                                                 return (
                                                     <li id="check-box" className="list-item">
-                                                        <Checkbox name={ genre_name } text={ genre.name } checked="false" writable={ true } handleCheckbox={ this.handleCheckbox.bind(this) } />
+                                                        <Checkbox 
+                                                            name={ genre_name }
+                                                            text={ genre.name }
+                                                            checked="false"
+                                                            writable={ true }
+                                                            closed={ this.props.closedChipID == genre.id }
+                                                            handleCheckbox={ this.handleCheckbox.bind(this) } />
                                                     </li>
                                                 );
                                             })}
