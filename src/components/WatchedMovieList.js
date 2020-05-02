@@ -50,14 +50,18 @@ class WatchedMovieList extends Component {
 	}
 
 	render() {
+		let moviesOnPageAmount = 0;
 		let films = <p></p>;
 		if (this.state && typeof(this.state.data.results) != 'undefined' && this.state.data.results.length > 0){
 			films = this.state.data.results.map(film => {
-				return (
-					<div>
-						<p><Movie film_id={film.id} link={`/film/${film.id}`} title={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => {return(genre.name + '  ')})} /></p>
-					</div>
-				);
+				if (moviesOnPageAmount < 12){
+					moviesOnPageAmount++;
+					return (
+						<div>
+							<p><Movie film_id={film.id} link={`/film/${film.id}`} title={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => {return(genre.name + '  ')})} /></p>
+						</div>
+					);
+				}
 			})
 		}
 		return (

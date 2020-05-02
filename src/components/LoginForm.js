@@ -55,7 +55,7 @@ class LoginForm extends Component {
                     console.log(data);
                     localStorage.setItem('jwt access', data.access);
                     localStorage.setItem('jwt refresh', data.refresh);
-                    this.props.history.push("/profile/");
+                    this.props.history.push("/");
                 }
             });
 

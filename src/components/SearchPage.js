@@ -102,7 +102,7 @@ class SearchPage extends Component {
           sortingQuery: sortingQuery,
       })
   }
-    
+
 	render() {
 		return (
 			<div id="wrapper">

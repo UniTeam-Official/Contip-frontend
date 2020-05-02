@@ -28,7 +28,7 @@ class SearchTiles extends Component {
 		// Trying to make a request for the server
 		const response = await fetch(url, options);
 		let data = undefined;
-	
+
 		if (response.status > 400) {
 			this.setState(() => {
 				return { placeholder: "Something went wrong!" };
@@ -36,7 +36,7 @@ class SearchTiles extends Component {
 		} else {
 			data = await response.json();
 		}
-	
+
 		this.setState(() => {
 			return {
 				data,
@@ -71,7 +71,7 @@ class SearchTiles extends Component {
 			e.preventDefault();
 			this.handleChange(e);
     	}
-	}	
+	}
 
 	updateResults() {
 		let searchQuery = this.state.search ? "search=" + this.state.search : "";
@@ -84,12 +84,16 @@ class SearchTiles extends Component {
 	}
 
 	render() {
+    let moviesOnPageCount = 0;
     let filteredFilms = <span></span>;
 		if (this.state && typeof(this.state.data.results) != 'undefined' && this.state.data.results.length > 0) {
 			filteredFilms = this.state.data.results.map(film => {
-				return (
-					<RecommendationFilm href={`/film/${ film.id }`} title={ film.title } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={ film.genre.map(genre => { return(genre.name + '  ') }) } />
-				);
+        if (moviesOnPageCount < 18){
+					moviesOnPageCount++;
+  				return (
+  					<RecommendationFilm href={`/film/${ film.id }`} title={ film.title } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={ film.genre.map(genre => { return(genre.name + '  ') }) } />
+  				);
+        }
 			})
 		}
 		return (
