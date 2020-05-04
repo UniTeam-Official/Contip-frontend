@@ -9,6 +9,7 @@ class NavBar extends Component {
 				<li id="desktop_navbarbutton"><Link to='/'>Recommendations</Link></li>
 				<li id="desktop_navbarbutton"><Link to='/watched'>Watched Movies</Link></li>
 				<li id="desktop_navbarbutton"><Link to='/profile'>Profile</Link></li>
+				{/*<li id="desktop_navbarbutton"><Link to='/login' onClick={handle=>{localStorage.removeItem('jwt access'); localStorage.removeItem('jwt refresh')}}>Log Out</Link></li>*/}
 			</ul>
 		);
 	}

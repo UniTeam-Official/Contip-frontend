@@ -274,6 +274,7 @@ hr.major {
   flex-wrap: wrap;
   box-sizing: border-box;
   align-items: stretch;
+  width: 700px;
 }
 .row > * {
   box-sizing: border-box;
@@ -458,6 +459,7 @@ hr.major {
     flex-wrap: wrap;
     box-sizing: border-box;
     align-items: stretch;
+    width: 700px;
   }
   .row > * {
     box-sizing: border-box;
@@ -643,6 +645,7 @@ hr.major {
     flex-wrap: wrap;
     box-sizing: border-box;
     align-items: stretch;
+    width: 700px;
   }
   .row > * {
     box-sizing: border-box;
@@ -828,6 +831,7 @@ hr.major {
     flex-wrap: wrap;
     box-sizing: border-box;
     align-items: stretch;
+    width: 700px;
   }
   .row > * {
     box-sizing: border-box;
@@ -1013,6 +1017,7 @@ hr.major {
     flex-wrap: wrap;
     box-sizing: border-box;
     align-items: stretch;
+    width: 700px;
   }
   .row > * {
     box-sizing: border-box;
@@ -1198,6 +1203,7 @@ hr.major {
     flex-wrap: wrap;
     box-sizing: border-box;
     align-items: stretch;
+    width: 700px;
   }
   .row > * {
     box-sizing: border-box;
