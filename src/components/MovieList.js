@@ -22,7 +22,7 @@ class MovieList extends Component {
 				'Authorization': `JWT ${access_token}`
 			}
 		}
-		fetch("http://yyr3ll.pythonanywhere.com/api/v1/app/film/list/", options)
+		fetch("http://yyr3ll.pythonanywhere.com/api/v1/app/film/recommend/", options)
 			.then(response => {
 				console.log(response);
 				if (response.status > 400) {
