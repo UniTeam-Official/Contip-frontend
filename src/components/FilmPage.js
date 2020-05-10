@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import SendButton from "./SendButton";
 
 class FilmPage extends Component{
 	constructor(props) {
@@ -10,9 +11,54 @@ class FilmPage extends Component{
 			tmdb: [],
 			loaded: false,
 			loaded_tmdb: false,
-			placeholder: "Loading"
+			placeholder: "Loading",
+            watched_films: [],
 		};
 	}
+
+    handleAddToWatched = event => {
+
+        const access_token = localStorage.getItem('jwt access');
+		const options = {
+			method: "GET",
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': `JWT ${access_token}`
+			}
+		}
+		fetch(`http://yyr3ll.pythonanywhere.com/api/v1/app/watched/set/`, options)
+            	.then(response => {
+				return response.json();
+			})
+			.then(watched_films => {
+
+
+                watched_films.watched_list.push(this.state.data.id);
+
+				this.setState({watched_films: watched_films.watched_list});
+
+                console.log("Modified list (for DEBUG ) " + this.state.watched_films);
+                
+                const add_options = {
+                    method: "PUT",
+                    body: JSON.stringify({"watched_list": watched_films.watched_list}),
+        			headers: {
+        				'Accept': 'application/json',
+        				'Content-Type': 'application/json',
+        				'Authorization': `JWT ${access_token}`
+        			}
+                }
+
+
+                fetch(`http://yyr3ll.pythonanywhere.com/api/v1/app/watched/set/`, add_options)
+        			.then(response => {
+        				console.log(response);
+        				return response.json();
+        			})
+			});
+
+    }
 
 	componentDidMount() {
 		const access_token = localStorage.getItem('jwt access');
@@ -99,6 +145,7 @@ class FilmPage extends Component{
 								<h3>Runtime: </h3>
 								<p>{this.state.tmdb.runtime} minutes</p>
 								<h3><a href={`https://www.imdb.com/title/tt0${this.state.data.imdb}`}>IMDB Link</a></h3>
+                                    <SendButton buttonName="Add to watched" onClick={this.handleAddToWatched} />
 							</div>
 		}
 		if (this.state.loaded && !this.state.loaded_tmdb) {
