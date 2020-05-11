@@ -17,7 +17,7 @@ class FilmPage extends Component{
 		};
 	}
 
-    handleAddToWatched = () => {
+    handleAddToWatched = (event, addToast) => {
 
         const access_token = localStorage.getItem('jwt access');
 		const options = {
@@ -25,7 +25,7 @@ class FilmPage extends Component{
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'Authorization': `JWT ${access_token}`
+				'Authorization': `JWT ${ access_token }`
 			}
 		}
 		fetch(`http://yyr3ll.pythonanywhere.com/api/v1/app/watched/set/`, options)
@@ -54,6 +54,7 @@ class FilmPage extends Component{
 
                 fetch(`http://yyr3ll.pythonanywhere.com/api/v1/app/watched/set/`, add_options)
         			.then(response => {
+						addToast("Added to watched successfully!", { appearance: 'success', autoDismiss: true, });
         				console.log(response);
         				return response.json();
         			})
@@ -150,7 +151,7 @@ class FilmPage extends Component{
 					<h3>Runtime: </h3>
 					<p>{ this.state.tmdb.runtime } minutes</p>
 					<h3><a href={`https://www.imdb.com/title/tt0${ this.state.data.imdb }`}>IMDB Link</a></h3>
-					<SendButton buttonName="Add to watched" onSubmit={ this.handleAddToWatched } toastMessage="Added to watched successfully" />
+					<SendButton buttonName="Add to watched" onSubmit={ this.handleAddToWatched } />
 				</div>
 			);
 		}

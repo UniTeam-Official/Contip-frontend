@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SendButton from "./SendButton";
 
 class RateButton extends Component {
-	handleClick = event => {
+	handleClick = (event, addToast) => {
 		if (isNaN(this.props.movie_rating)) {
 			alert(`Rating must be a number!`);
 			event.preventDefault();
@@ -28,10 +28,10 @@ class RateButton extends Component {
 				.then(res => {
 					console.log(res);
 					if (res.status != 201){
-						alert("Something went wrong");
+						addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
 					}
 					else {
-						alert("Success!");
+						addToast("Rated successfully!", { appearance: 'success', autoDismiss: true, });
 					}
 					return res.json();
 				});
@@ -41,7 +41,7 @@ class RateButton extends Component {
 	render() {
 		return (
 			<li>
-				<SendButton buttonName="Rate" onSubmit={ this.handleClick } toastMessage="Rating submitted!" />
+				<SendButton buttonName="Rate" onSubmit={ this.handleClick } />
 			</li>
 		);
 	}
