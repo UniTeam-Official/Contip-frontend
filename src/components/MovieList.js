@@ -46,22 +46,24 @@ class MovieList extends Component {
 	}
 
 	render() {
-		let moviesOnPageCount = 0;
-		let films = <span></span>;
-		if (this.state && typeof(this.state.data.results) != 'undefined' && this.state.data.results.length > 0){
-			films = this.state.data.results.map(film => {
-				if (moviesOnPageCount < 6){
-					moviesOnPageCount++;
-					return (
-						<RecommendationFilm href={`/film/${film.id}`} title={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => {return(genre.name + '  ')})} />
-					);
-				}
+		let films = <p><strong>Loading your recommendations... Hang on...</strong></p>;
+		if (this.state.loaded && typeof(this.state.data) != 'undefined' && this.state.data.length > 0){
+			films = this.state.data.map(film => {
+				return (
+					<RecommendationFilm href={`/film/${film.id}`} title={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => {return(genre.name + '  ')})} />
+				);
 			})
+			return (
+				<section className="tiles">
+					{films}
+				</section>
+			);
 		}
 		return (
-			<section className="tiles">
+			<header>
+				<br /><br /><br />
 				{films}
-			</section>
+			</header>
 		);
 	}
 }
