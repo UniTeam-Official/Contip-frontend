@@ -39,9 +39,8 @@ class SignUpPage extends Component{
       birthDate: event.target.value
     })
   }
-  handleSubmit = event => {
+  handleSubmit = (event, addToast) => {
     if (this.state.password == this.state.re_password) {
-      alert('Success! Authenticate me!');
       event.preventDefault();
       // Authenticate User
       let options = {
@@ -56,16 +55,16 @@ class SignUpPage extends Component{
           .then(res => {
               console.log(res);
               if (res.status != 201){
-                  alert("Something went wrong");
+                addToast("Incorrect email entered!", { appearance: 'error', autoDismiss: true, });
               }
               else {
-                  this.props.history.push("/login/");
+                this.props.history.push("/login/");
               }
               return res.json();
           });
     }
     else {
-      alert('Error: Passwords do not match.');
+      addToast("Passwords do not match!", { appearance: 'error', autoDismiss: true, });
       event.preventDefault();
     }
 
@@ -98,7 +97,7 @@ class SignUpPage extends Component{
                     </form> */}
                     <div className="col-12">
                       <ul className="actions">
-                        <li><SendButton buttonName="Sign Up" onClick={ this.handleSubmit } /></li>
+                        <li><SendButton buttonName="Sign Up" onSubmit={ this.handleSubmit } /></li>
                       </ul>
                     </div>
                   </div>

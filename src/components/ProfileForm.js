@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import Checkbox from "./Checkbox";
 import PasswordInputField from "./PasswordInputFields";
 import SendButton from "./SendButton";
-import DeleteProfileButton from "./DeleteProfileButton";
 import InfoText from "./InfoText";
 import WelcomeText from "./WelcomeText";
 
@@ -72,8 +71,7 @@ class ProfileForm extends Component {
         })
     }
 
-    handlePreferenceSubmit = preferenceSubmitEvent => {
-        alert("Genre change submitted!");
+    handlePreferenceSubmit = (preferenceSubmitEvent, addToast) => {
         preferenceSubmitEvent.preventDefault();
 
         const selectedPreferences = (Object
@@ -98,25 +96,25 @@ class ProfileForm extends Component {
             .then(res => {
                 console.log(res);
                 if (res.status != 200){
-                    alert("Something went wrong");
+                    addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
+
                 }
                 else {
                     this.props.history.push("/profile/");
+                    addToast("Preferences changed successfully!", { appearance: 'success', autoDismiss: true, });
                 }
                 return res.json();
             });
     }
 
     handleLogOutSubmit = event => {
-        alert("Are You Sure?");
         event.preventDefault();
         localStorage.removeItem('jwt access');
         localStorage.removeItem('jwt refresh')
         this.props.history.push("/login/");
     }
 
-    handleEmailSubmit = event => {
-        alert("Email change submitted!");
+    handleEmailSubmit = (event, addToast) => {
         event.preventDefault();
         // Update user email
 		const access_token = localStorage.getItem('jwt access');
@@ -133,18 +131,18 @@ class ProfileForm extends Component {
             .then(res => {
                 console.log(res);
                 if (res.status != 200){
-                    alert("Something went wrong");
+                    addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
                 }
                 else {
                     this.props.history.push("/profile/");
+                    addToast("Email changed successfully!", { appearance: 'success', autoDismiss: true, });
                 }
                 return res.json();
             });
     }
 
-    handlePasswordSubmit = event => {
+    handlePasswordSubmit = (event, addToast) => {
         if (this.state.password == this.state.confirmPassword) {
-            alert("Password change submitted!");
             event.preventDefault();
             // Update user password
             const access_token = localStorage.getItem('jwt access');
@@ -161,7 +159,7 @@ class ProfileForm extends Component {
                 .then(res => {
                     console.log(res);
                     if (res.status != 204){
-                        alert("Something went wrong");
+                        addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
                     }
                     else {
                         this.props.history.push("/login/");
@@ -170,13 +168,13 @@ class ProfileForm extends Component {
                 });
         }
         else {
-            alert("Passwords do not match!");
             event.preventDefault();
+            addToast("Passwords do not match!", { appearance: 'error', autoDismiss: true, });
         }
     }
 
-    handleDeleteProfile = () => {
-        alert("Profile deletion request submitted!");
+    handleDeleteProfile = (event, addToast) => {
+        addToast("Profile deletion request submitted!", { appearance: 'info', autoDismiss: true, });
         // Delete user
         const access_token = localStorage.getItem('jwt access');
         let options = {
@@ -192,7 +190,7 @@ class ProfileForm extends Component {
             .then(res => {
                 console.log(res);
                 if (res.status != 204){
-                    alert("Something went wrong");
+                    addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
                 }
                 else {
                     this.props.history.push("/signup/");
@@ -291,7 +289,7 @@ class ProfileForm extends Component {
                                 <div className="col-12">
                                     <ul className="actions">
                                         <li id="sendButton">
-                                            <SendButton buttonName="Submit" onClick={ this.handlePreferenceSubmit } />
+                                            <SendButton buttonName="Submit" onSubmit={ this.handlePreferenceSubmit } toastMessage="Preferences saved successfully" />
                                         </li>
                                     </ul>
                                 </div>
@@ -305,7 +303,7 @@ class ProfileForm extends Component {
                           <div style={{ flex: '50%' }}>
                             <h4>Everything We Know About You:</h4>
                                 <InfoText />
-                                <SendButton buttonName="Log Out" onClick={ this.handleLogOutSubmit }/>
+                                <SendButton buttonName="Log Out" onSubmit={ this.handleLogOutSubmit } toastMessage="Log out completed successfully" />
                             </div>
                         </div>
                         </div>
@@ -338,7 +336,7 @@ class ProfileForm extends Component {
                                             <div className="col-12">
                                             <ul className="actions">
                                                 <li id="sendButton">
-                                                <SendButton buttonName="Change!" onClick={ this.handleEmailSubmit } />
+                                                <SendButton buttonName="Change!" onSubmit={ this.handleEmailSubmit } toastMessage="Email changed successfully" />
                                                 </li>
                                             </ul>
                                         </div>
@@ -371,7 +369,7 @@ class ProfileForm extends Component {
                                         <div className="col-12">
                                             <ul className="actions">
                                                 <li id="sendButton">
-                                                    <SendButton buttonName="Change!" onClick={ this.handlePasswordSubmit } />
+                                                    <SendButton buttonName="Change!" onSubmit={ this.handlePasswordSubmit } toastMessage="Password changed successfully" />
                                                 </li>
                                             </ul>
                                         </div>
@@ -398,7 +396,7 @@ class ProfileForm extends Component {
                             </div>
                         <br />
                         <div className="row">
-                            <DeleteProfileButton buttonName="Delete" onClick={ this.handleDeleteProfile } />
+                            <SendButton id="DeleteProfileButton" buttonName="Delete" onSubmit={ this.handleDeleteProfile } />
                         </div>
                         </form>
                     </section>

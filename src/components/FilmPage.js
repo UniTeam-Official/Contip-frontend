@@ -150,7 +150,7 @@ class FilmPage extends Component{
 					<h3>Runtime: </h3>
 					<p>{ this.state.tmdb.runtime } minutes</p>
 					<h3><a href={`https://www.imdb.com/title/tt0${ this.state.data.imdb }`}>IMDB Link</a></h3>
-					<SendButton buttonName="Add to watched" onClick={ this.handleAddToWatched } />
+					<SendButton buttonName="Add to watched" onSubmit={ this.handleAddToWatched } toastMessage="Added to watched successfully" />
 				</div>
 			);
 		}
