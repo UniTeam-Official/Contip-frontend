@@ -12,7 +12,6 @@ class RateButton extends Component {
 			event.preventDefault();
 		}
 		else {
-			alert(`Rating submitted! ID = ${this.props.film_id} Rating = ${this.props.movie_rating}`);
 			event.preventDefault();
 			// Create movie rating
 			const access_token = localStorage.getItem('jwt access');
@@ -42,7 +41,7 @@ class RateButton extends Component {
 	render() {
 		return (
 			<li>
-				<SendButton buttonName="Rate" onClick={this.handleClick} />
+				<SendButton buttonName="Rate" onSubmit={ this.handleClick } toastMessage="Rating submitted!" />
 			</li>
 		);
 	}

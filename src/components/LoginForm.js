@@ -27,7 +27,7 @@ class LoginForm extends Component {
         })
     }
 
-    handleSubmit = event => {
+    handleSubmit = (event, addToast) => {
         localStorage.clear();
         event.preventDefault()
         let options = {
@@ -43,7 +43,7 @@ class LoginForm extends Component {
             .then(res => {
                 console.log(res);
                 if (res.status != 200){
-                    alert("wrong credentials");
+                    addToast("Wrong credentials!", { appearance: 'error', autoDismiss: true, });
                     return false;
                 }
                 return res.json();
@@ -78,7 +78,7 @@ class LoginForm extends Component {
                             <div className="col-12">
                                 <ul className="actions">
                                     <li id="sendButton">
-                                        <SendButton buttonName="Login" onClick={this.handleSubmit} />
+                                        <SendButton buttonName="Login" onSubmit={ this.handleSubmit } />
                                     </li>
                                     <li>
                                         <a href="#">Forgot password?</a>

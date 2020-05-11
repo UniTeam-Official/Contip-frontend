@@ -28,7 +28,6 @@ class SuggestForm extends Component {
 		})
 	}
 	handleSuggestSubmit = event => {
-		alert("Movie suggestion submitted!");
 		event.preventDefault();
 	}
 
@@ -49,7 +48,7 @@ class SuggestForm extends Component {
 						</div>
 					</div>
 					<ul className="actions">
-						<li><SendButton buttonName="Submit" onClick={ this.handleSuggestSubmit } /></li>
+						<li><SendButton buttonName="Submit" onSubmit={ this.handleSuggestSubmit } toastMessage="Film submitted successfully" /></li>
 					</ul>
 				</form>
 			</section>
