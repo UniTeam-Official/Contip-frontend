@@ -81,11 +81,15 @@ class Accordion extends Component {
 
     handleSortingChange = changeEvent => {
         const { name } = changeEvent.target;
+        const mustBeUnchecked = Object
+            .keys(this.state.sorting)
+            .filter(option => name !== option);
 
         this.setState(prevState => ({
             sorting: {
               ...prevState.sorting,
               [name]: !prevState.sorting[name],
+              [mustBeUnchecked]: false,
             },
         }));
 
