@@ -1,76 +1,97 @@
+/* eslint-disable eqeqeq */
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Checkbox from "./Checkbox";
 import PasswordInputField from "./PasswordInputFields";
 import SendButton from "./SendButton";
 import DeleteProfileButton from "./DeleteProfileButton";
 import InfoText from "./InfoText";
 import WelcomeText from "./WelcomeText";
-import history from './history';
+
+let GENRES = [];
 
 class ProfileForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            genres: {},
             email: '',
             password: '',
             confirmPassword: '',
             deletePassword: '',
             data: [],
-            preferences: [],
             loaded: false,
-            placeholder: "Loading"
+            placeholder: "Loading",
+
+            preferences: GENRES.reduce(
+                (options, option) => ({
+                    ...options,
+                    [option]: false,
+                }),
+                {}
+            ),
         };
     }
 
-    handleGenreChange = event => {
-        const genre = event.target.name;
-        this.state.genres[genre] = !this.state.genres[genre];
+    handlePreferenceChange = changeEvent => {
+        const { name } = changeEvent.target;
+
+        this.setState(prevState => ({
+            preferences: {
+              ...prevState.preferences,
+              [name]: !prevState.preferences[name],
+            },
+        }));
     }
+
     handleEmailChange = event => {
         this.setState({
             email: event.target.value
         })
     }
+
     handlePasswordChange = event => {
         this.setState({
             password: event.target.value
         })
     }
+
     handleConfirmPasswordChange = event => {
         this.setState({
             confirmPassword: event.target.value
         })
     }
+
     handleCurrentPasswordChange = event => {
         this.setState({
             currentPassword: event.target.value
         })
     }
+
     handleDeletePasswordChange = event => {
         this.setState({
             deletePassword: event.target.value
         })
     }
-    handleGenreSubmit = event => {
+
+    handlePreferenceSubmit = preferenceSubmitEvent => {
         alert("Genre change submitted!");
-        event.preventDefault();
+        preferenceSubmitEvent.preventDefault();
+
+        const selectedPreferences = (Object
+            .keys(this.state.preferences)
+            .filter(option => this.state.preferences[option])
+        );
+
+        console.log(`selectedPreferences: ${selectedPreferences}`);
+
         // Update user genres
         const access_token = localStorage.getItem('jwt access');
-        const prefs = [];
-        for (const key of Object.keys(this.state.genres)) {
-            if (this.state.genres[key]) {
-                prefs.push(parseInt(key.substring(5, 10)));
-            }
-        }
         let options = {
             method: "PUT",
-            body: JSON.stringify({genre_preference: prefs}),
+            body: JSON.stringify({ genre_preference: selectedPreferences }),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-				'Authorization': `JWT ${access_token}`
+				'Authorization': `JWT ${ access_token }`
             }
         }
         fetch('http://yyr3ll.pythonanywhere.com/api/v1/app/preferences/set/', options)
@@ -101,11 +122,11 @@ class ProfileForm extends Component {
 		const access_token = localStorage.getItem('jwt access');
         let options = {
             method: "PATCH",
-            body: JSON.stringify({email: this.state.email}),
+            body: JSON.stringify({ email: this.state.email }),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-				'Authorization': `JWT ${access_token}`
+				'Authorization': `JWT ${ access_token }`
             }
         }
         fetch('http://yyr3ll.pythonanywhere.com/api/v1/account/users/me/', options)
@@ -129,11 +150,11 @@ class ProfileForm extends Component {
             const access_token = localStorage.getItem('jwt access');
             let options = {
                 method: "POST",
-                body: JSON.stringify({new_password: this.state.password, re_new_password: this.state.confirmPassword, current_password: this.state.currentPassword}),
+                body: JSON.stringify({ new_password: this.state.password, re_new_password: this.state.confirmPassword, current_password: this.state.currentPassword }),
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': `JWT ${access_token}`
+                    'Authorization': `JWT ${ access_token }`
                 }
             }
             fetch('http://yyr3ll.pythonanywhere.com/api/v1/account/users/set_password/', options)
@@ -153,17 +174,18 @@ class ProfileForm extends Component {
             event.preventDefault();
         }
     }
-    handleDeleteProfile = event => {
+
+    handleDeleteProfile = () => {
         alert("Profile deletion request submitted!");
         // Delete user
         const access_token = localStorage.getItem('jwt access');
         let options = {
             method: "DELETE",
-            body: JSON.stringify({current_password: this.state.deletePassword}),
+            body: JSON.stringify({ current_password: this.state.deletePassword }),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${access_token}`
+                'Authorization': `JWT ${ access_token }`
             }
         }
         fetch('http://yyr3ll.pythonanywhere.com/api/v1/account/users/me/', options)
@@ -179,12 +201,6 @@ class ProfileForm extends Component {
             });
     }
 
-    setGenres() {
-        for (const genre of this.state.data) {
-            this.state.genres["genre"+genre.id] = (genre.id in this.state.preferences.genre_preference);
-        }
-    }
-
     componentDidMount() {
 		const access_token = localStorage.getItem('jwt access');
         const options = {
@@ -192,9 +208,10 @@ class ProfileForm extends Component {
             headers: {
                 'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'Authorization': `JWT ${access_token}`
+				'Authorization': `JWT ${ access_token }`
             }
         }
+
         fetch("http://yyr3ll.pythonanywhere.com/api/v1/app/genre/list/", options)
             .then(response => {
                 console.log(response);
@@ -208,6 +225,9 @@ class ProfileForm extends Component {
             })
             .then(data => {
                 console.log(data);
+
+                GENRES = Array.from(data.map(genre => genre.id));
+
                 this.setState(() => {
                     return {
                         data,
@@ -226,13 +246,16 @@ class ProfileForm extends Component {
                 return response.json();
             })
             .then(preferences => {
-                console.log(preferences);
-                this.setState(() => {
-                    return {
-                        preferences
-                    };
+                preferences = preferences.genre_preference;
+                
+                preferences.forEach(preference => {
+                    this.setState(prevState => ({
+                        preferences: {
+                          ...prevState.preferences,
+                          [preference]: !prevState.preferences[preference],
+                        },
+                    }));
                 });
-                this.setGenres();
             });
     }
 
@@ -245,25 +268,32 @@ class ProfileForm extends Component {
                         <WelcomeText/>
 
                       <div style={{display: 'flex'}}>
-                        {/* GENRES */}
+
+                        {/* PREFERENCES */}
+
                         <form method="post" action="#">
                           <div style={{flex: '50%'}}>
                             <div className="row gtr-uniform">
                               <div className="col-6 col-12-small">
-                                <h4>Here's Your Favourite Stuff<br/>Change It Up If You Want{this.state.preferences["genre_preference"]}</h4>
-                                  {this.state.data.map(genre => {
-                                      let genre_name = "genre" + genre.id;
-                                      return (
-                                        <Checkbox name={genre_name} text={genre.name} checked={this.state.genres[genre_name]} onChange={this.handleGenreChange.bind(this)} />
-                                            );
-                                  })}
+                                <h4>Here's Your Favourite Stuff<br/>Change It Up If You Want</h4>
+                                    {this.state.data.map(genre => {
+                                      let genreName = "genre" + genre.id;
+                                        return (
+                                            <Checkbox
+                                                id={ genreName }
+                                                name={ genre.id }
+                                                text={ genre.name }
+                                                isSelected={ this.state.preferences[genre.id] }
+                                                onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
+                                        );
+                                    })}
                               </div>
                                 <div className="col-12">
-                                  <ul className="actions">
-                                    <li id="sendButton">
-                                      <SendButton buttonName="Submit" onClick={this.handleGenreSubmit} />
-                                    </li>
-                                  </ul>
+                                    <ul className="actions">
+                                        <li id="sendButton">
+                                            <SendButton buttonName="Submit" onClick={ this.handlePreferenceSubmit } />
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                           </div>
@@ -272,10 +302,10 @@ class ProfileForm extends Component {
                         <br />
 
                         <div>
-                          <div style={{flex: '50%'}}>
+                          <div style={{ flex: '50%' }}>
                             <h4>Everything We Know About You:</h4>
-                              <InfoText />
-                              <SendButton buttonName="Log Out" onClick={this.handleLogOutSubmit}/>
+                                <InfoText />
+                                <SendButton buttonName="Log Out" onClick={ this.handleLogOutSubmit }/>
                             </div>
                         </div>
                         </div>
@@ -284,64 +314,91 @@ class ProfileForm extends Component {
                         <br />
                         <br />
 
-                        <div style={{display: 'flex'}}>
-                        {/* CHANGE EMAIL */}
-                          <form method="post" action="#">
-                          <div style={{flex: '50%'}}>
-                            <div className="row gtr-uniform">
-                              <div id="text-input-field" className="col-6 col-12-xsmall">
-                              <h3>Change Email</h3>
-                                <input type="email" name="profile_email" id="profile_email" value={this.state.email} onChange={this.handleEmailChange} placeholder="New Email" />
-                                <input type="password" name="#" id="#" placeholder="Enter Password To Confirm" />
-                              </div>
-                              <div className="col-12">
-                                <ul className="actions">
-                                  <li id="sendButton">
-                                    <SendButton buttonName="Change!" onClick={this.handleEmailSubmit} />
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                            </div>
-                          </form>
+                        <div style={{ display: 'flex' }}>
+
+                            {/* CHANGE EMAIL */}
+
+                            <form method="post" action="#">
+                                <div style={{flex: '50%'}}>
+                                  <div className="row gtr-uniform">
+                                        <div id="text-input-field" className="col-6 col-12-xsmall">
+                                            <h3>Change Email</h3>
+                                            <input
+                                                type="email"
+                                                name="profile_email"
+                                                id="profile_email"
+                                                value={ this.state.email } 
+                                                onChange={ this.handleEmailChange }
+                                                placeholder="New Email" />
+                                            <input
+                                                type="password"
+                                                name="#" id="#"
+                                                placeholder="Enter Password To Confirm" />
+                                            </div>
+                                            <div className="col-12">
+                                            <ul className="actions">
+                                                <li id="sendButton">
+                                                <SendButton buttonName="Change!" onClick={ this.handleEmailSubmit } />
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
 
                           <br/>
 
-                        {/* CHANGE PASS */}
+                            {/* CHANGE PASS */}
 
                             <form method="post" action="#">
-                            <div style={{flex: '50%'}}>
-                              <div className="row gtr-uniform">
-                                  <div className="col-6 col-12-xsmall">
-                                    <h3>Change Password</h3>
-                                      {/*<PasswordInputField name="profile_current_password" id="profile_current_password" value={this.state.currentPassword} onChange={this.handleCurrentPasswordChange} placeholder="Current Password" />*/}
-                                      <PasswordInputField name="profile_password" id="profile_password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="New Password" />
-                                      <PasswordInputField name="profile_confirm_password" id="profile_confirm_password" value={this.state.confirmPassword} onChange={this.handleConfirmPasswordChange} placeholder="Confirm New Password" />
-                                  </div>
-                                  <div className="col-12">
-                                      <ul className="actions">
-                                          <li id="sendButton">
-                                              <SendButton buttonName="Change!" onClick={this.handlePasswordSubmit} />
-                                          </li>
-                                      </ul>
-                                  </div>
-                              </div>
-                              </div>
+                                <div style={{ flex: '50%' }}>
+                                    <div className="row gtr-uniform">
+                                        <div className="col-6 col-12-xsmall">
+                                            <h3>Change Password</h3>
+                                            {/*<PasswordInputField name="profile_current_password" id="profile_current_password" value={this.state.currentPassword} onChange={this.handleCurrentPasswordChange} placeholder="Current Password" />*/}
+                                            <PasswordInputField
+                                                name="profile_password" id="profile_password"
+                                                value={ this.state.password }
+                                                onChange={ this.handlePasswordChange }
+                                                placeholder="New Password" />
+                                            <PasswordInputField
+                                                name="profile_confirm_password"
+                                                id="profile_confirm_password"
+                                                value={ this.state.confirmPassword }
+                                                onChange={ this.handleConfirmPasswordChange }
+                                                placeholder="Confirm New Password" />
+                                        </div>
+                                        <div className="col-12">
+                                            <ul className="actions">
+                                                <li id="sendButton">
+                                                    <SendButton buttonName="Change!" onClick={ this.handlePasswordSubmit } />
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
-</div>
+                        </div>
+
                         <br/>
 
                         {/* DELETE ACCOUNT */}
+
                         <h3>Wanna Leave Us? Ah, We Will Miss You!</h3>
                         <form method="post" action="#">
-                          <div className="row gtr-uniform">
-                              <div className="col-6 col-12-xsmall">
-                                  <PasswordInputField name="profile_delete_password" id="profile_delete_password" value={this.state.deletePassword} onChange={this.handleDeletePasswordChange} placeholder="Password" />
-                              </div>
-                          </div>
+                            <div className="row gtr-uniform">
+                                <div className="col-6 col-12-xsmall">
+                                    <PasswordInputField
+                                        name="profile_delete_password"
+                                        id="profile_delete_password"
+                                        value={ this.state.deletePassword }
+                                        onChange={ this.handleDeletePasswordChange }
+                                        placeholder="Password" />
+                                </div>
+                            </div>
                         <br />
                         <div className="row">
-                            <DeleteProfileButton buttonName="Delete" onClick={this.handleDeleteProfile} />
+                            <DeleteProfileButton buttonName="Delete" onClick={ this.handleDeleteProfile } />
                         </div>
                         </form>
                     </section>
