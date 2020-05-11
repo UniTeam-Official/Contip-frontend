@@ -120,15 +120,16 @@ a {
   text-decoration: none;
   color: #585858;
   border-bottom: dotted 1px rgba(88, 88, 88, 0.5);
-}
-a:hover {
-  border-bottom-color: transparent;
-  color: #f2849e !important;
-}
+  cursor: pointer; }
+    a:hover {
+      border-bottom-color: transparent;
+      color: #f2849e !important; }
+    a.no-border-btm {
+      border-bottom: none !important; }
 
-strong, b {
-  font-weight: 900;
-}
+  strong, b {
+    font-weight: 900;
+  }
 
 em, i {
   font-style: italic;
@@ -2459,7 +2460,7 @@ body.is-touch .tiles article .content {
   position: relative;
   z-index: 2;
   width: inherit;
-}
+  margin-bottom: 15px; }
 
 input {
   outline: none;

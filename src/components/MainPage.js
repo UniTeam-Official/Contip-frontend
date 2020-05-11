@@ -13,7 +13,7 @@ class MainPage extends Component {
 				<div id="main">
 					<div className="inner">
 						<RecommendationHeader />
-						<MovieList history={this.props.history}/>
+						<MovieList history={ this.props.history } key="movieList"/>
 					</div>
 				</div>
 				<Footer />

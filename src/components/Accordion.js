@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import AccordionHeader from "./AccordionHeader";
 import Checkbox from "./Checkbox";
-import history from './history';
+
+let FILTERS = [];
+const SORTING = ["title", "-title"];
 
 class Accordion extends Component {
     constructor(props) {
@@ -10,12 +12,22 @@ class Accordion extends Component {
             data: [],
             loaded: false,
             placeholder: "Loading",
-            filterOptions: [],
-            sortingOptions: [],
-            signalFilterOff: false,
-            signalSortingOff: false,
-            writableAsc: true,
-            writableDesc: true,
+
+            filters: FILTERS.reduce(
+                (options, option) => ({
+                    ...options,
+                    [option]: false,
+                }),
+                {}
+            ),
+
+            sorting: SORTING.reduce(
+                (options, option) => ({
+                    ...options,
+                    [option]: false,
+                }),
+                {}
+            ),
         };
     }
 
@@ -42,6 +54,9 @@ class Accordion extends Component {
             })
             .then(data => {
                 console.log(data);
+
+                FILTERS = Array.from(data.map(genre => genre.id));
+
                 this.setState(() => {
                     return {
                         data,
@@ -51,54 +66,52 @@ class Accordion extends Component {
             });
     }
 
-    handleCheckbox(option, checkState) {
-        let filterOptions = this.state.filterOptions;
-        let sortingOptions = this.state.sortingOptions;
-        let signalFilterOff = false;
-        let signalSortingOff = false;
+    handleFiltersChange = changeEvent => {
+        const { name } = changeEvent.target;
 
-        console.log(`option: ${ option }`);
-        console.log(`checkState: ${ checkState }`);
+        this.setState(prevState => ({
+            filters: {
+              ...prevState.filters,
+              [name]: !prevState.filters[name],
+            },
+        }));
 
-        if (~option.indexOf("sorting")) {
-            if (checkState) {
-                sortingOptions.push(option);
+        this.props.createFiltersList(this.handleFiltersList.bind(this));
+    };
 
-                signalSortingOff = false;
-            } else {
-                let optionIndexUnchecked = sortingOptions.indexOf(option);
-                if (~optionIndexUnchecked) {
-                    sortingOptions.splice(optionIndexUnchecked, 1);
-                }
+    handleSortingChange = changeEvent => {
+        const { name } = changeEvent.target;
+        const mustBeUnchecked = Object
+            .keys(this.state.sorting)
+            .filter(option => name !== option);
 
-                signalSortingOff = true;
-            }
-        } else {
-            if (checkState) {
-                filterOptions.push(option);
+        this.setState(prevState => ({
+            sorting: {
+              ...prevState.sorting,
+              [name]: !prevState.sorting[name],
+              [mustBeUnchecked]: false,
+            },
+        }));
 
-                signalFilterOff = false;
-            } else {
-                let optionIndexUnchecked = filterOptions.indexOf(option);
-                if (~optionIndexUnchecked) {
-                    filterOptions.splice(optionIndexUnchecked, 1);
-                }
+        this.props.createSortingList(this.handleSortingList.bind(this));
+    }
 
-                signalFilterOff = true;
-            }
-        }
+    handleFiltersList() {
+        const checkedFilters = (Object
+            .keys(this.state.filters)
+            .filter(option => this.state.filters[option])
+        );
+        
+        this.props.formFilterQuery(checkedFilters);
+    };
 
-        console.log(`filterOptions: ${ filterOptions }`);
-        console.log(`sortingOptions: ${ sortingOptions }`);
-
-        this.setState({
-            filterOptions: filterOptions,
-            sortingOptions: sortingOptions,
-            signalFilter: signalFilterOff,
-            signalSorting: signalSortingOff,
-        });
-
-        this.props.handleFilterQuery(filterOptions, sortingOptions, signalFilterOff, signalSortingOff);
+    handleSortingList() {
+        const checkedSorting = (Object
+            .keys(this.state.sorting)
+            .filter(option => this.state.sorting[option])
+        );
+        
+        this.props.formSortingQuery(checkedSorting);
     }
 
 	render() {
@@ -121,10 +134,15 @@ class Accordion extends Component {
                                     <div className="col-6 col-12-small">
                                         <ul className="list">
                                             {this.state.data.map(genre => {
-                                                let genre_name = this.props.namePrefix + "Filter" + genre.id;
+                                                const id = this.props.namePrefix + "Filter" + genre.id;
                                                 return (
-                                                    <li id="check-box" className="list-item">
-                                                        <Checkbox name={ genre_name } text={ genre.name } checked="false" writable={ true } handleCheckbox={ this.handleCheckbox.bind(this) } />
+                                                    <li id="check-box" className="list-item" key={ id }>
+                                                        <Checkbox
+                                                            id={ id }
+                                                            name={ genre.id }
+                                                            text={ genre.name }
+                                                            isSelected={ this.state.filters[genre.id] }
+                                                            onCheckboxChange={ this.handleFiltersChange } />
                                                     </li>
                                                 );
                                             })}
@@ -156,18 +174,28 @@ class Accordion extends Component {
                                     <div className="col-6 col-12-small">
                                         <ul className="list">
                                             {(() => {
-                                                let sortingName = this.props.namePrefix + "Ascending";
+                                                const sortingName = this.props.namePrefix + "Ascending";
                                                 return(
-                                                    <li id="check-box" className="list-item">
-                                                        <Checkbox name={ sortingName } text="Alphabetical (A-Z)" checked="false" writable={ this.state.writableAsc } handleCheckbox={ this.handleCheckbox.bind(this) } />
+                                                    <li id="check-box" className="list-item" key={ sortingName }>
+                                                        <Checkbox
+                                                            id={ sortingName }
+                                                            name="title"
+                                                            text="Alphabetical (A-Z)"
+                                                            isSelected={ this.state.sorting["title"] }
+                                                            onCheckboxChange={ this.handleSortingChange } />
                                                     </li>
                                                 );
                                             })()}
                                             {(() => {
-                                                let sortingName = this.props.namePrefix + "Descending";
+                                                const sortingName = this.props.namePrefix + "Descending";
                                                 return(
-                                                    <li id="check-box" className="list-item">
-                                                        <Checkbox name={ sortingName } text="Alphabetical (Z-A)" checked="false" writable={ this.state.writableDesc } handleCheckbox={ this.handleCheckbox.bind(this) } />
+                                                    <li id="check-box" className="list-item" key={ sortingName }>
+                                                        <Checkbox
+                                                            id={ sortingName }
+                                                            name="-title"
+                                                            text="Alphabetical (Z-A)"
+                                                            isSelected={ this.state.sorting["-title"] }
+                                                            onCheckboxChange={ this.handleSortingChange } />
                                                     </li>
                                                 );
                                             })()}

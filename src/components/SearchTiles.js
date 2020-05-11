@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import { openSidebar } from "../assets/js/sidebar";
 import RecommendationFilm from "./RecommendationFilm";
@@ -6,9 +8,9 @@ const WAIT_INTERVAL = 1000;
 const ENTER_KEY = 13;
 
 class SearchTiles extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+	constructor(props) {
+		super(props);
+		this.state = {
 			options: {
 				method: "GET",
 				headers: {
@@ -17,12 +19,14 @@ class SearchTiles extends Component {
 					'Authorization': `JWT ${localStorage.getItem('jwt access')}`
 				}
 			},
+
 			data: [],
 			loaded: false,
 			placeholder: "Loading",
 			search: "",
-    };
+		};
 	}
+
 	async fetchFilmsDecorator(url, options) {
 
 		// Trying to make a request for the server
@@ -49,8 +53,8 @@ class SearchTiles extends Component {
 		this.timer = null;
 	}
 
-  componentDidMount() {
-		this.fetchFilmsDecorator("http://yyr3ll.pythonanywhere.com/api/v1/app/film/list/", this.state.options);
+  	componentDidMount() {
+		this.updateResults();
 	}
 
 	handleChange(event) {
@@ -61,6 +65,15 @@ class SearchTiles extends Component {
 
 	triggerChange() {
 		const { search } = this.state.search;
+
+		if (this.props.handleFiltersList !== null) {
+			this.props.handleFiltersList();
+		}
+
+		if (this.props.handleSortingList !== null) {
+			this.props.handleSortingList();
+		}
+
 		this.updateResults();
 		this.setState({ search });
 	}
@@ -84,40 +97,45 @@ class SearchTiles extends Component {
 	}
 
 	render() {
-    let moviesOnPageCount = 0;
-    let filteredFilms = <span></span>;
+		let filteredFilms = <span></span>;
+		let resCounter = <span>no results</span>;
 		if (this.state && typeof(this.state.data.results) != 'undefined' && this.state.data.results.length > 0) {
 			filteredFilms = this.state.data.results.map(film => {
-        if (moviesOnPageCount < 18){
-					moviesOnPageCount++;
-  				return (
-  					<RecommendationFilm href={`/film/${ film.id }`} title={ film.title } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={ film.genre.map(genre => { return(genre.name + '  ') }) } />
-  				);
-        }
-			})
+				return (
+					<RecommendationFilm href={`/film/${ film.id }`} title={ film.title } key={ film.title } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={ film.genre.map(genre => { return(genre.name + '  ') }) } />
+				);
+			});
+
+			if (this.state.data.results.length > 1) {
+				resCounter = `${this.state.data.results.length} results`;
+			} else {
+				resCounter = `${this.state.data.results.length} result`;
+			}
 		}
+
 		return (
-      <section className="tiles-section">
-        <div className="controls">
-			<div id="search_bar" className="search-container">
-              <div className="search">
-                <i className="fa fa-filter openbtn" onClick={ openSidebar } style={{ fontSize:"16px" }}></i>
-                <button id="search_button" className="search-btn" type="button">
-                    <i className="fa fa-search"></i>
-                </button>
-                <span id="search_searched_count" className="search-searched-count">142 results</span>
-				<input type="text"
-				  className="search-input"
-				  value={ this.state.value }
-			      onChange={ this.handleChange.bind(this) }
-				  onKeyDown={this.handleKeyDown.bind(this) }></input>
-              </div>
-            </div>
-        </div>
-        <section className="tiles">
-          { filteredFilms }
-        </section>
-      </section>
+			<section className="tiles-section">
+				<div className="controls">
+					<div id="search_bar" className="search-container">
+						<div className="search">
+							<i className="fa fa-filter openbtn" onClick={ openSidebar } style={{ fontSize:"16px" }}></i>
+							<button id="search_button" className="search-btn" type="button">
+									<i className="fa fa-search"></i>
+							</button>
+							<span id="search_searched_count" className="search-searched-count">{ resCounter }</span>
+							<input type="text"
+								className="search-input"
+								value={ this.state.value }
+								onChange={ this.handleChange.bind(this) }
+								onKeyDown={ this.handleKeyDown.bind(this) }>	
+							</input>
+						</div>
+					</div>
+				</div>
+				<section className="tiles">
+					{ filteredFilms }
+				</section>
+			</section>
 		);
 	}
 }
