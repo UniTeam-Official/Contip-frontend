@@ -32,7 +32,7 @@ class SearchTiles extends Component {
 		// Trying to make a request for the server
 		const response = await fetch(url, options);
 		let data = undefined;
-	
+
 		if (response.status > 400) {
 			this.setState(() => {
 				return { placeholder: "Something went wrong!" };
@@ -40,7 +40,7 @@ class SearchTiles extends Component {
 		} else {
 			data = await response.json();
 		}
-	
+
 		this.setState(() => {
 			return {
 				data,
@@ -84,7 +84,7 @@ class SearchTiles extends Component {
 			e.preventDefault();
 			this.handleChange(e);
     	}
-	}	
+	}
 
 	updateResults() {
 		let searchQuery = this.state.search ? "search=" + this.state.search : "";

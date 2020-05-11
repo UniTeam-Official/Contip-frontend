@@ -45,7 +45,7 @@ class SuggestForm extends Component {
 							<TextInputField name="footer_rating" id="footer_rating" onChange={ this.handleRatingChange } value={ this.state.rating } placeholder="How Much Will We Like It/10?" />
 						</div>
 						<div className="field">
-							<textarea name="footer_link" id="footer_link" onChange={ this.handleLinkChange } value={ this.state.link }  placeholder="Imdb Link"></textarea>
+							<TextInputField name="footer_link" id="footer_link" onChange={ this.handleLinkChange } value={ this.state.link }  placeholder="Imdb Link"/>
 						</div>
 					</div>
 					<ul className="actions">

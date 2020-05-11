@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Checkbox from "./Checkbox";
 import PasswordInputField from "./PasswordInputFields";
 import SendButton from "./SendButton";
 import DeleteProfileButton from "./DeleteProfileButton";
 import InfoText from "./InfoText";
+import WelcomeText from "./WelcomeText";
 import history from './history';
 
 class ProfileForm extends Component {
@@ -83,6 +85,15 @@ class ProfileForm extends Component {
                 return res.json();
             });
     }
+
+    handleLogOutSubmit = event => {
+        alert("Are You Sure?");
+        event.preventDefault();
+        localStorage.removeItem('jwt access');
+        localStorage.removeItem('jwt refresh')
+        this.props.history.push("/login/");
+    }
+
     handleEmailSubmit = event => {
         alert("Email change submitted!");
         event.preventDefault();
@@ -109,6 +120,7 @@ class ProfileForm extends Component {
                 return res.json();
             });
     }
+
     handlePasswordSubmit = event => {
         if (this.state.password == this.state.confirmPassword) {
             alert("Password change submitted!");
@@ -230,77 +242,103 @@ class ProfileForm extends Component {
                 <div className="inner">
                     <h1>My Profile</h1>
                     <section>
-                        <h2>User Info</h2>
-                        <InfoText />
-                        <h2>Change Profile</h2>
-                        <h3>Change Favorite Genres</h3>
+                        <WelcomeText/>
 
+                      <div style={{display: 'flex'}}>
                         {/* GENRES */}
-
                         <form method="post" action="#">
+                          <div style={{flex: '50%'}}>
                             <div className="row gtr-uniform">
-                                <div className="col-6 col-12-small">
-                                    <h4>Checkboxes that SHOULD be checked: {this.state.preferences["genre_preference"]}</h4>
-                                    {this.state.data.map(genre => {
-                                        let genre_name = "genre" + genre.id;
-                                        return (
-                                            <Checkbox name={genre_name} text={genre.name} checked={this.state.genres[genre_name]} onChange={this.handleGenreChange.bind(this)} />
-                                        );
-                                    })}
-                                </div>
+                              <div className="col-6 col-12-small">
+                                <h4>Here's Your Favourite Stuff<br/>Change It Up If You Want{this.state.preferences["genre_preference"]}</h4>
+                                  {this.state.data.map(genre => {
+                                      let genre_name = "genre" + genre.id;
+                                      return (
+                                        <Checkbox name={genre_name} text={genre.name} checked={this.state.genres[genre_name]} onChange={this.handleGenreChange.bind(this)} />
+                                            );
+                                  })}
+                              </div>
                                 <div className="col-12">
-                                    <ul className="actions">
-                                        <li id="sendButton">
-                                            <SendButton buttonName="Submit" onClick={this.handleGenreSubmit} />
-                                        </li>
-                                    </ul>
+                                  <ul className="actions">
+                                    <li id="sendButton">
+                                      <SendButton buttonName="Submit" onClick={this.handleGenreSubmit} />
+                                    </li>
+                                  </ul>
                                 </div>
                             </div>
+                          </div>
                         </form>
 
+                        <br />
+
+                        <div>
+                          <div style={{flex: '50%'}}>
+                            <h4>Everything We Know About You:</h4>
+                              <InfoText />
+                              <SendButton buttonName="Log Out" onClick={this.handleLogOutSubmit}/>
+                            </div>
+                        </div>
+                        </div>
+
+                        <br />
+                        <br />
+                        <br />
+
+                        <div style={{display: 'flex'}}>
                         {/* CHANGE EMAIL */}
-
-                        <h3>Change Email</h3>
-                        <form method="post" action="#">
+                          <form method="post" action="#">
+                          <div style={{flex: '50%'}}>
                             <div className="row gtr-uniform">
-                                <div id="text-input-field" className="col-6 col-12-xsmall">
-                                    <input type="email" name="profile_email" id="profile_email" value={this.state.email} onChange={this.handleEmailChange} placeholder="New Email" />
-                                </div>
-                                <div className="col-12">
-                                    <ul className="actions">
-                                        <li id="sendButton">
-                                            <SendButton buttonName="Submit" onClick={this.handleEmailSubmit} />
-                                        </li>
-                                    </ul>
-                                </div>
+                              <div id="text-input-field" className="col-6 col-12-xsmall">
+                              <h3>Change Email</h3>
+                                <input type="email" name="profile_email" id="profile_email" value={this.state.email} onChange={this.handleEmailChange} placeholder="New Email" />
+                                <input type="password" name="#" id="#" placeholder="Enter Password To Confirm" />
+                              </div>
+                              <div className="col-12">
+                                <ul className="actions">
+                                  <li id="sendButton">
+                                    <SendButton buttonName="Change!" onClick={this.handleEmailSubmit} />
+                                  </li>
+                                </ul>
+                              </div>
                             </div>
-                        </form>
+                            </div>
+                          </form>
+
+                          <br/>
 
                         {/* CHANGE PASS */}
 
-                        <h3>Change Password</h3>
+                            <form method="post" action="#">
+                            <div style={{flex: '50%'}}>
+                              <div className="row gtr-uniform">
+                                  <div className="col-6 col-12-xsmall">
+                                    <h3>Change Password</h3>
+                                      {/*<PasswordInputField name="profile_current_password" id="profile_current_password" value={this.state.currentPassword} onChange={this.handleCurrentPasswordChange} placeholder="Current Password" />*/}
+                                      <PasswordInputField name="profile_password" id="profile_password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="New Password" />
+                                      <PasswordInputField name="profile_confirm_password" id="profile_confirm_password" value={this.state.confirmPassword} onChange={this.handleConfirmPasswordChange} placeholder="Confirm New Password" />
+                                  </div>
+                                  <div className="col-12">
+                                      <ul className="actions">
+                                          <li id="sendButton">
+                                              <SendButton buttonName="Change!" onClick={this.handlePasswordSubmit} />
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              </div>
+                            </form>
+</div>
+                        <br/>
+
+                        {/* DELETE ACCOUNT */}
+                        <h3>Wanna Leave Us? Ah, We Will Miss You!</h3>
                         <form method="post" action="#">
-                            <div className="row gtr-uniform">
-                                <div className="col-6 col-12-xsmall">
-                                    <PasswordInputField name="profile_current_password" id="profile_current_password" value={this.state.currentPassword} onChange={this.handleCurrentPasswordChange} placeholder="Current Password" />
-                                    <PasswordInputField name="profile_password" id="profile_password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="New Password" />
-                                    <PasswordInputField name="profile_confirm_password" id="profile_confirm_password" value={this.state.confirmPassword} onChange={this.handleConfirmPasswordChange} placeholder="Confirm New Password" />
-                                </div>
-                                <div className="col-12">
-                                    <ul className="actions">
-                                        <li id="sendButton">
-                                            <SendButton buttonName="Submit" onClick={this.handlePasswordSubmit} />
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </form>
-                        <form method="post" action="#">
-                        <div className="row gtr-uniform">
-                            <div className="col-6 col-12-xsmall">
-                                <PasswordInputField name="profile_delete_password" id="profile_delete_password" value={this.state.deletePassword} onChange={this.handleDeletePasswordChange} placeholder="Password" />
-                            </div>
-                        </div>
+                          <div className="row gtr-uniform">
+                              <div className="col-6 col-12-xsmall">
+                                  <PasswordInputField name="profile_delete_password" id="profile_delete_password" value={this.state.deletePassword} onChange={this.handleDeletePasswordChange} placeholder="Password" />
+                              </div>
+                          </div>
                         <br />
                         <div className="row">
                             <DeleteProfileButton buttonName="Delete" onClick={this.handleDeleteProfile} />

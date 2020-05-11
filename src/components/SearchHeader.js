@@ -4,8 +4,8 @@ class SearchHeader extends Component {
 	render() {
 		return (
 			<header>
-				<h1>Kuda edem?</h1>
-				<p>...we sat down and watched thousands of DURKAS, just to find six special ones that you should definitely check out this week </p>
+				<h1>Looking For Something?</h1>
+				<p><strong>Here you can look up something definitely special for your evening</strong></p>
 			</header>
 		);
 	}

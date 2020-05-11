@@ -5,7 +5,7 @@ class RecommendationHeader extends Component {
 		return (
 			<header>
 				<h1>Specially For You...</h1>
-				<p>...we sat down and watched thousands of movies, just to find six special ones that you should definitely check out this week </p>
+				<p><strong>...we sat down and watched thousands of movies, just to find six special ones that you should definitely check out this week </strong></p>
 			</header>
 		);
 	}
