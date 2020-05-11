@@ -18,6 +18,46 @@ class WatchedMovieList extends Component {
         }
     }
 
+    get_films = async (film_ids, options) => {
+
+        /* 
+            Functions that makes get requests simultaneously and returns films data
+        */
+       
+        let fetches = [];
+        let jsones = [];
+
+        let responses;
+        let data;
+
+        // GETTING RESPONSES
+        for (const id of film_ids.watched_list) {
+            fetches.push(fetch(`${host}api/v1/app/film/detail/${id}/`, options));
+            console.log(id);
+        }
+
+        try {
+            responses = await Promise.all(fetches);
+        }
+        catch (err) {
+            console.log(err);
+        };
+
+        //
+        for (const response of responses) {
+            jsones.push(response.json());
+        }
+
+        try {
+            data = await Promise.all(jsones);
+        }
+        catch (err) {
+            console.log(err);
+        };
+
+        return data;
+    };
+
     async componentDidMount() {
         const access_token = localStorage.getItem('jwt access');
         const options = {
@@ -29,30 +69,21 @@ class WatchedMovieList extends Component {
             }
         }
 
-        console.log(host);
-        // Gettings list of watched films from the server
+        console.log(this.host);
+        // GETTINGS FILM IDS
         const response = await fetch(`${host}api/v1/app/watched/set/`, options);
 
-        // Force user to login if some kind of 400-like http codes returns
+        // IF 401 THEN LOGIN
         if (response.status === 401) {
             this.props.history.push("/login");
             return this.setState(() => {
                 return { placeholder: "Something went wrong!" };
             });
         }
-        
-        const films_id = await response.json();
-        console.log(films_id);
-        
-        const data = [];
 
-        for (const id of films_id.watched_list) {
-            let response = await fetch(`http://yyr3ll.pythonanywhere.com/api/v1/app/film/detail/${id}/`, options); 
-            console.log(response)
-            let json = await response.json();
-            console.log(json);
-            data.push(json);
-        }
+        const film_ids = await response.json();
+
+        let data = await this.get_films(film_ids, options);
 
         this.setState(() => {
             return {
@@ -65,8 +96,8 @@ class WatchedMovieList extends Component {
     render() {
         let moviesOnPageAmount = 0;
         let films = <p></p>;
-        if (this.state && typeof (this.state.data.watched_list) != 'undefined' && this.state.data.watched_list.length > 0) {
-            films = this.state.data.watched_list.map(film => {
+        if (this.state && typeof (this.state.data) != 'undefined' && this.state.data.length > 0) {
+            films = this.state.data.map(film => {
                 if (moviesOnPageAmount < 12) {
                     moviesOnPageAmount++;
                     return (
