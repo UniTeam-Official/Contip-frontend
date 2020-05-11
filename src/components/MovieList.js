@@ -18,7 +18,7 @@ class MovieList extends Component {
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'Authorization': `JWT ${access_token}`
+				'Authorization': `JWT ${ access_token }`
 			}
 		}
 		fetch("http://yyr3ll.pythonanywhere.com/api/v1/app/film/recommend/", options)
@@ -54,14 +54,14 @@ class MovieList extends Component {
 			})
 			return (
 				<section className="tiles">
-					{films}
+					{ films }
 				</section>
 			);
 		}
 		return (
 			<header>
 				<br /><br /><br />
-				{films}
+				{ films }
 			</header>
 		);
 	}
