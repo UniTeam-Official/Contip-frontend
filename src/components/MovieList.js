@@ -1,7 +1,6 @@
-import React, { Component, Redirect } from "react";
+import React, { Component } from "react";
 
 import RecommendationFilm from "./RecommendationFilm";
-import history from './history';
 class MovieList extends Component {
 	constructor(props) {
 		super(props);
@@ -50,7 +49,7 @@ class MovieList extends Component {
 		if (this.state && typeof(this.state.data.results) != 'undefined' && this.state.data.results.length > 0){
 			films = this.state.data.results.map(film => {
 				return (
-					<RecommendationFilm href={`/film/${film.id}`} title={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => {return(genre.name + '  ')})} />
+					<RecommendationFilm href={`/film/${ film.id }`} title={ film.title } key={ film.title } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => {return(genre.name + '  ')})} />
 				);
 			})
 		}

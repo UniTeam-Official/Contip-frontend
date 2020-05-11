@@ -7,166 +7,100 @@ import SearchTiles from "./SearchTiles";
 import Accordion from "./Accordion";
 import { closeSidebar } from "../assets/js/sidebar";
 import { accordionButtonListener } from "../assets/js/accordion";
-import history from './history';
 
 class SearchPage extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-          filterQuery: [],
-          sortingQuery: [],
-          genreList: [],
-          closedChipID: null,
-      };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      filterQuery: [],
+      sortingQuery: [],
+      handleFiltersList: null,
+      handleSortingList: null,
+    };
+  }
 
-    componentDidMount() {
-      accordionButtonListener();
-    }
+  componentDidMount() {
+    accordionButtonListener();
+  }
 
-    deleteExtraOption(item, arr) {
-      if (Array.isArray(arr)) {
-          let extraOption = arr.indexOf(item);
+  formFilterQuery(filterQuery) {
+    this.setState({
+      filterQuery,
+    })
+  }
 
-          if (~extraOption) {
-              arr.splice(extraOption, 1);
-          }
-      }
+  formSortingQuery(sortingQuery) {
+    this.setState({
+      sortingQuery,        
+    })
+  }
 
-      return arr;
-    }
+  createFiltersList(handleFiltersList) {
+    this.setState({
+      handleFiltersList,
+    })
+  }
 
-    deleteExtraSortings(item, sortingQuery, sortingOptions) {
-      let extraOption;
-      if (~item.indexOf("-title")) {
-          extraOption = sortingOptions.indexOf("Descending");
-      } else {
-          extraOption = sortingOptions.indexOf("Ascending");
-      }
-
-      if (!(~extraOption)) {
-          sortingQuery.splice(sortingQuery.indexOf(item), 1);
-      }
-
-      return sortingQuery;
-    }
-
-    handleFilterQuery(filterOptions, sortingOptions, signalFilterOff, signalSortingOff, genreList) {
-      let filterQuery = this.state.filterQuery;
-      let sortingQuery = this.state.sortingQuery;
-
-      // sorting options cleaning (NOTE: if you can rewrite this shit, do it better)
-      if ((sortingOptions.length > 0 && filterOptions.length === 0)
-          || (signalSortingOff)) {
-          // *screams internally*
-          sortingQuery.forEach((item) => {
-              sortingQuery = this.deleteExtraSortings(item, sortingQuery, sortingOptions);
-              sortingQuery = this.deleteExtraSortings(item, sortingQuery, sortingOptions);
-          });
-      }
-
-      // form filter query
-      filterOptions.forEach((item) => {
-          filterQuery = this.deleteExtraOption(item, filterQuery);
-          filterQuery.push(item);
-      });
-
-      // form sorting query
-      sortingOptions.forEach((item) => {
-          if (~item.indexOf("Ascending")) {
-              sortingQuery = this.deleteExtraOption("title", sortingQuery);
-              sortingQuery.push("title");
-          } else {
-              sortingQuery = this.deleteExtraOption("-title", sortingQuery);
-              sortingQuery.push("-title");
-          }
-      });
-
-      // filter options cleaning (NOTE: if you can rewrite this shit, do it better)
-      if ((sortingOptions.length === 0 && filterOptions.length > 0)
-          || (sortingOptions.length > 0 && filterOptions.length > 0)
-          || signalFilterOff) {
-          filterQuery.forEach((item) => {
-              let extraOption = filterOptions.indexOf(item);
-
-              if (!(~extraOption)) {
-                  filterQuery.splice(filterQuery.indexOf(item), 1);
-              }
-          });
-      }
-
-      console.log(`filterQuery: ${ filterQuery }`);
-      console.log(`sortingQuery: ${ sortingQuery }`);
-      console.log("-------------------------");
-
-      this.setState({
-          filterQuery,
-          sortingQuery,
-          genreList,
-      })
-    }
-
-    handleChipClose(chipOptionID) {
-        console.log(`chipOptionID: ${chipOptionID}`);
-        this.setState({ 
-            closedChipID: chipOptionID,
-         })
-    }
-    
-    render() {
-		return (
-			<div id="wrapper">
-                <div id="filterSidebar" className="filter-sidebar">
-                    <a className="closebtn" href="" onClick={ closeSidebar }>×</a>
-                    <div className="accordion">
-                      <Accordion className="accordion-content content-sidebar"
+  createSortingList(handleSortingList) {
+    this.setState({
+      handleSortingList,
+    })
+  }
+  
+  render() {
+  return (
+    <div id="wrapper">
+      <div id="filterSidebar" className="filter-sidebar">
+        <a className="closebtn" onClick={ closeSidebar }>×</a>
+        <div className="accordion">
+          <Accordion className="accordion-content content-sidebar"
+            accordionHeader="genres"
+            namePrefix="sidebarGenres"
+            history={ this.props.history }
+            createFiltersList={ this.createFiltersList.bind(this) }
+            formFilterQuery={ this.formFilterQuery.bind(this) } />
+          <Accordion className="accordion-content content-sidebar"
+            accordionHeader="sorting"
+            namePrefix="sidebarSorting"
+            history={ this.props.history }
+            createSortingList={ this.createSortingList.bind(this) }
+            formSortingQuery={ this.formSortingQuery.bind(this) } />
+        </div>
+      </div>
+      <Header />
+      <div id="main">
+        <div className="inner">
+            <SearchHeader />
+            <div className="sections-double">
+                <div id="filters" className="filters-section">
+                    <div id="filter-box" className="accordion">
+                      <Accordion className="accordion-content"
                         accordionHeader="genres"
-                        namePrefix="sidebarGenres"
-                        history={this.props.history}
-                        closedChipID={ this.state.closedChipID }
-                        handleFilterQuery={ this.handleFilterQuery.bind(this) } />
-                      <Accordion className="accordion-content content-sidebar"
+                        namePrefix="genres"
+                        history={ this.props.history }
+                        createFiltersList={ this.createFiltersList.bind(this) }
+                        formFilterQuery={ this.formFilterQuery.bind(this) } />
+                      <Accordion className="accordion-content"
                         accordionHeader="sorting"
-                        namePrefix="sidebarSorting"
-                        history={this.props.history}
-                        closedChipID={ this.state.closedChipID }
-                        handleFilterQuery={ this.handleFilterQuery.bind(this) } />
+                        namePrefix="sorting"
+                        history={ this.props.history }
+                        createSortingList={ this.createSortingList.bind(this) }
+                        formSortingQuery={ this.formSortingQuery.bind(this) } />
                     </div>
                 </div>
-				<Header />
-				<div id="main">
-                    <div className="inner">
-                        <SearchHeader />
-                        <div className="sections-double">
-                            <div id="filters" className="filters-section">
-                                <div id="filter-box" className="accordion">
-                                  <Accordion className="accordion-content"
-                                    accordionHeader="genres"
-                                    namePrefix="genres"
-                                    history={this.props.history}
-                                    closedChipID={ this.state.closedChipID }
-                                    handleFilterQuery={ this.handleFilterQuery.bind(this) } />
-                                  <Accordion className="accordion-content"
-                                    accordionHeader="sorting"
-                                    namePrefix="sorting"
-                                    history={this.props.history}
-                                    closedChipID={ this.state.closedChipID }
-                                    handleFilterQuery={ this.handleFilterQuery.bind(this) } />
-                                </div>
-                            </div>
-                            <SearchTiles 
-                                filterQuery={ `genre=[${ [...this.state.filterQuery] }]` }
-                                sortingQuery={ `ordering=${ this.state.sortingQuery }` }
-                                chipsOptions={ this.state.filterQuery }
-                                genreList={ this.state.genreList }
-                                handleChipClose={ this.handleChipClose.bind(this) }  />
-                        </div>
-                    </div>
-                </div>
-				<Footer />
-			</div>
-        );
-    }
+                <SearchTiles 
+                    name="searchTiles"
+                    filterQuery={ `genre=[${ [...this.state.filterQuery] }]` }
+                    sortingQuery={ `ordering=${ this.state.sortingQuery }` }
+                    handleFiltersList={ this.state.handleFiltersList }
+                    handleSortingList={ this.state.handleSortingList } />
+            </div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+    );
+  }
 
 }
 
