@@ -11,9 +11,6 @@ import "./assets/css/main.css";
 import history from './components/history';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return (
             <Router history={history}>
