@@ -30,10 +30,15 @@
 		text-decoration: none;
 		color: _palette(fg);
 		border-bottom: dotted 1px transparentize(_palette(fg), 0.5);
+		cursor: pointer;
 
 		&:hover {
 			border-bottom-color: transparent;
 			color: _palette(accent1) !important;
+		}
+
+		&.no-border-btm {
+			border-bottom: none !important;
 		}
 	}
 
