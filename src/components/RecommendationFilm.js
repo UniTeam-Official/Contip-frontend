@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 const STYLES = ["style1", "style2", "style3", "style4", "style5", "style6"];
 
+
 class RecommendationFilm extends Component {
     /**
      * Returns a random integer between min (inclusive) and max (inclusive).

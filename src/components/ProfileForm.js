@@ -1,10 +1,12 @@
-/* eslint-disable eqeqeq */
 import React, { Component } from "react";
 import Checkbox from "./Checkbox";
 import PasswordInputField from "./PasswordInputFields";
 import SendButton from "./SendButton";
 import InfoText from "./InfoText";
 import WelcomeText from "./WelcomeText";
+
+import host from '../config';
+
 
 let GENRES = [];
 
@@ -92,7 +94,7 @@ class ProfileForm extends Component {
 				'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch('http://yyr3ll.pythonanywhere.com/api/v1/app/preferences/set/', options)
+        fetch(`${host}api/v1/app/preferences/set/`, options)
             .then(res => {
                 console.log(res);
                 if (res.status != 200){
@@ -127,7 +129,7 @@ class ProfileForm extends Component {
 				'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch('http://yyr3ll.pythonanywhere.com/api/v1/account/users/me/', options)
+        fetch(`${host}api/v1/account/users/me/`, options)
             .then(res => {
                 console.log(res);
                 if (res.status != 200){
@@ -155,7 +157,7 @@ class ProfileForm extends Component {
                     'Authorization': `JWT ${ access_token }`
                 }
             }
-            fetch('http://yyr3ll.pythonanywhere.com/api/v1/account/users/set_password/', options)
+            fetch(`${host}api/v1/account/users/set_password/`, options)
                 .then(res => {
                     console.log(res);
                     if (res.status != 204){
@@ -186,7 +188,7 @@ class ProfileForm extends Component {
                 'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch('http://yyr3ll.pythonanywhere.com/api/v1/account/users/me/', options)
+        fetch(`${host}api/v1/account/users/me/`, options)
             .then(res => {
                 console.log(res);
                 if (res.status != 204){
@@ -210,7 +212,7 @@ class ProfileForm extends Component {
             }
         }
 
-        fetch("http://yyr3ll.pythonanywhere.com/api/v1/app/genre/list/", options)
+        fetch(`${host}api/v1/app/genre/list/`, options)
             .then(response => {
                 console.log(response);
                 if (response.status > 400) {
@@ -233,7 +235,7 @@ class ProfileForm extends Component {
                     };
                 });
             });
-        fetch("http://yyr3ll.pythonanywhere.com/api/v1/app/preferences/set/", options)
+        fetch(`${host}api/v1/app/preferences/set/`, options)
             .then(response => {
                 console.log(response);
                 if (response.status > 400) {
