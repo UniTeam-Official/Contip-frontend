@@ -21,7 +21,7 @@ class Header extends Component {
 						<nav id="meny" className="meny">
 							<NavBar />
 						</nav>
-						<a href="#" className="icon" onClick={this.navBarFunc}>
+						<a className="icon no-border-btm" onClick={this.navBarFunc}>
 							<i className="nav-button fa fa-bars"></i>
 						</a>
 					</div>

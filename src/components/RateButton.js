@@ -17,11 +17,11 @@ class RateButton extends Component {
 			const access_token = localStorage.getItem('jwt access');
 			let options = {
 				method: "POST",
-				body: JSON.stringify({film: this.props.film_id, value: this.props.movie_rating}),
+				body: JSON.stringify({ film: this.props.film_id, value: this.props.movie_rating }),
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json',
-					'Authorization': `JWT ${access_token}`
+					'Authorization': `JWT ${ access_token }`
 				}
 			}
 			fetch('http://yyr3ll.pythonanywhere.com/api/v1/app/rating/create/', options)

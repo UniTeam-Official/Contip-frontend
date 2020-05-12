@@ -992,6 +992,12 @@ hr {
 /* Section/Article */
 section.special, article.special {
   text-align: center; }
+section .content > p > span, article .content > p > span {
+  background-color: #585858;
+  color: #fff;
+  border-radius: 5px;
+  padding: 3px 15px;
+  margin-right: 10px; }
 
 header p {
   margin-top: -1em; }
@@ -2077,9 +2083,8 @@ input {
   .nav-button {
     display: block;
     position: fixed;
-    vertical-align: baseline;
     right: 2em;
-    top: 5.9%;
+    top: 5%;
     z-index: 10000; } }
 #header {
   padding: 10px 20px;
