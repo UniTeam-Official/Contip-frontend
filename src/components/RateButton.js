@@ -4,12 +4,12 @@ import SendButton from "./SendButton";
 class RateButton extends Component {
 	handleClick = (event, addToast) => {
 		if (isNaN(this.props.movie_rating)) {
-			alert(`Rating must be a number!`);
 			event.preventDefault();
+			addToast("Rating must be a number!", { appearance: 'error', autoDismiss: true, });
 		}
 		else if (+this.props.movie_rating > 100 || +this.props.movie_rating < 0) {
-			alert(`Rating must be between 0 and 100!`);
 			event.preventDefault();
+			addToast("Rating must be between 0 and 100!", { appearance: 'error', autoDismiss: true, });
 		}
 		else {
 			event.preventDefault();
