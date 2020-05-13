@@ -81,7 +81,7 @@ class Movie extends Component {
 							</p>
 							<div className="title-card-content-bottom">
 								<div id="text-input-field" className="col-6 col-12-xsmall rating-input-field">
-									<TextInputField name={`rating${ this.props.film_id }`} id={`rating${ this.props.film_id }`} onChange={ this.handleRatingChange } value={ this.state.movie_rating } placeholder="Rating 0-100" />
+									<TextInputField name={`rating${ this.props.film_id }`} id={`rating${ this.props.film_id }`} onChange={ this.handleRatingChange } value={ this.state.movie_rating } placeholder="0-100 points" />
 								</div>
 								<div className="col-12">
 									<ul className="actions">
