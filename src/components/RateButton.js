@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import SendButton from "./SendButton";
 
+import host from '../config';
+
+
 class RateButton extends Component {
 	handleClick = (event, addToast) => {
 		if (isNaN(this.props.movie_rating)) {

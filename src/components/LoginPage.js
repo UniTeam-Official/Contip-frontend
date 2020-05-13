@@ -4,16 +4,15 @@ import LoginForm from "./LoginForm";
 import history from './history';
 
 
-
 class LoginPage extends Component {
-	render() {
-		return (
-			<div id="wrapper">
-				<LoginHeader />
-				<LoginForm history={this.props.history}/>
-			</div>
-		);
-	}
+    render() {
+        return (
+            <div id="wrapper">
+                <LoginHeader />
+                <LoginForm history={this.props.history}/>
+            </div>
+        );
+    }
 }
 
 export default LoginPage;

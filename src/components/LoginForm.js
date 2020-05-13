@@ -4,6 +4,7 @@ import TextInputField from "./TextInputField";
 import SendButton from "./SendButton";
 
 import history from './history';
+import host from '../config';
 
 
 class LoginForm extends Component {
@@ -39,7 +40,7 @@ class LoginForm extends Component {
             }
         }
 
-        fetch('http://yyr3ll.pythonanywhere.com/api/v1/auth/login/', options)
+        fetch(`${host}api/v1/auth/login/`, options)
             .then(res => {
                 console.log(res);
                 if (res.status != 200){

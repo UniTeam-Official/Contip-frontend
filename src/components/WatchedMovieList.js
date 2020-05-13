@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Movie from "./Movie";
+
 import host from '../config';
+
 
 class WatchedMovieList extends Component {
     constructor(props) {
@@ -22,7 +24,7 @@ class WatchedMovieList extends Component {
         /* 
             Functions that makes get requests simultaneously and returns films data
         */
-       
+
         let fetches = [];
         let jsones = [];
 

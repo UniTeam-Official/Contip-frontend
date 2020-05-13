@@ -11,10 +11,10 @@ const SendButton = (props) => {
 }
 
 const Button = (props) => {
-	const { addToast } = useToasts()
-	const onClick = (event) => { 
-		props.onSubmit(event, addToast);
-	};
+    const { addToast } = useToasts()
+    const onClick = (event) => {
+        props.onSubmit(event, addToast);
+    };
 
 	if (props.id === "DeleteProfileButton") {
 		return (

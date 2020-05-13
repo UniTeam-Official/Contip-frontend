@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import AccordionHeader from "./AccordionHeader";
 import Checkbox from "./Checkbox";
 
+import host from '../config';
+
+
 let FILTERS = [];
 const SORTING = ["title", "-title"];
 
@@ -41,7 +44,7 @@ class Accordion extends Component {
 				'Authorization': `JWT ${access_token}`
             }
         }
-        fetch("http://yyr3ll.pythonanywhere.com/api/v1/app/genre/list/", options)
+        fetch(`${host}api/v1/app/genre/list/`, options)
             .then(response => {
                 console.log(response);
                 if (response.status > 400) {
