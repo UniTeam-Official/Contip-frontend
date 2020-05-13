@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Movie from "./Movie";
-import history from './history';
 
 import host from '../config';
 
@@ -13,11 +12,11 @@ class WatchedMovieList extends Component {
             loaded: false,
             placeholder: "Loading"
         };
-        for (var i = 0; i <= 100; i++) {
-            this.setState(prevState => ({
-                movie_ratings: { ...prevState.movie_ratings, [i]: "" }
-            }));
-        }
+        // for (var i = 0; i <= 100; i++) {
+        //     this.setState(prevState => ({
+        //         movie_ratings: { ...prevState.movie_ratings, [i]: "" }
+        //     }));
+        // }
     }
 
     get_films = async (film_ids, options) => {
@@ -103,9 +102,7 @@ class WatchedMovieList extends Component {
                 if (moviesOnPageAmount < 12) {
                     moviesOnPageAmount++;
                     return (
-                        <div>
-                            <p><Movie film_id={film.id} link={`/film/${film.id}`} title={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => { return (genre.name + '  ') })} /></p>
-                        </div>
+                        <Movie film_id={ film.id } tmdb={ film.tmdb } link={ `/film/${film.id}` } title={ film.title } desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => { return (genre.name + '  ') })} />
                     );
                 }
             })
@@ -114,7 +111,11 @@ class WatchedMovieList extends Component {
             <div id="main">
                 <div className="inner">
                     <h1>Watched Movies</h1>
-                    {films}
+                    <div className="watchlist">
+                        <div className="watchlist-row">
+                            { films }
+                        </div>
+                    </div>
                 </div>
             </div>
         );

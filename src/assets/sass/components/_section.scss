@@ -10,6 +10,16 @@
 		&.special {
 			text-align: center;
 		}
+
+		.content {
+			> span {
+				background-color: #585858;
+				color: #fff;
+				border-radius: 5px;
+				padding: 3px 15px;
+				margin-right: 10px;
+			}
+		}
 	}
 
 	header {
