@@ -89,7 +89,7 @@ class LoginForm extends Component {
                     </form>
                     <h3><br />Dont have account? Create new one!</h3>
                     <ul className="actions">
-                        <a href="/signup/">
+                        <a className="no-border-btm" href="/signup/">
                             <li id="sendButton">
                                 <SendButton buttonName="Sign Up" />
                             </li>

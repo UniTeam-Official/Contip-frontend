@@ -55,7 +55,7 @@ class SignUpPage extends Component{
           .then(res => {
               console.log(res);
               if (res.status != 201){
-                addToast("Incorrect email entered!", { appearance: 'error', autoDismiss: true, });
+                addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
               }
               else {
                 this.props.history.push("/login/");

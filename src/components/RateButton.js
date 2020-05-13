@@ -41,7 +41,7 @@ class RateButton extends Component {
 	render() {
 		return (
 			<li>
-				<SendButton buttonName="Rate" onSubmit={ this.handleClick } />
+				<SendButton buttonName="Rate" onSubmit={ this.handleClick } className={ this.props.className } />
 			</li>
 		);
 	}

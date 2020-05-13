@@ -5,7 +5,7 @@ import { useToasts, ToastProvider } from 'react-toast-notifications';
 const SendButton = (props) => {
 	return (
 		<ToastProvider>
-			<Button id={ props.id } buttonName={ props.buttonName } onSubmit={ props.onSubmit } />
+			<Button id={ props.id } className={ props.className ? props.className : "" } buttonName={ props.buttonName } onSubmit={ props.onSubmit } />
 		</ToastProvider>
 	);
 }
@@ -27,7 +27,7 @@ const Button = (props) => {
 		);
 	} else {
 		return (
-			<button type="submit" value="Submit" className="primary" onClick={ onClick } >{ props.buttonName }</button>
+			<button type="submit" value="Submit" className={`primary ${ props.className }`} onClick={ onClick } >{ props.buttonName }</button>
 		);
 	}
 }

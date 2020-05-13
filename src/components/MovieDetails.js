@@ -13,7 +13,7 @@ class MovieDetails extends Component {
 				{/*<h3> Description: </h3>
 				<p>{this.props.desc}</p>*/}
 				{/* <h3> Genres: </h3> */}
-				<p>{ genres }</p>
+				{ genres }
 			</div>
 		);
 	}
