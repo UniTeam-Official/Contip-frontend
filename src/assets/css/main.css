@@ -94,12 +94,6 @@ body, input, select, textarea {
   font-size: 16pt;
   font-weight: 300;
   line-height: 1.75; }
-  @media screen and (max-width: 1680px) {
-    body, input, select, textarea {
-      font-size: 14pt; } }
-  @media screen and (max-width: 1280px) {
-    body, input, select, textarea {
-      font-size: 12pt; } }
 
 a {
   -moz-transition: border-bottom-color 0.2s ease, color 0.2s ease;
@@ -133,13 +127,6 @@ h1 {
   letter-spacing: -0.035em; }
   h1 a {
     color: inherit; }
-  @media screen and (max-width: 736px) {
-    h1 {
-      font-size: 2em;
-      margin: 0 0 1em 0; } }
-  @media screen and (max-width: 360px) {
-    h1 {
-      font-size: 1.75em; } }
 
 h2, h3, h4, h5, h6 {
   font-weight: 900;
@@ -165,15 +152,6 @@ h5 {
 h6 {
   font-size: 0.8em; }
 
-@media screen and (max-width: 980px) {
-  h1 br, h2 br, h3 br, h4 br, h5 br, h6 br {
-    display: none; } }
-@media screen and (max-width: 736px) {
-  h2 {
-    font-size: 1em; }
-
-  h3 {
-    font-size: 0.8em; } }
 sub {
   font-size: 0.8em;
   position: relative;
@@ -230,6 +208,32 @@ hr {
   font-size: 16px;
   line-height: 1.5; }
 
+/* Breakpoints */
+@media screen and (min-width: 981px) {
+  .text-wrap-pre-line {
+    font-size: 18px; } }
+@media screen and (max-width: 1680px) {
+  body, input, select, textarea {
+    font-size: 14pt; } }
+@media screen and (max-width: 1280px) {
+  body, input, select, textarea {
+    font-size: 12pt; } }
+@media screen and (max-width: 980px) {
+  h1 br, h2 br, h3 br, h4 br, h5 br, h6 br {
+    display: none; } }
+@media screen and (max-width: 736px) {
+  h1 {
+    font-size: 2em;
+    margin: 0 0 1em 0; }
+
+  h2 {
+    font-size: 1em; }
+
+  h3 {
+    font-size: 0.8em; } }
+@media screen and (max-width: 360px) {
+  h1 {
+    font-size: 1.75em; } }
 /* Row */
 .row {
   display: flex;
@@ -2232,7 +2236,7 @@ input {
   font-size: 16px;
   padding-top: 1px; }
   .detail-infos-subheading.label {
-    width: 120px;
+    width: 140px;
     float: left;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2241,19 +2245,23 @@ input {
   display: table-cell; }
 
 /* Breakpoints */
+@media screen and (min-width: 981px) {
+  .detail-infos-subheading {
+    font-size: 18px; }
+    .detail-infos-subheading.label {
+      width: 180px; }
+  .detail-infos-detail-values {
+    font-size: 18px; }
+
+  .title-block > h1 {
+    font-size: 36px; } }
 @media screen and (max-width: 1280px) {
   .detail-infos-subheading.label {
-    width: 120px;
-    float: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
     padding-top: 1px; }
 
   .title-sidebar-button > button {
     width: 100%;
-    font-size: 12px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0; } }
+    font-size: 12px; } }
 @media screen and (max-width: 736px) {
   .info-box {
     min-height: 1000px; } }
