@@ -28,17 +28,25 @@ class RateButton extends Component {
                 }
             }
 
+            let get_id_options = {};
 
 
 
             const response = await fetch(`${host}api/v1/app/rating/create/`, options);
-
             console.log(response);
 
             if (response.status == 400 && response.url == `${host}api/v1/app/rating/create/`) {
 
+
+
+                Object.assign(get_id_options, options);
+                get_id_options.body = JSON.stringify({ id: this.props.film_id});
+
+                const rating_id_response = await fetch(`${host}api/v1/app/rating/get_id/`, get_id_options);
+                console.log(rating_id_response);
+                const rating_id = await rating_id_response.json(); 
+
                 options.method = "PUT";
-                const rating_id = await fetch(`${host}api/v1/app/rating/find_by_film/${this.props.film_id}/`, options);
                 const put_response = await fetch(`${host}api/v1/app/rating/detail/${rating_id}`, options);
                 console.log(put_response);
 
