@@ -52,7 +52,7 @@ class MovieList extends Component {
         if (this.state.loaded && typeof(this.state.data) != 'undefined' && this.state.data.length > 0){
             films = this.state.data.map(film => {
                 return (
-                    <RecommendationFilm href={`/film/${ film.id }`} title={ film.title } key={ film.title } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => {return(genre.name + '  ')})} />
+                    <RecommendationFilm href={`/film/${ film.id }`} title={ film.title } key={ film.title } tmdb={ film.tmdb } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => {return(genre.name + '  ')})} />
                 );
             })
             return (
