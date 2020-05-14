@@ -86,7 +86,7 @@
 
 
             &.label {
-                width: 120px;
+                width: 140px;
                 float: left;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -100,14 +100,34 @@
     }
 
 /* Breakpoints */
+    @include breakpoint('>=large') {
+        .detail-infos {
+            &-subheading {  
+                font-size: 18px;
+                
+                &.label {
+                    width: 180px;
+                }
+            }
+
+            &-detail-values {
+                font-size: 18px;
+            }
+        }
+
+        .title {
+            &-block {
+                > h1 {
+                    font-size: 36px;
+                }
+            }
+        }
+    }
+
     @include breakpoint('<=large') {
         .detail-infos {
             &-subheading {    
                 &.label {
-                    width: 120px;
-                    float: left;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
                     padding-top: 1px;
                 }
             }
@@ -119,8 +139,6 @@
                     > button {
                         width: 100%;
                         font-size: 12px;
-                        border-top-left-radius: 0;
-                        border-top-right-radius: 0;
                     }
                 }
             }
