@@ -235,7 +235,7 @@
 
 			article {
 				width: calc(#{(100% / 2)} - #{$gutter * 1});
-				margin: $gutter 0 0 $gutter;
+				margin: $gutter 0 $gutter $gutter;
 
 				&:hover {
 					> .image {

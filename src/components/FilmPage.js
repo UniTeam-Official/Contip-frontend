@@ -229,17 +229,9 @@ class FilmPage extends Component{
     }
 
     render() {
-        let movie = (
-            <div className="inner">
-                <h1 id="main-film-title">TITLE</h1>
-                <span id="main-film-image" className="image main"><img src="image" alt="IMAGE" /></span>
-                <a href='/'>IMDB Link</a>
-                <h3>Film description:</h3>
-                <p id="film-description">DESCRIPTION</p>
-            </div>
-        );
+        let movie = <h1>Film page</h1>
 
-        if(this.state && this.state.loaded && this.state.loaded_tmdb) {
+        if (this.state && this.state.loaded && this.state.loaded_tmdb) {
             let counter = 0;
             let genresArray = this.state.data.genre;
 

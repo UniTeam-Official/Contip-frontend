@@ -105,7 +105,7 @@ class SearchTiles extends Component {
         if (this.state && typeof (this.state.data.results) != 'undefined' && this.state.data.results.length > 0) {
             filteredFilms = this.state.data.results.map(film => {
                 return (
-                    <RecommendationFilm href={`/film/${film.id}`} title={film.title} key={film.title} image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => { return (genre.name + '  ') })} />
+                    <RecommendationFilm href={`/film/${ film.id }`} title={ film.title } key={ film.title } tmdb={ film.tmdb } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => { return (genre.name + '  ') })} />
                 );
             });
 
@@ -125,18 +125,18 @@ class SearchTiles extends Component {
                             <button id="search_button" className="search-btn" type="button">
                                 <i className="fa fa-search"></i>
                             </button>
-                            <span id="search_searched_count" className="search-searched-count">{resCounter}</span>
+                            <span id="search_searched_count" className="search-searched-count">{ resCounter }</span>
                             <input type="text"
                                 className="search-input"
-                                value={this.state.value}
-                                onChange={this.handleChange.bind(this)}
-                                onKeyDown={this.handleKeyDown.bind(this)}>
+                                value={ this.state.value }
+                                onChange={ this.handleChange.bind(this) }
+                                onKeyDown={ this.handleKeyDown.bind(this) }>
                             </input>
                         </div>
                     </div>
                 </div>
                 <section className="tiles">
-                    {filteredFilms}
+                    { filteredFilms }
                 </section>
             </section>
         );
