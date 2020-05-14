@@ -14,14 +14,14 @@ class Header extends Component {
 	}
 	render() {
 		return (
-			<header id="header" className={this.props.className}>
+			<header id="header" className={ this.props.className }>
 				<div className="header-inner">
 					<div className="navbar">
 						<TitleIcon className="logo"/>
 						<nav id="meny" className="meny">
 							<NavBar />
 						</nav>
-						<a className="icon no-border-btm" onClick={this.navBarFunc}>
+						<a className="icon no-border-btm" onClick={ this.navBarFunc }>
 							<i className="nav-button fa fa-bars"></i>
 						</a>
 					</div>
