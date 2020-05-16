@@ -2144,11 +2144,7 @@ input {
     height: 2.8em; }
   .watchlist .rating-button {
     height: initial;
-    line-height: 3.5em; }
-  .watchlist-row .col-xs-6 {
-    width: 100%; }
-  .watchlist-row .col-xs-4 {
-    width: 27%; } }
+    line-height: 3.5em; } }
 @media screen and (max-width: 736px) {
   .watchlist .title-card-content-bottom {
     bottom: -5%; }
@@ -2158,9 +2154,7 @@ input {
     height: 2.4em; }
   .watchlist .rating-button {
     height: 3em;
-    line-height: 1em; }
-  .watchlist-row .col-xs-4 {
-    width: 33.33333%; } }
+    line-height: 1em; } }
 @media screen and (max-width: 480px) {
   .watchlist .title-card-content-title {
     line-height: 1em; }
@@ -2333,7 +2327,7 @@ input {
     display: block;
     position: fixed;
     right: 2em;
-    top: 3.38%;
+    top: 33px;
     z-index: 10000; } }
 #header {
   padding: 10px 20px;
@@ -2640,6 +2634,7 @@ body.is-menu-visible #menu {
     width: 33.33333%; }
 
   .col-sm-push-4 {
+    float: unset;
     left: unset; }
   .col-sm-pull-8 {
     right: -15%; }
@@ -2649,6 +2644,7 @@ body.is-menu-visible #menu {
     width: 70%; } }
 @media screen and (max-width: 480px) {
   .col-sm-pull-8 {
+    float: unset;
     right: unset; }
   .col-sm-4 {
     width: 100%; } }
