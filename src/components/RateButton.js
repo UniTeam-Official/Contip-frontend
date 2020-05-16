@@ -30,52 +30,40 @@ class RateButton extends Component {
 
             let get_id_options = {};
 
-
-
             const response = await fetch(`${host}api/v1/app/rating/create/`, options);
-            console.log(response);
 
-            if (response.status == 400 && response.url == `${host}api/v1/app/rating/create/`) {
-
+            if (response.status === 400 && response.url === `${host}api/v1/app/rating/create/`) {
 
 
+                // Creating options for getting id of rating
                 Object.assign(get_id_options, options);
-                get_id_options.body = JSON.stringify({ id: this.props.film_id});
+                get_id_options.method = "GET";
+                delete get_id_options["body"];
 
-                const rating_id_response = await fetch(`${host}api/v1/app/rating/get_id/`, get_id_options);
-                console.log(rating_id_response);
-                const rating_id = await rating_id_response.json(); 
 
+                // Fetching rating id
+                const rating_id_response = await fetch(`${host}api/v1/app/rating/get_id/${this.props.film_id}`, get_id_options);
+                const rating_obj = await rating_id_response.json();
+
+
+                // Updating rating
                 options.method = "PUT";
-                const put_response = await fetch(`${host}api/v1/app/rating/detail/${rating_id}`, options);
-                console.log(put_response);
+                const put_response = await fetch(`${host}api/v1/app/rating/detail/${rating_obj}/`, options);
 
-                if (put_response.status != 201) {
+
+                if (put_response.status !== 200) {
                     addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
                 }
                 addToast("Rated successfully!", { appearance: 'success', autoDismiss: true, });
 
             }
-            else if (response.status != 201) {
+            else if (response.status !== 201) {
                 addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
             }
             else {
                 addToast("Rated successfully!", { appearance: 'success', autoDismiss: true, });
             }
 
-
-
-            // fetch(`${host}api/v1/app/rating/create/`, options)
-            //     .then(res => {
-            //         console.log(res);
-            //         if (res.status != 201) {
-            //             addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
-            //         }
-            //         else {
-            //             addToast("Rated successfully!", { appearance: 'success', autoDismiss: true, });
-            //         }
-            //         return res.json();
-            //     });
         }
     }
 
