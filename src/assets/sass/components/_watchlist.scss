@@ -192,18 +192,6 @@
                     line-height: 3.5em;
                 }
             }
-
-            &-row {
-                .col {
-                    &-xs-6 {
-                        width: 100%;
-                    }
-
-                    &-xs-4 {
-                        width: 27%;
-                    }
-                }
-            }
         }
     }
 
@@ -235,14 +223,6 @@
                 &-button {
                     height: 3em;
                     line-height: 1em;
-                }
-            }
-
-            &-row {
-                .col {
-                    &-xs-4 {
-                        width: 33.33333%;
-                    }
                 }
             }
         }    
