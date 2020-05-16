@@ -2036,7 +2036,7 @@ input {
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
-  background: rgba(12, 21, 29, 0.85);
+  background: #f6f6f6;
   margin-bottom: 20px;
   border-radius: 5px; }
   .watchlist .title-card-content {
@@ -2057,11 +2057,9 @@ input {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px; }
     .watchlist .title-card-content-title a {
-      font-size: 19px;
-      color: #fff; }
+      font-size: 19px; }
     .watchlist .title-card-content-description {
       height: 70px;
-      opacity: .3;
       margin-top: 10px;
       margin-bottom: 0;
       display: block;
@@ -2070,8 +2068,7 @@ input {
       overflow: hidden;
       text-overflow: ellipsis;
       padding: 0;
-      font-size: 16px;
-      color: #fff; }
+      font-size: 16px; }
       .watchlist .title-card-content-description::after {
         content: "";
         text-align: right;
@@ -2081,7 +2078,7 @@ input {
         display: block;
         height: 20px;
         width: 25%;
-        background: linear-gradient(90deg, rgba(12, 21, 29, 0), #30373e 75%); }
+        background: linear-gradient(90deg, transparent, #f6f6f6 75%); }
     .watchlist .title-card-content-bottom {
       display: -moz-flex;
       display: -webkit-flex;
@@ -2113,7 +2110,6 @@ input {
 .watchlist .rating-input-field {
   width: 63%; }
   .watchlist .rating-input-field > input {
-    background: #30373e;
     border: solid 1px #585858;
     height: 2.8em;
     padding: 10px;
