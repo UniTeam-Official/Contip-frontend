@@ -111,7 +111,7 @@ class SignUpPage extends Component {
                     <div className="inner">
                         <h1>Register</h1>
                         <section>
-                            <form method="post" action="#">
+                            <form method="post" className="login-form" action="#">
                                 <div className="row gtr-uniform">
                                     <div className="col-6 col-12-xsmall">
                                         <TextInputField name="username" id="username" value={this.state.username} onChange={this.handleUsernameChange} placeholder="Username" />
