@@ -264,63 +264,53 @@ class ProfileForm extends Component {
             <div id="main">
                 <div className="inner">
                     <h1>My Profile</h1>
-                    <section>
+                    <section className="profile-section">
                         <WelcomeText/>
 
-                      <div style={{display: 'flex'}}>
+                        <div>
+                            {/* PREFERENCES */}
 
-                        {/* PREFERENCES */}
-
-                        <form method="post" action="#">
-                          <div style={{flex: '50%'}}>
-                            <div className="row gtr-uniform">
-                              <div className="col-6 col-12-small">
-                                <h4>Here's Your Favourite Stuff<br/>Change It Up If You Want</h4>
-                                    {this.state.data.map(genre => {
-                                      let genreName = "genre" + genre.id;
-                                        return (
-                                            <Checkbox
-                                                id={ genreName }
-                                                name={ genre.id }
-                                                text={ genre.name }
-                                                isSelected={ this.state.preferences[genre.id] }
-                                                onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
-                                        );
-                                    })}
-                              </div>
-                                <div className="col-12">
-                                    <ul className="actions">
-                                        <li id="sendButton">
-                                            <SendButton buttonName="Submit" onSubmit={ this.handlePreferenceSubmit } toastMessage="Preferences saved successfully" />
-                                        </li>
-                                    </ul>
+                            <form method="post" action="#">
+                            <div>
+                                <div className="row gtr-uniform">
+                                <div className="col-6 col-12-small">
+                                    <h4>Here's Your Favourite Stuff<br/>Change It Up If You Want</h4>
+                                        {this.state.data.map(genre => {
+                                        let genreName = "genre" + genre.id;
+                                            return (
+                                                <Checkbox
+                                                    id={ genreName }
+                                                    name={ genre.id }
+                                                    text={ genre.name }
+                                                    isSelected={ this.state.preferences[genre.id] }
+                                                    onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
+                                            );
+                                        })}
+                                </div>
+                                    <div className="col-12">
+                                        <ul className="actions">
+                                            <li id="sendButton">
+                                                <SendButton buttonName="Submit" onSubmit={ this.handlePreferenceSubmit } toastMessage="Preferences saved successfully" />
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                          </div>
-                        </form>
-
-                        <br />
+                            </form>
+                        </div>
+                        
+                        <div className="user-info">
+                            <h4>Everything We Know About You:</h4>
+                            <InfoText />
+                            <SendButton buttonName="Log Out" onSubmit={ this.handleLogOutSubmit } toastMessage="Log out completed successfully" />
+                        </div>
 
                         <div>
-                          <div style={{ flex: '50%' }}>
-                            <h4>Everything We Know About You:</h4>
-                                <InfoText />
-                                <SendButton buttonName="Log Out" onSubmit={ this.handleLogOutSubmit } toastMessage="Log out completed successfully" />
-                            </div>
-                        </div>
-                        </div>
-
-                        <br />
-                        <br />
-                        <br />
-
-                        <div style={{ display: 'flex' }}>
-
                             {/* CHANGE EMAIL */}
 
                             <form method="post" action="#">
-                                <div style={{flex: '50%'}}>
-                                  <div className="row gtr-uniform">
+                                <div>
+                                    <div className="row gtr-uniform">
                                         <div id="text-input-field" className="col-6 col-12-xsmall">
                                             <h3>Change Email</h3>
                                             <input
@@ -334,24 +324,24 @@ class ProfileForm extends Component {
                                                 type="password"
                                                 name="#" id="#"
                                                 placeholder="Enter Password To Confirm" />
-                                            </div>
-                                            <div className="col-12">
+                                        </div>
+                                        <div className="col-12">
                                             <ul className="actions">
                                                 <li id="sendButton">
-                                                <SendButton buttonName="Change!" onSubmit={ this.handleEmailSubmit } toastMessage="Email changed successfully" />
+                                                    <SendButton buttonName="Change!" onSubmit={ this.handleEmailSubmit } toastMessage="Email changed successfully" />
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </form>
+                        </div>
 
-                          <br/>
-
+                        <div>
                             {/* CHANGE PASS */}
 
                             <form method="post" action="#">
-                                <div style={{ flex: '50%' }}>
+                                <div>
                                     <div className="row gtr-uniform">
                                         <div className="col-6 col-12-xsmall">
                                             <h3>Change Password</h3>
@@ -380,27 +370,26 @@ class ProfileForm extends Component {
                             </form>
                         </div>
 
-                        <br/>
-
                         {/* DELETE ACCOUNT */}
 
-                        <h3>Wanna Leave Us? Ah, We Will Miss You!</h3>
-                        <form method="post" action="#">
-                            <div className="row gtr-uniform">
-                                <div className="col-6 col-12-xsmall">
-                                    <PasswordInputField
-                                        name="profile_delete_password"
-                                        id="profile_delete_password"
-                                        value={ this.state.deletePassword }
-                                        onChange={ this.handleDeletePasswordChange }
-                                        placeholder="Password" />
+                        <div>
+                            <h3>Wanna Leave Us? Ah, We Will Miss You!</h3>
+                            <form method="post" action="#">
+                                <div className="row gtr-uniform">
+                                    <div className="col-6 col-12-xsmall">
+                                        <PasswordInputField
+                                            name="profile_delete_password"
+                                            id="profile_delete_password"
+                                            value={ this.state.deletePassword }
+                                            onChange={ this.handleDeletePasswordChange }
+                                            placeholder="Password" />
+                                    </div>
                                 </div>
-                            </div>
-                        <br />
-                        <div className="row">
-                            <SendButton id="DeleteProfileButton" buttonName="Delete" onSubmit={ this.handleDeleteProfile } />
+                                <div className="row">
+                                    <SendButton id="DeleteProfileButton" buttonName="Delete" onSubmit={ this.handleDeleteProfile } />
+                                </div>
+                            </form>
                         </div>
-                        </form>
                     </section>
                 </div>
             </div>
