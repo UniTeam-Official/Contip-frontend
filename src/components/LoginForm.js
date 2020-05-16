@@ -70,18 +70,18 @@ class LoginForm extends Component {
                 <div className="inner">
 
                     <h1>Login Page</h1>
-                    <form method="post" onSubmit={this.handleSubmit}>
+                    <form method="post" className="login-form" onSubmit={ this.handleSubmit }>
                         <div className="row gtr-uniform">
                             <div id="text-input-field" className="col-6 col-12-xsmall">
-                                <TextInputField name="username" id="username" value={this.state.username} onChange={this.handleUsernameChange} placeholder="Username" />
-                                <PasswordInputField name="password" id="password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="Password" />
+                                <TextInputField name="username" id="username" value={ this.state.username } onChange={ this.handleUsernameChange } placeholder="Username" />
+                                <PasswordInputField name="password" id="password" value={ this.state.password } onChange={ this.handlePasswordChange } placeholder="Password" />
                             </div>
                             <div className="col-12">
                                 <ul className="actions">
                                     <li id="sendButton">
                                         <SendButton buttonName="Login" onSubmit={ this.handleSubmit } />
                                     </li>
-                                    <li>
+                                    <li className="forgot-password">
                                         <a href="#">Forgot password?</a>
                                     </li>
                                 </ul>

@@ -20,7 +20,7 @@ class WelcomeText extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${access_token}`
+                'Authorization': `JWT ${ access_token }`
             }
         }
         fetch(`${host}api/v1/account/users/me/`, options)
@@ -47,7 +47,7 @@ class WelcomeText extends Component {
     render() {
         return (
             <div>
-                <h2>Welcome, {this.state.data.username}!</h2>
+                <h2>Welcome, { this.state.data.username }!</h2>
             </div>
         );
     }
