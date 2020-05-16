@@ -1,3 +1,3 @@
 export {host as default}
 
-const host = 'http://yyr3ll.pythonanywhere.com/';
+const host = 'http://161.35.73.64:8000/';
