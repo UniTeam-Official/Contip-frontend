@@ -141,7 +141,7 @@
 		min-height: (_size(element-height) * 1.25);
 	}
 
-	input[type="checkbox"],
+	input[type="checkbox"]:not(.preferences-checkbox),
 	input[type="radio"] {
 		@include vendor('appearance', 'none');
 		display: block;

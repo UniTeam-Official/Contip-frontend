@@ -273,19 +273,36 @@ class ProfileForm extends Component {
                             <form method="post" action="#">
                             <div>
                                 <div className="row gtr-uniform">
-                                <div className="col-6 col-12-small">
+                                <div className="col-6 col-12-small preferences">
                                     <h4>Here's Your Favourite Stuff<br/>Change It Up If You Want</h4>
-                                        {this.state.data.map(genre => {
-                                        let genreName = "genre" + genre.id;
+                                    {this.state.data.map(genre => {
+                                        if (this.state.preferences[genre.id]) {
+                                            let genreName = "genre" + genre.id;
                                             return (
                                                 <Checkbox
                                                     id={ genreName }
                                                     name={ genre.id }
                                                     text={ genre.name }
                                                     isSelected={ this.state.preferences[genre.id] }
+                                                    className="preferences-checkbox"
                                                     onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
                                             );
-                                        })}
+                                        }
+                                    })}
+                                    {this.state.data.map(genre => {
+                                        if (!this.state.preferences[genre.id]) {
+                                            let genreName = "genre" + genre.id;
+                                            return (
+                                                <Checkbox
+                                                    id={ genreName }
+                                                    name={ genre.id }
+                                                    text={ genre.name }
+                                                    isSelected={ this.state.preferences[genre.id] }
+                                                    className="preferences-checkbox"
+                                                    onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
+                                            );
+                                        }
+                                    })}
                                 </div>
                                     <div className="col-12">
                                         <ul className="actions">
