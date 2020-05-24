@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Checkbox from "./Checkbox";
-import PasswordInputField from "./PasswordInputFields";
+import TextInputField from "./TextInputField";
 import SendButton from "./SendButton";
 import InfoText from "./InfoText";
 import WelcomeText from "./WelcomeText";
@@ -29,6 +29,56 @@ class ProfileForm extends Component {
                 }),
                 {}
             ),
+
+            emailInputList: [
+                {
+                    type: "email",
+                    name: "email-change",
+                    id: "email-change",
+                    value: this.email,
+                    onChange: this.handleEmailChange,
+                    placeholder: "New email",
+                },
+
+                {
+                    type: "password",
+                    name: "password-email-change",
+                    id: "password-email-change",
+                    placeholder: "Enter Password To Confirm",
+                },
+            ],
+
+
+            passwordInputList: [
+                {
+                    type: "password",
+                    name: "password-profile",
+                    id: "password-profile",
+                    value: this.password,
+                    onChange: this.handlePasswordChange,
+                    placeholder: "New Password",
+                },
+
+                {
+                    type: "password",
+                    name: "password-confirm-profile",
+                    id: "password-confirm-profile",
+                    value: this.confirmPassword,
+                    onChange: this.handleConfirmPasswordChange,
+                    placeholder: "Confirm Your Password",
+                },
+            ],
+
+            deleteInputList: [
+                {
+                    type: "password",
+                    name: "password-delete-profile",
+                    id: "password-delete-profile",
+                    value: this.deletePassword,
+                    onChange: this.handleDeletePasswordChange,
+                    placeholder: "Password",
+                },
+            ],
         };
     }
 
@@ -157,7 +207,7 @@ class ProfileForm extends Component {
                     'Authorization': `JWT ${ access_token }`
                 }
             }
-            fetch(`${host}api/v1/account/users/set_password/`, options)
+            fetch(`${ host }api/v1/account/users/set_password/`, options)
                 .then(res => {
                     console.log(res);
                     if (res.status != 204){
@@ -188,7 +238,7 @@ class ProfileForm extends Component {
                 'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${host}api/v1/account/users/me/`, options)
+        fetch(`${ host }api/v1/account/users/me/`, options)
             .then(res => {
                 console.log(res);
                 if (res.status != 204){
@@ -212,7 +262,7 @@ class ProfileForm extends Component {
             }
         }
 
-        fetch(`${host}api/v1/app/genre/list/`, options)
+        fetch(`${ host }api/v1/app/genre/list/`, options)
             .then(response => {
                 console.log(response);
                 if (response.status > 400) {
@@ -235,7 +285,7 @@ class ProfileForm extends Component {
                     };
                 });
             });
-        fetch(`${host}api/v1/app/preferences/set/`, options)
+        fetch(`${ host }api/v1/app/preferences/set/`, options)
             .then(response => {
                 console.log(response);
                 if (response.status > 400) {
@@ -271,48 +321,48 @@ class ProfileForm extends Component {
                             {/* PREFERENCES */}
 
                             <form method="post" action="#">
-                            <div>
-                                <div className="row gtr-uniform">
-                                <div className="col-6 col-12-small preferences">
-                                    <h4>Here's Your Favourite Stuff<br/>Change It Up If You Want</h4>
-                                    {this.state.data.map(genre => {
-                                        if (this.state.preferences[genre.id]) {
-                                            let genreName = "genre" + genre.id;
-                                            return (
-                                                <Checkbox
-                                                    id={ genreName }
-                                                    name={ genre.id }
-                                                    text={ genre.name }
-                                                    isSelected={ this.state.preferences[genre.id] }
-                                                    className="preferences-checkbox"
-                                                    onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
-                                            );
-                                        }
-                                    })}
-                                    {this.state.data.map(genre => {
-                                        if (!this.state.preferences[genre.id]) {
-                                            let genreName = "genre" + genre.id;
-                                            return (
-                                                <Checkbox
-                                                    id={ genreName }
-                                                    name={ genre.id }
-                                                    text={ genre.name }
-                                                    isSelected={ this.state.preferences[genre.id] }
-                                                    className="preferences-checkbox"
-                                                    onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
-                                            );
-                                        }
-                                    })}
-                                </div>
-                                    <div className="col-12">
-                                        <ul className="actions">
-                                            <li id="sendButton">
-                                                <SendButton buttonName="Submit" onSubmit={ this.handlePreferenceSubmit } toastMessage="Preferences saved successfully" />
-                                            </li>
-                                        </ul>
+                                <div>
+                                    <div className="row gtr-uniform">
+                                    <div className="col-6 col-12-small preferences">
+                                        <h4>Here's Your Favourite Stuff<br/>Change It Up If You Want</h4>
+                                        {this.state.data.map(genre => {
+                                            if (this.state.preferences[genre.id]) {
+                                                let genreName = "genre" + genre.id;
+                                                return (
+                                                    <Checkbox
+                                                        id={ genreName }
+                                                        name={ genre.id }
+                                                        text={ genre.name }
+                                                        isSelected={ this.state.preferences[genre.id] }
+                                                        className="preferences-checkbox"
+                                                        onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
+                                                );
+                                            }
+                                        })}
+                                        {this.state.data.map(genre => {
+                                            if (!this.state.preferences[genre.id]) {
+                                                let genreName = "genre" + genre.id;
+                                                return (
+                                                    <Checkbox
+                                                        id={ genreName }
+                                                        name={ genre.id }
+                                                        text={ genre.name }
+                                                        isSelected={ this.state.preferences[genre.id] }
+                                                        className="preferences-checkbox"
+                                                        onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
+                                                );
+                                            }
+                                        })}
+                                    </div>
+                                        <div className="col-12">
+                                            <ul className="actions">
+                                                <li id="sendButton">
+                                                    <SendButton buttonName="Submit" onSubmit={ this.handlePreferenceSubmit } toastMessage="Preferences saved successfully" />
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </form>
                         </div>
                         
@@ -330,17 +380,7 @@ class ProfileForm extends Component {
                                     <div className="row gtr-uniform">
                                         <div id="text-input-field" className="col-6 col-12-xsmall">
                                             <h3>Change Email</h3>
-                                            <input
-                                                type="email"
-                                                name="profile_email"
-                                                id="profile_email"
-                                                value={ this.state.email } 
-                                                onChange={ this.handleEmailChange }
-                                                placeholder="New Email" />
-                                            <input
-                                                type="password"
-                                                name="#" id="#"
-                                                placeholder="Enter Password To Confirm" />
+                                            <TextInputField textInputList={ this.state.emailInputList } />
                                         </div>
                                         <div className="col-12">
                                             <ul className="actions">
@@ -363,17 +403,7 @@ class ProfileForm extends Component {
                                         <div className="col-6 col-12-xsmall">
                                             <h3>Change Password</h3>
                                             {/*<PasswordInputField name="profile_current_password" id="profile_current_password" value={this.state.currentPassword} onChange={this.handleCurrentPasswordChange} placeholder="Current Password" />*/}
-                                            <PasswordInputField
-                                                name="profile_password" id="profile_password"
-                                                value={ this.state.password }
-                                                onChange={ this.handlePasswordChange }
-                                                placeholder="New Password" />
-                                            <PasswordInputField
-                                                name="profile_confirm_password"
-                                                id="profile_confirm_password"
-                                                value={ this.state.confirmPassword }
-                                                onChange={ this.handleConfirmPasswordChange }
-                                                placeholder="Confirm New Password" />
+                                            <TextInputField textInputList={ this.state.passwordInputList } />
                                         </div>
                                         <div className="col-12">
                                             <ul className="actions">
@@ -394,12 +424,7 @@ class ProfileForm extends Component {
                             <form method="post" action="#">
                                 <div className="row gtr-uniform">
                                     <div className="col-6 col-12-xsmall">
-                                        <PasswordInputField
-                                            name="profile_delete_password"
-                                            id="profile_delete_password"
-                                            value={ this.state.deletePassword }
-                                            onChange={ this.handleDeletePasswordChange }
-                                            placeholder="Password" />
+                                        <TextInputField textInputList={ this.state.deleteInputList } />
                                     </div>
                                 </div>
                                 <div className="row">

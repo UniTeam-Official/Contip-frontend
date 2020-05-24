@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import PasswordInputField from "./PasswordInputFields";
 import TextInputField from "./TextInputField";
 import SendButton from "./SendButton";
 
-import history from './history';
 import host from '../config';
 
 
@@ -13,6 +11,26 @@ class LoginForm extends Component {
         this.state = {
             username: '',
             password: '',
+
+            textInputList: [
+                {
+                    type: "text",
+                    name: "username-login",
+                    id: "username-login",
+                    value: this.username,
+                    onChange: this.handleUsernameChange,
+                    placeholder: "Username",
+                },
+
+                {
+                    type: "password",
+                    name: "password-login",
+                    id: "password-login",
+                    value: this.password,
+                    onChange: this.handlePasswordChange,
+                    placeholder: "Password",
+                },
+            ],
         }
     }
 
@@ -73,8 +91,7 @@ class LoginForm extends Component {
                     <form method="post" className="login-form" onSubmit={ this.handleSubmit }>
                         <div className="row gtr-uniform">
                             <div id="text-input-field" className="col-6 col-12-xsmall">
-                                <TextInputField name="username" id="username" value={ this.state.username } onChange={ this.handleUsernameChange } placeholder="Username" />
-                                <PasswordInputField name="password" id="password" value={ this.state.password } onChange={ this.handlePasswordChange } placeholder="Password" />
+                                <TextInputField textInputList={ this.state.textInputList } />
                             </div>
                             <div className="col-12">
                                 <ul className="actions">

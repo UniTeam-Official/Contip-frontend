@@ -2,9 +2,14 @@ import React, { Component } from "react";
 
 class TextInputField extends Component {
     render() {
-        return (
-            <input type="text" name={this.props.name} id={this.props.id} value={this.props.value} onChange={this.props.onChange} placeholder={this.props.placeholder} />
-        );
+        const { textInputList } = this.props;
+        const inputs = textInputList.map(input => {
+            return (
+                <input type={ input.type } name={ input.name } id={ input.id } value={ input.value } onChange={ input.onChange } placeholder={ input.placeholder } key={ input.id } />
+            );
+        });
+
+        return inputs;
     }
 }
 

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 class MovieDetails extends Component {
 	render() {
-		let genres = this.props.genres.map((genre) => {
+		let genres = this.props.genres.map(genre => {
 			return (
 				<span>{ genre }</span>
 			);

@@ -96,21 +96,32 @@ class WatchedMovieList extends Component {
 
     render() {
         let moviesOnPageAmount = 0;
-        let films = <p></p>;
+        let films = <span></span>;
+        let emptyWatchlistInfo = (
+            <div>
+                <h2>There is nothing here</h2>
+                <p><strong>but you can improve it =)</strong></p>
+            </div>
+        );
+
         if (this.state && typeof (this.state.data) != 'undefined' && this.state.data.length > 0) {
             films = this.state.data.map(film => {
                 if (moviesOnPageAmount < 12) {
                     moviesOnPageAmount++;
                     return (
-                        <Movie film_id={ film.id } tmdb={ film.tmdb } link={ `/film/${film.id}` } title={ film.title } desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => { return (genre.name + '  ') })} />
+                        <Movie film_id={ film.id } tmdb={ film.tmdb } link={ `/film/${film.id}` } title={ film.title } desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => { return (genre.name + '  ') })} key={ film.id } />
                     );
                 }
-            })
+            });
+
+            emptyWatchlistInfo = <span></span>
         }
+
         return (
             <div id="main">
                 <div className="inner">
                     <h1>Watched Movies</h1>
+                    { emptyWatchlistInfo }
                     <div className="watchlist">
                         <div className="watchlist-row">
                             { films }

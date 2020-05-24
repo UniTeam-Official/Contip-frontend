@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import PasswordInputField from "./PasswordInputFields";
 import TextInputField from "./TextInputField";
 import SendButton from "./SendButton";
-import history from './history';
 
 import host from '../config';
 
@@ -15,6 +13,44 @@ class SignUpPage extends Component {
             username: '',
             password: '',
             re_password: '',
+
+            textInputList: [
+                {
+                    type: "text",
+                    name: "username-registration",
+                    id: "username-registration",
+                    value: this.username,
+                    onChange: this.handleUsernameChange,
+                    placeholder: "Username",
+                },
+
+                {
+                    type: "email",
+                    name: "email-registration",
+                    id: "email-registration",
+                    value: this.email,
+                    onChange: this.handleEmailChange,
+                    placeholder: "Email",
+                },
+
+                {
+                    type: "password",
+                    name: "password-registration",
+                    id: "password-registration",
+                    value: this.password,
+                    onChange: this.handlePasswordChange,
+                    placeholder: "Password",
+                },
+
+                {
+                    type: "password",
+                    name: "password-confirm-registration",
+                    id: "password-confirm-registration",
+                    value: this.re_password,
+                    onChange: this.handleConfirmPasswordChange,
+                    placeholder: "Confirm Your Password",
+                },
+            ],
         }
     }
 
@@ -114,14 +150,11 @@ class SignUpPage extends Component {
                             <form method="post" className="login-form" action="#">
                                 <div className="row gtr-uniform">
                                     <div className="col-6 col-12-xsmall">
-                                        <TextInputField name="username" id="username" value={this.state.username} onChange={this.handleUsernameChange} placeholder="Username" />
-                                        <input type="email" name="demo-email" id="demo-email" value={this.state.email} onChange={this.handleEmailChange} placeholder="Email" />
-                                        <PasswordInputField name="demo-password" id="demo-password" value={this.state.password} onChange={this.handlePasswordChange} placeholder="Password" />
-                                        <PasswordInputField name="confirm-password" id="confirm-password" value={this.state.re_password} onChange={this.handleConfirmPasswordChange} placeholder="Confirm Your Password" />
+                                        <TextInputField textInputList={ this.state.textInputList } />
                                         <br />
                                         <div className="col-12">
                                             <ul className="actions">
-                                                <li><SendButton buttonName="Sign Up" onSubmit={this.handleSubmit} /></li>
+                                                <li><SendButton buttonName="Sign Up" onSubmit={ this.handleSubmit } /></li>
                                             </ul>
                                         </div>
                                     </div>

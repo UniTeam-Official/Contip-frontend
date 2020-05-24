@@ -9,7 +9,7 @@ class WatchedMoviesPage extends Component {
         return (
             <div id="wrapper">
                 <Header />
-                <WatchedMovieList history={this.props.history} />
+                <WatchedMovieList history={ this.props.history } />
                 <Footer />
             </div>
         );

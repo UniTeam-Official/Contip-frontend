@@ -47,8 +47,8 @@ class InfoText extends Component {
     render() {
         return (
             <div>
-                <p>Username: {this.state.data.username} </p>
-                <p>Email: {this.state.data.email} </p>
+                <p>Username: { this.state.data.username } </p>
+                <p>Email: { this.state.data.email } </p>
             </div>
         );
     }

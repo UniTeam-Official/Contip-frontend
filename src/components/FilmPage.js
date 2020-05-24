@@ -87,7 +87,7 @@ class FilmPage extends Component{
                 'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${host}api/v1/app/watched/set/`, options)
+        fetch(`${ host }api/v1/app/watched/set/`, options)
             .then(response => {
                 if (response.status > 400) {
                     //<Redirect to="/login" />
@@ -121,7 +121,7 @@ class FilmPage extends Component{
                 }
 
 
-                fetch(`${host}api/v1/app/watched/set/`, add_options)
+                fetch(`${ host }api/v1/app/watched/set/`, add_options)
                     .then(response => {
                         addToast("Deleted from watched successfully!", { appearance: 'success', autoDismiss: true, });
                         console.log(response);

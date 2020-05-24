@@ -34,7 +34,7 @@ class SearchTiles extends Component {
 
         // Trying to make a request for the server
         const response = await fetch(url, options);
-        let data = undefined;
+        let data;
 
         if (response.status > 400) {
             this.setState(() => {

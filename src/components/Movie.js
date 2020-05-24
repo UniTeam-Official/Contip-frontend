@@ -10,6 +10,17 @@ class Movie extends Component {
 			movie_rating: "",
 			tmdb: [],
 			loaded_tmdb: false,
+
+			ratingInputList: [
+				{
+                    type: "text",
+                    name: `rating${ this.props.film_id }`,
+                    id: `rating${ this.props.film_id }`,
+                    value: this.movie_rating,
+                    onChange: this.handleRatingChange,
+                    placeholder: "0-100 points",
+                },
+			],
 		};
 	}
 
@@ -81,7 +92,7 @@ class Movie extends Component {
 							</p>
 							<div className="title-card-content-bottom">
 								<div id="text-input-field" className="col-6 col-12-xsmall rating-input-field">
-									<TextInputField name={`rating${ this.props.film_id }`} id={`rating${ this.props.film_id }`} onChange={ this.handleRatingChange } value={ this.state.movie_rating } placeholder="0-100 points" />
+									<TextInputField textInputList={ this.state.ratingInputList } />
 								</div>
 								<div className="col-12">
 									<ul className="actions">

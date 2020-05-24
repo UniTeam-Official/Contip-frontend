@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import RecommendationHeader from "./RecommendationHeader";
+import Headline from "./Headline";
 import MovieList from "./MovieList";
 import Header from "./Header";
 import Footer from "./Footer";
-import history from './history';
 
 
 class MainPage extends Component {
@@ -13,8 +12,10 @@ class MainPage extends Component {
                 <Header />
                 <div id="main">
                     <div className="inner">
-                        <RecommendationHeader />
-                        <MovieList history={ this.props.history } key="movieList"/>
+                        <Headline
+                            heading = "Specially For You..."
+                            subheading = "...we sat down and watched thousands of movies, just to find six special ones that you should definitely check out this week" />
+                        <MovieList history={ this.props.history } />
                     </div>
                 </div>
                 <Footer />
