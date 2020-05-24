@@ -13,10 +13,10 @@ class SuggestForm extends Component {
             movieInputList: [
                 {
                     type: "text",
-                    name: "footer-movie",
+                    name: "movie",
                     id: "footer-movie",
                     value: this.movie,
-                    onChange: this.handleMovieChange,
+                    onChange: this.handleInputChange,
                     placeholder: "Movie We Have To Check Out!",
                 },
             ],
@@ -24,10 +24,10 @@ class SuggestForm extends Component {
             ratingInputList: [
                 {
                     type: "text",
-                    name: "footer-rating",
+                    name: "rating",
                     id: "footer-rating",
                     value: this.rating,
-                    onChange: this.handleRatingChange,
+                    onChange: this.handleInputChange,
                     placeholder: "How Much Will We Like It/10?",
                 },
             ],
@@ -35,31 +35,40 @@ class SuggestForm extends Component {
             linkInputList: [
                 {
                     type: "text",
-                    name: "footer-link",
+                    name: "link",
                     id: "footer-link",
                     value: this.link,
-                    onChange: this.handleLinkChange,
+                    onChange: this.handleInputChange,
                     placeholder: "Imdb Link",
                 },
             ],
         };
     }
 
-    handleMovieChange = event => {
+    handleInputChange = event => {
         this.setState({
-            movie: event.target.value
+            [event.target.name]: event.target.value,
         })
     }
-    handleRatingChange = event => {
-        this.setState({
-            rating: event.target.value
-        })
-    }
-    handleLinkChange = event => {
-        this.setState({
-            link: event.target.value
-        })
-    }
+    
+    // handleMovieChange = event => {
+    //     this.setState({
+    //         movie: event.target.value
+    //     })
+    // }
+
+    // handleRatingChange = event => {
+    //     this.setState({
+    //         rating: event.target.value
+    //     })
+    // }
+
+    // handleLinkChange = event => {
+    //     this.setState({
+    //         link: event.target.value
+    //     })
+    // }
+
     handleSuggestSubmit = event => {
         event.preventDefault();
     }

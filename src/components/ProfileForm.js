@@ -16,6 +16,7 @@ class ProfileForm extends Component {
         this.state = {
             email: '',
             password: '',
+            currentPassword: '',
             confirmPassword: '',
             deletePassword: '',
             data: [],
@@ -34,10 +35,10 @@ class ProfileForm extends Component {
             emailInputList: [
                 {
                     type: "email",
-                    name: "email-change",
+                    name: "email",
                     id: "email-change",
                     value: this.email,
-                    onChange: this.handleEmailChange,
+                    onChange: this.handleInputChange,
                     placeholder: "New email",
                 },
 
@@ -53,19 +54,28 @@ class ProfileForm extends Component {
             passwordInputList: [
                 {
                     type: "password",
-                    name: "password-profile",
+                    name: "currentPassword",
+                    id: "password-current-profile",
+                    value: this.currentPassword,
+                    onChange: this.handleInputChange,
+                    placeholder: "Current Password",
+                },
+
+                {
+                    type: "password",
+                    name: "password",
                     id: "password-profile",
                     value: this.password,
-                    onChange: this.handlePasswordChange,
+                    onChange: this.handleInputChange,
                     placeholder: "New Password",
                 },
 
                 {
                     type: "password",
-                    name: "password-confirm-profile",
+                    name: "confirmPassword",
                     id: "password-confirm-profile",
                     value: this.confirmPassword,
-                    onChange: this.handleConfirmPasswordChange,
+                    onChange: this.handleInputChange,
                     placeholder: "Confirm Your Password",
                 },
             ],
@@ -73,15 +83,16 @@ class ProfileForm extends Component {
             deleteInputList: [
                 {
                     type: "password",
-                    name: "password-delete-profile",
+                    name: "deletePassword",
                     id: "password-delete-profile",
                     value: this.deletePassword,
-                    onChange: this.handleDeletePasswordChange,
+                    onChange: this.handleInputChange,
                     placeholder: "Password",
                 },
             ],
         };
     }
+
 
     handlePreferenceChange = changeEvent => {
         const { name } = changeEvent.target;
@@ -94,33 +105,9 @@ class ProfileForm extends Component {
         }));
     }
 
-    handleEmailChange = event => {
+    handleInputChange = event => {
         this.setState({
-            email: event.target.value
-        })
-    }
-
-    handlePasswordChange = event => {
-        this.setState({
-            password: event.target.value
-        })
-    }
-
-    handleConfirmPasswordChange = event => {
-        this.setState({
-            confirmPassword: event.target.value
-        })
-    }
-
-    handleCurrentPasswordChange = event => {
-        this.setState({
-            currentPassword: event.target.value
-        })
-    }
-
-    handleDeletePasswordChange = event => {
-        this.setState({
-            deletePassword: event.target.value
+            [event.target.name]: event.target.value,
         })
     }
 
@@ -145,7 +132,7 @@ class ProfileForm extends Component {
 				'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${host}api/v1/app/preferences/set/`, options)
+        fetch(`${ host }api/v1/app/preferences/set/`, options)
             .then(res => {
                 console.log(res);
                 if (res.status != 200){
@@ -180,7 +167,7 @@ class ProfileForm extends Component {
 				'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${host}api/v1/account/users/me/`, options)
+        fetch(`${ host }api/v1/account/users/me/`, options)
             .then(res => {
                 console.log(res);
                 if (res.status != 200){
@@ -387,7 +374,7 @@ class ProfileForm extends Component {
                         </div>
                         
                         <div className="user-info">
-                            <h4>Everything We Know About You:</h4>
+                            <h4>Everything We Know About You</h4>
                             <InfoText username={ this.state.userInfo.username } email={ this.state.userInfo.email } />
                             <SendButton buttonName="Log Out" onSubmit={ this.handleLogOutSubmit } toastMessage="Log out completed successfully" />
                         </div>
@@ -422,7 +409,6 @@ class ProfileForm extends Component {
                                     <div className="row gtr-uniform">
                                         <div className="col-6 col-12-xsmall">
                                             <h3>Change Password</h3>
-                                            {/*<PasswordInputField name="profile_current_password" id="profile_current_password" value={this.state.currentPassword} onChange={this.handleCurrentPasswordChange} placeholder="Current Password" />*/}
                                             <TextInputField textInputList={ this.state.passwordInputList } />
                                         </div>
                                         <div className="col-12">

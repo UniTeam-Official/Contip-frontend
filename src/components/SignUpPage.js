@@ -17,97 +17,47 @@ class SignUpPage extends Component {
             textInputList: [
                 {
                     type: "text",
-                    name: "username-registration",
+                    name: "username",
                     id: "username-registration",
                     value: this.username,
-                    onChange: this.handleUsernameChange,
+                    onChange: this.handleInputChange,
                     placeholder: "Username",
                 },
 
                 {
                     type: "email",
-                    name: "email-registration",
+                    name: "email",
                     id: "email-registration",
                     value: this.email,
-                    onChange: this.handleEmailChange,
+                    onChange: this.handleInputChange,
                     placeholder: "Email",
                 },
 
                 {
                     type: "password",
-                    name: "password-registration",
+                    name: "password",
                     id: "password-registration",
                     value: this.password,
-                    onChange: this.handlePasswordChange,
+                    onChange: this.handleInputChange,
                     placeholder: "Password",
                 },
 
                 {
                     type: "password",
-                    name: "password-confirm-registration",
+                    name: "re_password",
                     id: "password-confirm-registration",
                     value: this.re_password,
-                    onChange: this.handleConfirmPasswordChange,
+                    onChange: this.handleInputChange,
                     placeholder: "Confirm Your Password",
                 },
             ],
         }
     }
 
-    handleUsernameChange = event => {
+    handleInputChange = event => {
         this.setState({
-            username: event.target.value
+            [event.target.name]: event.target.value,
         })
-    }
-
-    handleEmailChange = event => {
-        this.setState({
-            email: event.target.value
-        })
-    }
-
-    handlePasswordChange = event => {
-        this.setState({
-          password: event.target.value
-        })
-    }
-
-    handleConfirmPasswordChange = event => {
-        this.setState({
-            re_password: event.target.value
-        })
-    }
-    
-    handleBirthDateChange = event => {
-        this.setState({
-            birthDate: event.target.value
-        })
-    }
-
-    handleSubmit = (event, addToast) => {
-        if (this.state.password == this.state.re_password) {
-        event.preventDefault();
-        // Authenticate User
-        let options = {
-            method: "POST",
-            body: JSON.stringify(this.state),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }
-        fetch('http://yyr3ll.pythonanywhere.com/api/v1/account/users/', options)
-            .then(res => {
-                console.log(res);
-                if (res.status != 201){
-                    addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
-                }
-                else {
-                    this.props.history.push("/login/");
-                }
-                return res.json();
-            });
-        }
     }
 
     handleSubmit = (event, addToast) => {
@@ -122,7 +72,7 @@ class SignUpPage extends Component {
                     'Content-Type': 'application/json'
                 }
             }
-            fetch(`${host}api/v1/account/users/`, options)
+            fetch(`${ host }api/v1/account/users/`, options)
                 .then(res => {
                     console.log(res);
                     if (res.status != 201) {
@@ -140,6 +90,7 @@ class SignUpPage extends Component {
 
 
     }
+    
     render() {
         return (
             <div id="wrapper">

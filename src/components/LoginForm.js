@@ -15,36 +15,42 @@ class LoginForm extends Component {
             textInputList: [
                 {
                     type: "text",
-                    name: "username-login",
+                    name: "username",
                     id: "username-login",
                     value: this.username,
-                    onChange: this.handleUsernameChange,
+                    onChange: this.handleInputChange,
                     placeholder: "Username",
                 },
 
                 {
                     type: "password",
-                    name: "password-login",
+                    name: "password",
                     id: "password-login",
                     value: this.password,
-                    onChange: this.handlePasswordChange,
+                    onChange: this.handleInputChange,
                     placeholder: "Password",
                 },
             ],
         }
     }
 
-    handleUsernameChange = event => {
+    handleInputChange = event => {
         this.setState({
-            username: event.target.value
+            [event.target.name]: event.target.value,
         })
     }
 
-    handlePasswordChange = event => {
-        this.setState({
-            password: event.target.value
-        })
-    }
+    // handleUsernameChange = event => {
+    //     this.setState({
+    //         username: event.target.value
+    //     })
+    // }
+
+    // handlePasswordChange = event => {
+    //     this.setState({
+    //         password: event.target.value
+    //     })
+    // }
 
     handleSubmit = (event, addToast) => {
         localStorage.clear();
