@@ -12,7 +12,7 @@ class FilmPage extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            filmData: [],
             tmdb: [],
             loaded: false,
             loaded_tmdb: false,
@@ -22,7 +22,7 @@ class FilmPage extends Component{
         };
     }
 
-    handleAddToWatched = (event, addToast) => {
+    handleAddToWatched = async (event, addToast) => {
 
         const access_token = localStorage.getItem('jwt access');
         const options = {
@@ -33,50 +33,42 @@ class FilmPage extends Component{
                 'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${host}api/v1/app/watched/set/`, options)
-            .then(response => {
-                if (response.status > 400) {
-                    //<Redirect to="/login" />
-                    this.props.history.push("/login/");
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
 
-                return response.json();
-            })
-            .then(watched_films => {
+        let response = await fetch(`${ host }api/v1/app/watched/set/`, options);
+        console.log(response);
 
-
-                watched_films.watched_list.push(this.state.data.id);
-
-                this.setState({ watched_films: watched_films.watched_list });
-
-                console.log("Modified list (for DEBUG ) " + this.state.watched_films);
-                
-                const add_options = {
-                    method: "PUT",
-                    body: JSON.stringify({ "watched_list": watched_films.watched_list }),
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Authorization': `JWT ${access_token}`
-                    }
-                }
-
-
-                fetch(`${host}api/v1/app/watched/set/`, add_options)
-                    .then(response => {
-                        addToast("Added to watched successfully!", { appearance: 'success', autoDismiss: true, });
-                        console.log(response);
-                        this.isInWatched();
-                        return response.json();
-                    })
+        if (response.status > 400) {
+            //<Redirect to="/login" />
+            this.props.history.push("/login/");
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
             });
+        }
 
+        const watchedFilms = await response.json();
+        console.log(watchedFilms);
+
+        await watchedFilms.watched_list.push(this.state.filmData.id);
+
+        const add_options = {
+            method: "PUT",
+            body: JSON.stringify({ "watched_list": watchedFilms.watched_list }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${ access_token }`
+            }
+        }
+
+        response = await fetch(`${ host }api/v1/app/watched/set/`, add_options);
+        console.log(response);
+
+        addToast("Added to watched successfully!", { appearance: 'success', autoDismiss: true, });
+        console.log(response);
+        this.isInWatched();
     }
 
-    handleDeleteFromWatched = (event, addToast) => {
+    handleDeleteFromWatched = async (event, addToast) => {
 
         const access_token = localStorage.getItem('jwt access');
         const options = {
@@ -87,52 +79,44 @@ class FilmPage extends Component{
                 'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${ host }api/v1/app/watched/set/`, options)
-            .then(response => {
-                if (response.status > 400) {
-                    //<Redirect to="/login" />
-                    this.props.history.push("/login/");
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
 
-                return response.json();
-            })
-            .then(watched_films => {
-                const indexOfFilm = watched_films.watched_list.indexOf(this.state.data.id);
+        let response = await fetch(`${ host }api/v1/app/watched/set/`, options);
+        console.log(response);
 
-                if (~indexOfFilm) {
-                    watched_films.watched_list.splice(indexOfFilm, 1);
-                }
-
-                this.setState({ watched_films: watched_films.watched_list });
-
-                console.log("Modified list (for DEBUG ) " + this.state.watched_films);
-                
-                const add_options = {
-                    method: "PUT",
-                    body: JSON.stringify({ "watched_list": watched_films.watched_list }),
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Authorization': `JWT ${access_token}`
-                    }
-                }
-
-
-                fetch(`${ host }api/v1/app/watched/set/`, add_options)
-                    .then(response => {
-                        addToast("Deleted from watched successfully!", { appearance: 'success', autoDismiss: true, });
-                        console.log(response);
-                        this.isInWatched();
-                        return response.json();
-                    })
+        if (response.status > 400) {
+            //<Redirect to="/login" />
+            this.props.history.push("/login/");
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
             });
+        }
 
+        const watchedFilms = await response.json();
+        console.log(watchedFilms);
+        const indexOfFilm = await watchedFilms.watched_list.indexOf(this.state.filmData.id);
+
+        if (~indexOfFilm) {
+            await watchedFilms.watched_list.splice(indexOfFilm, 1);
+        }
+
+        const add_options = {
+            method: "PUT",
+            body: JSON.stringify({ "watched_list": watchedFilms.watched_list }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${ access_token }`
+            }
+        }
+
+        response = await fetch(`${ host }api/v1/app/watched/set/`, add_options);
+
+        addToast("Deleted from watched successfully!", { appearance: 'success', autoDismiss: true, });
+        console.log(response);
+        this.isInWatched();
     }
 
-    isInWatched = () => {
+    isInWatched = async () => {
         const access_token = localStorage.getItem('jwt access');
         const options = {
             method: "GET",
@@ -142,90 +126,91 @@ class FilmPage extends Component{
                 'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${host}api/v1/app/watched/set/`, options)
-            .then(response => {
-                if (response.status > 400) {
-                    //<Redirect to="/login" />
-                    this.props.history.push("/login/");
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
 
-                return response.json();
-            })
-            .then(watched_films => {
-                let isInWatched = Boolean(watched_films.watched_list.find(filmID => {
-                    return filmID == this.state.data.id;
-                }));
+        const response = await fetch(`${ host }api/v1/app/watched/set/`, options);
+        console.log(response);
 
-                this.setState({
-                    isInWatched,
-                });
+        if (response.status > 400) {
+            //<Redirect to="/login" />
+            this.props.history.push("/login/");
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
             });
+        }
+
+        const watchedFilms = await response.json();
+        console.log(watchedFilms);
+
+        const isInWatched = Boolean(watchedFilms.watched_list.find(filmID => {
+            return filmID == this.state.filmData.id;
+        }));
+        
+        this.setState({
+            isInWatched,
+        });
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const access_token = localStorage.getItem('jwt access');
         const options = {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${access_token}`
+                'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${host}api/v1/app/film/detail/${ this.props.match.params.id }`, options)
-            .then(response => {
-                console.log(response);
-                if (response.status > 400) {
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                this.isInWatched();
-                this.setState(() => {
-                    return {
-                        data,
-                        loaded: true
-                    };
-                });
+        
+        const response = await fetch(`${ host }api/v1/app/film/detail/${ this.props.match.params.id }`, options);
+        console.log(response);
+
+        if (response.status > 400) {
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
             });
+        }
+
+        const filmData = await response.json();
+        console.log(filmData);
+
+        this.isInWatched();
+        this.setState(() => {
+            return {
+                filmData,
+                loaded: true
+            };
+        });
     }
 
-    loadTMDB() {
+    async loadTMDB() {
         const access_token = localStorage.getItem('jwt access');
         const options = {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${access_token}`
+                'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`https://api.themoviedb.org/3/movie/${ this.state.data.tmdb }?api_key=18c2fd7db94f9e4300a4700ea19affb9`, options)
-            .then(response => {
-                console.log(response);
-                if (response.status > 400) {
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
-                return response.json();
-            })
-            .then(tmdb => {
-                console.log(tmdb);
-                this.setState(() => {
-                    return {
-                        tmdb,
-                        loaded_tmdb: true
-                    };
-                });
+
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${ this.state.filmData.tmdb }?api_key=18c2fd7db94f9e4300a4700ea19affb9`, options);
+        console.log(response);
+
+        if (response.status > 400) {
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
             });
+        }
+
+        const tmdb = await response.json();
+        console.log(tmdb);
+
+        this.setState(() => {
+            return {
+                tmdb,
+                loaded_tmdb: true
+            };
+        });
     }
 
     render() {
@@ -233,7 +218,7 @@ class FilmPage extends Component{
 
         if (this.state && this.state.loaded && this.state.loaded_tmdb) {
             let counter = 0;
-            let genresArray = this.state.data.genre;
+            let genresArray = this.state.filmData.genre;
 
             let genres = genresArray.map(genre => {
                 counter += 1;
@@ -267,7 +252,7 @@ class FilmPage extends Component{
                         <div className="col-sm-8 col-sm-push-4">
                             <div className="title-block">
                                 <h1>
-                                    { this.state.data.title }
+                                    { this.state.filmData.title }
                                 </h1>
                             </div>
                             <div className="detail-infos">
@@ -279,7 +264,7 @@ class FilmPage extends Component{
                                             </div>
                                             <div className="detail-infos-detail-values">
                                                 <div className="title-card-rating">
-                                                    <a className="no-border-btm" href={ `https://www.themoviedb.org/movie/${ this.state.data.tmdb }` }>
+                                                    <a className="no-border-btm" href={ `https://www.themoviedb.org/movie/${ this.state.filmData.tmdb }` }>
                                                         <img src={ tmdb_logo } alt="tmdb logo" />
                                                         <span>{ this.state.tmdb.vote_average }</span>
                                                     </a>
@@ -326,7 +311,7 @@ class FilmPage extends Component{
                             <div className="title-sidebar">
                                 <aside>
                                     <div className="title-poster no-radius-btm">
-                                        <img src={ "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.state.tmdb.poster_path } alt={ this.state.data.title } />
+                                        <img src={ "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.state.tmdb.poster_path } alt={ this.state.filmData.title } />
                                     </div>
                                 </aside>
                             </div>
@@ -335,21 +320,6 @@ class FilmPage extends Component{
                             </div>
                         </div>
                     </div>
-
-                    {/* <h1 id="main-film-title">{ this.state.data.title }</h1>
-                    <span id="main-film-image" className="image left"><img src={ "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.state.tmdb.poster_path } alt={ this.state.data.title } /></span>
-                    <h3>Film description:</h3>
-                    <p id="film-description">{ this.state.tmdb.overview }</p>
-                    <h3>Genres: </h3>
-                    <p>
-                        { this.state.data.genre.map(genre => { return(genre.name + "  ") }) }
-                    </p>
-                    <h3>Release Date: </h3>
-                    <p>{ this.state.tmdb.release_date }</p>
-                    <h3>Runtime: </h3>
-                    <p>{ this.state.tmdb.runtime } minutes</p>
-                    <h3><a href={`https://www.imdb.com/title/tt0${ this.state.data.imdb }`}>IMDB Link</a></h3>
-                    <SendButton buttonName="Add to watched" onSubmit={ this.handleAddToWatched } /> */}
                 </div>
             );
         }

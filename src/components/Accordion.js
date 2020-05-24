@@ -12,7 +12,7 @@ class Accordion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            genreList: [],
             loaded: false,
             placeholder: "Loading",
 
@@ -34,7 +34,7 @@ class Accordion extends Component {
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 		const access_token = localStorage.getItem('jwt access');
         const options = {
             method: "GET",
@@ -44,29 +44,26 @@ class Accordion extends Component {
 				'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${ host }api/v1/app/genre/list/`, options)
-            .then(response => {
-                console.log(response);
-                if (response.status > 400) {
-                    this.props.history.push("/login");
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
 
-                FILTERS = Array.from(data.map(genre => genre.id));
+        const response = await fetch(`${ host }api/v1/app/genre/list/`, options);
 
-                this.setState(() => {
-                    return {
-                        data,
-                        loaded: true
-                    };
-                });
+        if (response.status > 400) {
+            this.props.history.push("/login");
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
             });
+        }
+
+        const genreList = await response.json();
+        
+        FILTERS = Array.from(genreList.map(genre => genre.id));
+
+        this.setState(() => {
+            return {
+                genreList,
+                loaded: true
+            };
+        });
     }
 
     handleFiltersChange = changeEvent => {
@@ -132,7 +129,7 @@ class Accordion extends Component {
     
                 checkboxList = (
                     <ul className="list">
-                        {this.state.data.map(genre => {
+                        {this.state.genreList.map(genre => {
                             const id = accordion.namePrefix + "Filter" + genre.id;
                             return (
                                 <li id="check-box" className="list-item" key={ id }>

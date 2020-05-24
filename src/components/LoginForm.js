@@ -40,22 +40,11 @@ class LoginForm extends Component {
         })
     }
 
-    // handleUsernameChange = event => {
-    //     this.setState({
-    //         username: event.target.value
-    //     })
-    // }
-
-    // handlePasswordChange = event => {
-    //     this.setState({
-    //         password: event.target.value
-    //     })
-    // }
-
-    handleSubmit = (event, addToast) => {
+    handleSubmit = async (event, addToast) => {
         localStorage.clear();
         event.preventDefault()
-        let options = {
+
+        const options = {
             method: "POST",
             body: JSON.stringify(this.state),
             headers: {
@@ -64,28 +53,23 @@ class LoginForm extends Component {
             }
         }
 
-        fetch(`${host}api/v1/auth/login/`, options)
-            .then(res => {
-                console.log(res);
-                if (res.status != 200){
-                    addToast("Wrong credentials!", { appearance: 'error', autoDismiss: true, });
-                    return false;
-                }
-                return res.json();
+        let response = await fetch(`${ host }api/v1/auth/login/`, options);
+        console.log(response);
 
+        let loginData = false;
 
-            })
-            .then(data => {
-                if(data){
-                    console.log(data);
-                    localStorage.setItem('jwt access', data.access);
-                    localStorage.setItem('jwt refresh', data.refresh);
-                    this.props.history.push("/");
-                }
-            });
+        if (response.status != 200){
+            addToast("Wrong credentials!", { appearance: 'error', autoDismiss: true, });
+        } else {
+            loginData = await response.json();
+        }
 
-
-
+        if (loginData) {
+            console.log(loginData);
+            localStorage.setItem('jwt access', loginData.access);
+            localStorage.setItem('jwt refresh', loginData.refresh);
+            this.props.history.push("/");
+        }
     }
 
     render() {

@@ -19,7 +19,7 @@ class ProfileForm extends Component {
             currentPassword: '',
             confirmPassword: '',
             deletePassword: '',
-            data: [],
+            genreList: [],
             userInfo: [],
             loaded: false,
             placeholder: "Loading",
@@ -111,7 +111,7 @@ class ProfileForm extends Component {
         })
     }
 
-    handlePreferenceSubmit = (preferenceSubmitEvent, addToast) => {
+    handlePreferenceSubmit = async (preferenceSubmitEvent, addToast) => {
         preferenceSubmitEvent.preventDefault();
 
         const selectedPreferences = (Object
@@ -132,19 +132,17 @@ class ProfileForm extends Component {
 				'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${ host }api/v1/app/preferences/set/`, options)
-            .then(res => {
-                console.log(res);
-                if (res.status != 200){
-                    addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
 
-                }
-                else {
-                    this.props.history.push("/profile/");
-                    addToast("Preferences changed successfully!", { appearance: 'success', autoDismiss: true, });
-                }
-                return res.json();
-            });
+        const response = await fetch(`${ host }api/v1/app/preferences/set/`, options);
+        console.log(response);
+
+        if (response.status != 200){
+            addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
+        }
+        else {
+            this.props.history.push("/profile/");
+            addToast("Preferences changed successfully!", { appearance: 'success', autoDismiss: true, });
+        }
     }
 
     handleLogOutSubmit = event => {
@@ -154,7 +152,7 @@ class ProfileForm extends Component {
         this.props.history.push("/login/");
     }
 
-    handleEmailSubmit = (event, addToast) => {
+    handleEmailSubmit = async (event, addToast) => {
         event.preventDefault();
         // Update user email
 		const access_token = localStorage.getItem('jwt access');
@@ -167,21 +165,20 @@ class ProfileForm extends Component {
 				'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${ host }api/v1/account/users/me/`, options)
-            .then(res => {
-                console.log(res);
-                if (res.status != 200){
-                    addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
-                }
-                else {
-                    this.props.history.push("/profile/");
-                    addToast("Email changed successfully!", { appearance: 'success', autoDismiss: true, });
-                }
-                return res.json();
-            });
+
+        const response = await fetch(`${ host }api/v1/account/users/me/`, options);
+        console.log(response);
+        
+        if (response.status != 200){
+            addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
+        }
+        else {
+            this.props.history.push("/profile/");
+            addToast("Email changed successfully!", { appearance: 'success', autoDismiss: true, });
+        }
     }
 
-    handlePasswordSubmit = (event, addToast) => {
+    handlePasswordSubmit = async (event, addToast) => {
         if (this.state.password == this.state.confirmPassword) {
             event.preventDefault();
             // Update user password
@@ -195,17 +192,16 @@ class ProfileForm extends Component {
                     'Authorization': `JWT ${ access_token }`
                 }
             }
-            fetch(`${ host }api/v1/account/users/set_password/`, options)
-                .then(res => {
-                    console.log(res);
-                    if (res.status != 204){
-                        addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
-                    }
-                    else {
-                        this.props.history.push("/login/");
-                    }
-                    return res.json();
-                });
+
+            const response = await fetch(`${ host }api/v1/account/users/set_password/`, options);
+            console.log(response);
+
+            if (response.status != 204){
+                addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
+            }
+            else {
+                this.props.history.push("/login/");
+            }
         }
         else {
             event.preventDefault();
@@ -213,6 +209,7 @@ class ProfileForm extends Component {
         }
     }
 
+    // TODO: rewrtite function to async/await after bug fixed
     handleDeleteProfile = (event, addToast) => {
         addToast("Profile deletion request submitted!", { appearance: 'info', autoDismiss: true, });
         // Delete user
@@ -239,7 +236,7 @@ class ProfileForm extends Component {
             });
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 		const access_token = localStorage.getItem('jwt access');
         const options = {
             method: "GET",
@@ -250,70 +247,65 @@ class ProfileForm extends Component {
             }
         }
 
-        fetch(`${ host }api/v1/app/genre/list/`, options)
-            .then(response => {
-                console.log(response);
-                if (response.status > 400) {
-                    this.props.history.push("/login");
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
+        let response = await fetch(`${ host }api/v1/app/genre/list/`, options);
+        console.log(response);
 
-                GENRES = Array.from(data.map(genre => genre.id));
+        if (response.status > 400) {
+            this.props.history.push("/login");
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
+            });
+        }
 
-                this.setState(() => {
-                    return {
-                        data,
-                        loaded: true
-                    };
-                });
+        const genreList = await response.json();
+        console.log(genreList);
+
+        GENRES = Array.from(await genreList.map(genre => genre.id));
+
+        this.setState(() => {
+            return {
+                genreList,
+                loaded: true
+            };
+        });
+
+        response = await fetch(`${ host }api/v1/app/preferences/set/`, options);
+        console.log(response);
+
+        if (response.status > 400) {
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
             });
-        fetch(`${ host }api/v1/app/preferences/set/`, options)
-            .then(response => {
-                console.log(response);
-                if (response.status > 400) {
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
-                return response.json();
-            })
-            .then(preferences => {
-                preferences = preferences.genre_preference;
-                
-                preferences.forEach(preference => {
-                    this.setState(prevState => ({
-                        preferences: {
-                          ...prevState.preferences,
-                          [preference]: !prevState.preferences[preference],
-                        },
-                    }));
-                });
+        }
+
+        let preferences = await response.json();
+        preferences = preferences.genre_preference;
+
+        preferences.forEach(preference => {
+            this.setState(prevState => ({
+                preferences: {
+                  ...prevState.preferences,
+                  [preference]: !prevState.preferences[preference],
+                },
+            }));
+        });
+        
+        response = await fetch(`${ host }api/v1/account/users/me/`, options);
+        console.log(response);
+
+        if (response.status > 400) {
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
             });
-        fetch(`${ host }api/v1/account/users/me/`, options)
-            .then(response => {
-                console.log(response);
-                if (response.status > 400) {
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
-                return response.json();
-            })
-            .then(userInfo => {
-                console.log(userInfo);
-                this.setState(() => {
-                    return {
-                        userInfo,
-                        loaded: true
-                    };
-                });
-            });
+        }
+
+        const userInfo = await response.json();
+        console.log(userInfo);
+        
+        this.setState({
+            userInfo,
+            loaded: true
+        });
     }
 
     render() {
@@ -332,7 +324,7 @@ class ProfileForm extends Component {
                                     <div className="row gtr-uniform">
                                     <div className="col-6 col-12-small preferences">
                                         <h4>Here's Your Favourite Stuff<br/>Change It Up If You Want</h4>
-                                        {this.state.data.map(genre => {
+                                        {this.state.genreList.map(genre => {
                                             if (this.state.preferences[genre.id]) {
                                                 let genreName = "genre" + genre.id;
                                                 return (
@@ -344,9 +336,11 @@ class ProfileForm extends Component {
                                                         className="preferences-checkbox"
                                                         onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
                                                 );
+                                            } else {
+                                                return null;
                                             }
                                         })}
-                                        {this.state.data.map(genre => {
+                                        {this.state.genreList.map(genre => {
                                             if (!this.state.preferences[genre.id]) {
                                                 let genreName = "genre" + genre.id;
                                                 return (
@@ -358,6 +352,8 @@ class ProfileForm extends Component {
                                                         className="preferences-checkbox"
                                                         onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
                                                 );
+                                            } else {
+                                                return null;
                                             }
                                         })}
                                     </div>

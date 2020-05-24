@@ -4,7 +4,7 @@ class AccordionHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            genreList: [],
             loaded: false,
             placeholder: "Loading"
         };

@@ -30,36 +30,36 @@ class Movie extends Component {
         });
 	}
 	
-	loadTMDB() {
-		const access_token = localStorage.getItem('jwt access');
-		const options = {
-			method: "GET",
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-				'Authorization': `JWT ${access_token}`
-			}
-		}
-		fetch(`https://api.themoviedb.org/3/movie/${ this.props.tmdb }?api_key=18c2fd7db94f9e4300a4700ea19affb9`, options)
-			.then(response => {
-				console.log(response);
-				if (response.status > 400) {
-					return this.setState(() => {
-						return { placeholder: "Something went wrong!" };
-					});
-				}
-				return response.json();
-			})
-			.then(tmdb => {
-				console.log(tmdb);
-				this.setState(() => {
-					return {
-						tmdb,
-						loaded_tmdb: true
-					};
-				});
-			});
-	}
+	async loadTMDB() {
+        const access_token = localStorage.getItem('jwt access');
+        const options = {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${ access_token }`
+            }
+        }
+
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${ this.state.filmData.tmdb }?api_key=18c2fd7db94f9e4300a4700ea19affb9`, options);
+        console.log(response);
+
+        if (response.status > 400) {
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
+            });
+        }
+
+        const tmdb = await response.json();
+        console.log(tmdb);
+
+        this.setState(() => {
+            return {
+                tmdb,
+                loaded_tmdb: true
+            };
+        });
+    }
 
 	render() {
 		let overview = <span></span>
