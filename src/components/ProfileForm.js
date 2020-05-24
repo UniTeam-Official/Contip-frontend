@@ -19,6 +19,7 @@ class ProfileForm extends Component {
             confirmPassword: '',
             deletePassword: '',
             data: [],
+            userInfo: [],
             loaded: false,
             placeholder: "Loading",
 
@@ -307,6 +308,25 @@ class ProfileForm extends Component {
                     }));
                 });
             });
+        fetch(`${ host }api/v1/account/users/me/`, options)
+            .then(response => {
+                console.log(response);
+                if (response.status > 400) {
+                    return this.setState(() => {
+                        return { placeholder: "Something went wrong!" };
+                    });
+                }
+                return response.json();
+            })
+            .then(userInfo => {
+                console.log(userInfo);
+                this.setState(() => {
+                    return {
+                        userInfo,
+                        loaded: true
+                    };
+                });
+            });
     }
 
     render() {
@@ -315,7 +335,7 @@ class ProfileForm extends Component {
                 <div className="inner">
                     <h1>My Profile</h1>
                     <section className="profile-section">
-                        <WelcomeText/>
+                        <WelcomeText username={ this.state.userInfo.username } />
 
                         <div>
                             {/* PREFERENCES */}
@@ -368,7 +388,7 @@ class ProfileForm extends Component {
                         
                         <div className="user-info">
                             <h4>Everything We Know About You:</h4>
-                            <InfoText />
+                            <InfoText username={ this.state.userInfo.username } email={ this.state.userInfo.email } />
                             <SendButton buttonName="Log Out" onSubmit={ this.handleLogOutSubmit } toastMessage="Log out completed successfully" />
                         </div>
 

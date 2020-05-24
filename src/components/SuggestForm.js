@@ -81,7 +81,7 @@ class SuggestForm extends Component {
                         </div>
                     </div>
                     <ul className="actions">
-                        <li><SendButton buttonName="Submit" onSubmit={this.handleSuggestSubmit} toastMessage="Film submitted successfully" /></li>
+                        <li><SendButton buttonName="Submit" onSubmit={ this.handleSuggestSubmit } toastMessage="Film submitted successfully" /></li>
                     </ul>
                 </form>
             </section>
