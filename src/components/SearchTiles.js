@@ -52,7 +52,7 @@ class SearchTiles extends Component {
         });
     }
 
-    componentWillMount() {
+    componentWillUnmount() {
         this.timer = null;
     }
 

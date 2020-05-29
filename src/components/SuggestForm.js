@@ -50,24 +50,6 @@ class SuggestForm extends Component {
             [event.target.name]: event.target.value,
         })
     }
-    
-    // handleMovieChange = event => {
-    //     this.setState({
-    //         movie: event.target.value
-    //     })
-    // }
-
-    // handleRatingChange = event => {
-    //     this.setState({
-    //         rating: event.target.value
-    //     })
-    // }
-
-    // handleLinkChange = event => {
-    //     this.setState({
-    //         link: event.target.value
-    //     })
-    // }
 
     handleSuggestSubmit = event => {
         event.preventDefault();
