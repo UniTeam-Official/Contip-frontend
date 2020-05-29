@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import PasswordInputField from "./PasswordInputFields";
 import TextInputField from "./TextInputField";
 import SendButton from "./SendButton";
 
-import history from './history';
 import host from '../config';
 
 
@@ -13,25 +11,40 @@ class LoginForm extends Component {
         this.state = {
             username: '',
             password: '',
+
+            textInputList: [
+                {
+                    type: "text",
+                    name: "username",
+                    id: "username-login",
+                    value: this.username,
+                    onChange: this.handleInputChange,
+                    placeholder: "Username",
+                },
+
+                {
+                    type: "password",
+                    name: "password",
+                    id: "password-login",
+                    value: this.password,
+                    onChange: this.handleInputChange,
+                    placeholder: "Password",
+                },
+            ],
         }
     }
 
-    handleUsernameChange = event => {
+    handleInputChange = event => {
         this.setState({
-            username: event.target.value
+            [event.target.name]: event.target.value,
         })
     }
 
-    handlePasswordChange = event => {
-        this.setState({
-            password: event.target.value
-        })
-    }
-
-    handleSubmit = (event, addToast) => {
+    handleSubmit = async (event, addToast) => {
         localStorage.clear();
         event.preventDefault()
-        let options = {
+
+        const options = {
             method: "POST",
             body: JSON.stringify(this.state),
             headers: {
@@ -40,28 +53,23 @@ class LoginForm extends Component {
             }
         }
 
-        fetch(`${host}api/v1/auth/login/`, options)
-            .then(res => {
-                console.log(res);
-                if (res.status != 200){
-                    addToast("Wrong credentials!", { appearance: 'error', autoDismiss: true, });
-                    return false;
-                }
-                return res.json();
+        let response = await fetch(`${ host }api/v1/auth/login/`, options);
+        console.log(response);
 
+        let loginData = false;
 
-            })
-            .then(data => {
-                if(data){
-                    console.log(data);
-                    localStorage.setItem('jwt access', data.access);
-                    localStorage.setItem('jwt refresh', data.refresh);
-                    this.props.history.push("/");
-                }
-            });
+        if (response.status != 200){
+            addToast("Wrong credentials!", { appearance: 'error', autoDismiss: true, });
+        } else {
+            loginData = await response.json();
+        }
 
-
-
+        if (loginData) {
+            console.log(loginData);
+            localStorage.setItem('jwt access', loginData.access);
+            localStorage.setItem('jwt refresh', loginData.refresh);
+            this.props.history.push("/");
+        }
     }
 
     render() {
@@ -73,8 +81,7 @@ class LoginForm extends Component {
                     <form method="post" className="login-form" onSubmit={ this.handleSubmit }>
                         <div className="row gtr-uniform">
                             <div id="text-input-field" className="col-6 col-12-xsmall">
-                                <TextInputField name="username" id="username" value={ this.state.username } onChange={ this.handleUsernameChange } placeholder="Username" />
-                                <PasswordInputField name="password" id="password" value={ this.state.password } onChange={ this.handlePasswordChange } placeholder="Password" />
+                                <TextInputField textInputList={ this.state.textInputList } />
                             </div>
                             <div className="col-12">
                                 <ul className="actions">

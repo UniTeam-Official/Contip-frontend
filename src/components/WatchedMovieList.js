@@ -12,11 +12,6 @@ class WatchedMovieList extends Component {
             loaded: false,
             placeholder: "Loading"
         };
-        // for (var i = 0; i <= 100; i++) {
-        //     this.setState(prevState => ({
-        //         movie_ratings: { ...prevState.movie_ratings, [i]: "" }
-        //     }));
-        // }
     }
 
     get_films = async (film_ids, options) => {
@@ -31,9 +26,9 @@ class WatchedMovieList extends Component {
         let responses;
         let data;
 
-        // GETTING RESPONSES
+        // Getting responses
         for (const id of film_ids.watched_list) {
-            fetches.push(fetch(`${host}api/v1/app/film/detail/${id}/`, options));
+            fetches.push(fetch(`${ host }api/v1/app/film/detail/${ id }/`, options));
             console.log(id);
         }
 
@@ -44,7 +39,6 @@ class WatchedMovieList extends Component {
             console.log(err);
         };
 
-        //
         for (const response of responses) {
             jsones.push(response.json());
         }
@@ -66,15 +60,15 @@ class WatchedMovieList extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${access_token}`
+                'Authorization': `JWT ${ access_token }`
             }
         }
 
         console.log(this.host);
-        // GETTINGS FILM IDS
-        const response = await fetch(`${host}api/v1/app/watched/set/`, options);
+        // Getting film ids
+        const response = await fetch(`${ host }api/v1/app/watched/set/`, options);
 
-        // IF 401 THEN LOGIN
+        // If 401 then login
         if (response.status === 401) {
             this.props.history.push("/login");
             return this.setState(() => {
@@ -96,21 +90,34 @@ class WatchedMovieList extends Component {
 
     render() {
         let moviesOnPageAmount = 0;
-        let films = <p></p>;
+        let films = <span></span>;
+        let emptyWatchlistInfo = (
+            <div>
+                <h2>There is nothing here</h2>
+                <p><strong>but you can improve it =)</strong></p>
+            </div>
+        );
+
         if (this.state && typeof (this.state.data) != 'undefined' && this.state.data.length > 0) {
             films = this.state.data.map(film => {
                 if (moviesOnPageAmount < 12) {
                     moviesOnPageAmount++;
                     return (
-                        <Movie film_id={ film.id } tmdb={ film.tmdb } link={ `/film/${film.id}` } title={ film.title } desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => { return (genre.name + '  ') })} />
+                        <Movie film_id={ film.id } tmdb={ film.tmdb } link={ `/film/${ film.id }` } title={ film.title } desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => { return (genre.name + '  ') })} key={ film.id } />
                     );
+                } else {
+                    return null;
                 }
-            })
+            });
+
+            emptyWatchlistInfo = <span></span>
         }
+
         return (
             <div id="main">
                 <div className="inner">
                     <h1>Watched Movies</h1>
+                    { emptyWatchlistInfo }
                     <div className="watchlist">
                         <div className="watchlist-row">
                             { films }

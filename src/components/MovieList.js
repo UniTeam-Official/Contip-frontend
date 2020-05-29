@@ -1,20 +1,19 @@
 import React, { Component } from "react";
+import RecommendationFilm from "./RecommendationFilm";
 
 import host from '../config';
 
-
-import RecommendationFilm from "./RecommendationFilm";
 class MovieList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            recommendFilms: [],
             loaded: false,
             placeholder: "Loading"
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const access_token = localStorage.getItem('jwt access');
         const options = {
             method: "GET",
@@ -24,33 +23,33 @@ class MovieList extends Component {
                 'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${host}api/v1/app/film/recommend/`, options)
-            .then(response => {
-                console.log(response);
-                if (response.status > 400) {
-                    //<Redirect to="/login" />
-                    this.props.history.push("/login/");
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                this.setState(() => {
-                    return {
-                        data,
-                        loaded: true
-                    };
-                });
+
+        const response = await fetch(`${ host }api/v1/app/film/recommend/`, options);
+        console.log(response);
+
+        if (response.status > 400) {
+            //<Redirect to="/login" />
+            this.props.history.push("/login/");
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
             });
+        }
+
+        const recommendFilms = await response.json();
+        console.log(recommendFilms);
+
+        this.setState(() => {
+            return {
+                recommendFilms,
+                loaded: true
+            };
+        });
     }
 
     render() {
         let films = <p><strong>Loading your recommendations... Hang on...</strong></p>;
-        if (this.state.loaded && typeof(this.state.data) != 'undefined' && this.state.data.length > 0){
-            films = this.state.data.map(film => {
+        if (this.state.loaded && typeof(this.state.recommendFilms) != 'undefined' && this.state.recommendFilms.length > 0){
+            films = this.state.recommendFilms.map(film => {
                 return (
                     <RecommendationFilm href={`/film/${ film.id }`} title={ film.title } key={ film.title } tmdb={ film.tmdb } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => {return(genre.name + '  ')})} />
                 );

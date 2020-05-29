@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Checkbox from "./Checkbox";
-import PasswordInputField from "./PasswordInputFields";
+import TextInputField from "./TextInputField";
 import SendButton from "./SendButton";
 import InfoText from "./InfoText";
 import WelcomeText from "./WelcomeText";
@@ -16,9 +16,11 @@ class ProfileForm extends Component {
         this.state = {
             email: '',
             password: '',
+            currentPassword: '',
             confirmPassword: '',
             deletePassword: '',
-            data: [],
+            genreList: [],
+            userInfo: [],
             loaded: false,
             placeholder: "Loading",
 
@@ -29,8 +31,68 @@ class ProfileForm extends Component {
                 }),
                 {}
             ),
+
+            emailInputList: [
+                {
+                    type: "email",
+                    name: "email",
+                    id: "email-change",
+                    value: this.email,
+                    onChange: this.handleInputChange,
+                    placeholder: "New email",
+                },
+
+                {
+                    type: "password",
+                    name: "password-email-change",
+                    id: "password-email-change",
+                    placeholder: "Enter Password To Confirm",
+                },
+            ],
+
+
+            passwordInputList: [
+                {
+                    type: "password",
+                    name: "currentPassword",
+                    id: "password-current-profile",
+                    value: this.currentPassword,
+                    onChange: this.handleInputChange,
+                    placeholder: "Current Password",
+                },
+
+                {
+                    type: "password",
+                    name: "password",
+                    id: "password-profile",
+                    value: this.password,
+                    onChange: this.handleInputChange,
+                    placeholder: "New Password",
+                },
+
+                {
+                    type: "password",
+                    name: "confirmPassword",
+                    id: "password-confirm-profile",
+                    value: this.confirmPassword,
+                    onChange: this.handleInputChange,
+                    placeholder: "Confirm Your Password",
+                },
+            ],
+
+            deleteInputList: [
+                {
+                    type: "password",
+                    name: "deletePassword",
+                    id: "password-delete-profile",
+                    value: this.deletePassword,
+                    onChange: this.handleInputChange,
+                    placeholder: "Password",
+                },
+            ],
         };
     }
+
 
     handlePreferenceChange = changeEvent => {
         const { name } = changeEvent.target;
@@ -43,37 +105,13 @@ class ProfileForm extends Component {
         }));
     }
 
-    handleEmailChange = event => {
+    handleInputChange = event => {
         this.setState({
-            email: event.target.value
+            [event.target.name]: event.target.value,
         })
     }
 
-    handlePasswordChange = event => {
-        this.setState({
-            password: event.target.value
-        })
-    }
-
-    handleConfirmPasswordChange = event => {
-        this.setState({
-            confirmPassword: event.target.value
-        })
-    }
-
-    handleCurrentPasswordChange = event => {
-        this.setState({
-            currentPassword: event.target.value
-        })
-    }
-
-    handleDeletePasswordChange = event => {
-        this.setState({
-            deletePassword: event.target.value
-        })
-    }
-
-    handlePreferenceSubmit = (preferenceSubmitEvent, addToast) => {
+    handlePreferenceSubmit = async (preferenceSubmitEvent, addToast) => {
         preferenceSubmitEvent.preventDefault();
 
         const selectedPreferences = (Object
@@ -94,19 +132,17 @@ class ProfileForm extends Component {
 				'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${host}api/v1/app/preferences/set/`, options)
-            .then(res => {
-                console.log(res);
-                if (res.status != 200){
-                    addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
 
-                }
-                else {
-                    this.props.history.push("/profile/");
-                    addToast("Preferences changed successfully!", { appearance: 'success', autoDismiss: true, });
-                }
-                return res.json();
-            });
+        const response = await fetch(`${ host }api/v1/app/preferences/set/`, options);
+        console.log(response);
+
+        if (response.status != 200){
+            addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
+        }
+        else {
+            this.props.history.push("/profile/");
+            addToast("Preferences changed successfully!", { appearance: 'success', autoDismiss: true, });
+        }
     }
 
     handleLogOutSubmit = event => {
@@ -116,7 +152,7 @@ class ProfileForm extends Component {
         this.props.history.push("/login/");
     }
 
-    handleEmailSubmit = (event, addToast) => {
+    handleEmailSubmit = async (event, addToast) => {
         event.preventDefault();
         // Update user email
 		const access_token = localStorage.getItem('jwt access');
@@ -129,21 +165,20 @@ class ProfileForm extends Component {
 				'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${host}api/v1/account/users/me/`, options)
-            .then(res => {
-                console.log(res);
-                if (res.status != 200){
-                    addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
-                }
-                else {
-                    this.props.history.push("/profile/");
-                    addToast("Email changed successfully!", { appearance: 'success', autoDismiss: true, });
-                }
-                return res.json();
-            });
+
+        const response = await fetch(`${ host }api/v1/account/users/me/`, options);
+        console.log(response);
+        
+        if (response.status != 200){
+            addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
+        }
+        else {
+            this.props.history.push("/profile/");
+            addToast("Email changed successfully!", { appearance: 'success', autoDismiss: true, });
+        }
     }
 
-    handlePasswordSubmit = (event, addToast) => {
+    handlePasswordSubmit = async (event, addToast) => {
         if (this.state.password == this.state.confirmPassword) {
             event.preventDefault();
             // Update user password
@@ -157,17 +192,16 @@ class ProfileForm extends Component {
                     'Authorization': `JWT ${ access_token }`
                 }
             }
-            fetch(`${host}api/v1/account/users/set_password/`, options)
-                .then(res => {
-                    console.log(res);
-                    if (res.status != 204){
-                        addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
-                    }
-                    else {
-                        this.props.history.push("/login/");
-                    }
-                    return res.json();
-                });
+
+            const response = await fetch(`${ host }api/v1/account/users/set_password/`, options);
+            console.log(response);
+
+            if (response.status != 204){
+                addToast("Something went wrong", { appearance: 'error', autoDismiss: true, });
+            }
+            else {
+                this.props.history.push("/login/");
+            }
         }
         else {
             event.preventDefault();
@@ -175,6 +209,7 @@ class ProfileForm extends Component {
         }
     }
 
+    // TODO: rewrtite function to async/await after bug fixed
     handleDeleteProfile = (event, addToast) => {
         addToast("Profile deletion request submitted!", { appearance: 'info', autoDismiss: true, });
         // Delete user
@@ -188,7 +223,7 @@ class ProfileForm extends Component {
                 'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${host}api/v1/account/users/me/`, options)
+        fetch(`${ host }api/v1/account/users/me/`, options)
             .then(res => {
                 console.log(res);
                 if (res.status != 204){
@@ -201,7 +236,7 @@ class ProfileForm extends Component {
             });
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 		const access_token = localStorage.getItem('jwt access');
         const options = {
             method: "GET",
@@ -212,51 +247,65 @@ class ProfileForm extends Component {
             }
         }
 
-        fetch(`${host}api/v1/app/genre/list/`, options)
-            .then(response => {
-                console.log(response);
-                if (response.status > 400) {
-                    this.props.history.push("/login");
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
+        let response = await fetch(`${ host }api/v1/app/genre/list/`, options);
+        console.log(response);
 
-                GENRES = Array.from(data.map(genre => genre.id));
+        if (response.status > 400) {
+            this.props.history.push("/login");
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
+            });
+        }
 
-                this.setState(() => {
-                    return {
-                        data,
-                        loaded: true
-                    };
-                });
+        const genreList = await response.json();
+        console.log(genreList);
+
+        GENRES = Array.from(await genreList.map(genre => genre.id));
+
+        this.setState(() => {
+            return {
+                genreList,
+                loaded: true
+            };
+        });
+
+        response = await fetch(`${ host }api/v1/app/preferences/set/`, options);
+        console.log(response);
+
+        if (response.status > 400) {
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
             });
-        fetch(`${host}api/v1/app/preferences/set/`, options)
-            .then(response => {
-                console.log(response);
-                if (response.status > 400) {
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
-                return response.json();
-            })
-            .then(preferences => {
-                preferences = preferences.genre_preference;
-                
-                preferences.forEach(preference => {
-                    this.setState(prevState => ({
-                        preferences: {
-                          ...prevState.preferences,
-                          [preference]: !prevState.preferences[preference],
-                        },
-                    }));
-                });
+        }
+
+        let preferences = await response.json();
+        preferences = preferences.genre_preference;
+
+        preferences.forEach(preference => {
+            this.setState(prevState => ({
+                preferences: {
+                  ...prevState.preferences,
+                  [preference]: !prevState.preferences[preference],
+                },
+            }));
+        });
+        
+        response = await fetch(`${ host }api/v1/account/users/me/`, options);
+        console.log(response);
+
+        if (response.status > 400) {
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
             });
+        }
+
+        const userInfo = await response.json();
+        console.log(userInfo);
+        
+        this.setState({
+            userInfo,
+            loaded: true
+        });
     }
 
     render() {
@@ -265,60 +314,64 @@ class ProfileForm extends Component {
                 <div className="inner">
                     <h1>My Profile</h1>
                     <section className="profile-section">
-                        <WelcomeText/>
+                        <WelcomeText username={ this.state.userInfo.username } />
 
                         <div>
                             {/* PREFERENCES */}
 
                             <form method="post" action="#">
-                            <div>
-                                <div className="row gtr-uniform">
-                                <div className="col-6 col-12-small preferences">
-                                    <h4>Here's Your Favourite Stuff<br/>Change It Up If You Want</h4>
-                                    {this.state.data.map(genre => {
-                                        if (this.state.preferences[genre.id]) {
-                                            let genreName = "genre" + genre.id;
-                                            return (
-                                                <Checkbox
-                                                    id={ genreName }
-                                                    name={ genre.id }
-                                                    text={ genre.name }
-                                                    isSelected={ this.state.preferences[genre.id] }
-                                                    className="preferences-checkbox"
-                                                    onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
-                                            );
-                                        }
-                                    })}
-                                    {this.state.data.map(genre => {
-                                        if (!this.state.preferences[genre.id]) {
-                                            let genreName = "genre" + genre.id;
-                                            return (
-                                                <Checkbox
-                                                    id={ genreName }
-                                                    name={ genre.id }
-                                                    text={ genre.name }
-                                                    isSelected={ this.state.preferences[genre.id] }
-                                                    className="preferences-checkbox"
-                                                    onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
-                                            );
-                                        }
-                                    })}
-                                </div>
-                                    <div className="col-12">
-                                        <ul className="actions">
-                                            <li id="sendButton">
-                                                <SendButton buttonName="Submit" onSubmit={ this.handlePreferenceSubmit } toastMessage="Preferences saved successfully" />
-                                            </li>
-                                        </ul>
+                                <div>
+                                    <div className="row gtr-uniform">
+                                    <div className="col-6 col-12-small preferences">
+                                        <h4>Here's Your Favourite Stuff<br/>Change It Up If You Want</h4>
+                                        {this.state.genreList.map(genre => {
+                                            if (this.state.preferences[genre.id]) {
+                                                let genreName = "genre" + genre.id;
+                                                return (
+                                                    <Checkbox
+                                                        id={ genreName }
+                                                        name={ genre.id }
+                                                        text={ genre.name }
+                                                        isSelected={ this.state.preferences[genre.id] }
+                                                        className="preferences-checkbox"
+                                                        onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
+                                                );
+                                            } else {
+                                                return null;
+                                            }
+                                        })}
+                                        {this.state.genreList.map(genre => {
+                                            if (!this.state.preferences[genre.id]) {
+                                                let genreName = "genre" + genre.id;
+                                                return (
+                                                    <Checkbox
+                                                        id={ genreName }
+                                                        name={ genre.id }
+                                                        text={ genre.name }
+                                                        isSelected={ this.state.preferences[genre.id] }
+                                                        className="preferences-checkbox"
+                                                        onCheckboxChange={ this.handlePreferenceChange.bind(this) } />
+                                                );
+                                            } else {
+                                                return null;
+                                            }
+                                        })}
+                                    </div>
+                                        <div className="col-12">
+                                            <ul className="actions">
+                                                <li id="sendButton">
+                                                    <SendButton buttonName="Submit" onSubmit={ this.handlePreferenceSubmit } toastMessage="Preferences saved successfully" />
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </form>
                         </div>
                         
                         <div className="user-info">
-                            <h4>Everything We Know About You:</h4>
-                            <InfoText />
+                            <h4>Everything We Know About You</h4>
+                            <InfoText username={ this.state.userInfo.username } email={ this.state.userInfo.email } />
                             <SendButton buttonName="Log Out" onSubmit={ this.handleLogOutSubmit } toastMessage="Log out completed successfully" />
                         </div>
 
@@ -330,17 +383,7 @@ class ProfileForm extends Component {
                                     <div className="row gtr-uniform">
                                         <div id="text-input-field" className="col-6 col-12-xsmall">
                                             <h3>Change Email</h3>
-                                            <input
-                                                type="email"
-                                                name="profile_email"
-                                                id="profile_email"
-                                                value={ this.state.email } 
-                                                onChange={ this.handleEmailChange }
-                                                placeholder="New Email" />
-                                            <input
-                                                type="password"
-                                                name="#" id="#"
-                                                placeholder="Enter Password To Confirm" />
+                                            <TextInputField textInputList={ this.state.emailInputList } />
                                         </div>
                                         <div className="col-12">
                                             <ul className="actions">
@@ -362,18 +405,7 @@ class ProfileForm extends Component {
                                     <div className="row gtr-uniform">
                                         <div className="col-6 col-12-xsmall">
                                             <h3>Change Password</h3>
-                                            {/*<PasswordInputField name="profile_current_password" id="profile_current_password" value={this.state.currentPassword} onChange={this.handleCurrentPasswordChange} placeholder="Current Password" />*/}
-                                            <PasswordInputField
-                                                name="profile_password" id="profile_password"
-                                                value={ this.state.password }
-                                                onChange={ this.handlePasswordChange }
-                                                placeholder="New Password" />
-                                            <PasswordInputField
-                                                name="profile_confirm_password"
-                                                id="profile_confirm_password"
-                                                value={ this.state.confirmPassword }
-                                                onChange={ this.handleConfirmPasswordChange }
-                                                placeholder="Confirm New Password" />
+                                            <TextInputField textInputList={ this.state.passwordInputList } />
                                         </div>
                                         <div className="col-12">
                                             <ul className="actions">
@@ -394,12 +426,7 @@ class ProfileForm extends Component {
                             <form method="post" action="#">
                                 <div className="row gtr-uniform">
                                     <div className="col-6 col-12-xsmall">
-                                        <PasswordInputField
-                                            name="profile_delete_password"
-                                            id="profile_delete_password"
-                                            value={ this.state.deletePassword }
-                                            onChange={ this.handleDeletePasswordChange }
-                                            placeholder="Password" />
+                                        <TextInputField textInputList={ this.state.deleteInputList } />
                                     </div>
                                 </div>
                                 <div className="row">

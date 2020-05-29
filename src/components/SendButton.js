@@ -2,32 +2,32 @@
 import React from "react";
 import { useToasts, ToastProvider } from 'react-toast-notifications';
 
-const SendButton = (props) => {
+const SendButton = ({ id, className, buttonName, onSubmit }) => {
 	return (
 		<ToastProvider>
-			<Button id={ props.id } className={ props.className ? props.className : "" } buttonName={ props.buttonName } onSubmit={ props.onSubmit } />
+			<Button id={ id } className={ className ? className : "" } buttonName={ buttonName } onSubmit={ onSubmit } />
 		</ToastProvider>
 	);
 }
 
-const Button = (props) => {
+const Button = ({ id, className, buttonName, onSubmit }) => {
     const { addToast } = useToasts()
     const onClick = (event) => {
-        props.onSubmit(event, addToast);
+        onSubmit(event, addToast);
     };
 
-	if (props.id === "DeleteProfileButton") {
+	if (id === "DeleteProfileButton") {
 		return (
 			<div className="col-6 col-12-medium">
 				<ul className="actions stacked">
 					{/* <li><a href="#" className="button small fit">Delete Account</a></li> */}
-					<li id={ props.id }><a href="#" className="button small fit" onClick={ onClick } >{ props.buttonName }</a></li>
+					<li id={ id }><a href="#" className="button small fit" onClick={ onClick } >{ buttonName }</a></li>
 				</ul>
 			</div>
 		);
 	} else {
 		return (
-			<button type="submit" value="Submit" className={`primary ${ props.className }`} onClick={ onClick } >{ props.buttonName }</button>
+			<button type="submit" value="Submit" className={`primary ${ className }`} onClick={ onClick } >{ buttonName }</button>
 		);
 	}
 }

@@ -12,7 +12,7 @@ class Accordion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            genreList: [],
             loaded: false,
             placeholder: "Loading",
 
@@ -34,39 +34,36 @@ class Accordion extends Component {
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 		const access_token = localStorage.getItem('jwt access');
         const options = {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'Authorization': `JWT ${access_token}`
+				'Authorization': `JWT ${ access_token }`
             }
         }
-        fetch(`${host}api/v1/app/genre/list/`, options)
-            .then(response => {
-                console.log(response);
-                if (response.status > 400) {
-                    this.props.history.push("/login");
-                    return this.setState(() => {
-                        return { placeholder: "Something went wrong!" };
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
 
-                FILTERS = Array.from(data.map(genre => genre.id));
+        const response = await fetch(`${ host }api/v1/app/genre/list/`, options);
 
-                this.setState(() => {
-                    return {
-                        data,
-                        loaded: true
-                    };
-                });
+        if (response.status > 400) {
+            this.props.history.push("/login");
+            return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
             });
+        }
+
+        const genreList = await response.json();
+        
+        FILTERS = Array.from(genreList.map(genre => genre.id));
+
+        this.setState(() => {
+            return {
+                genreList,
+                loaded: true
+            };
+        });
     }
 
     handleFiltersChange = changeEvent => {
@@ -118,38 +115,85 @@ class Accordion extends Component {
     }
 
 	render() {
-		if (this.props.accordionHeader === "genres") {
-            return (
-                <div>
-                    <div className="accordion-btn .active opened active">
+        let accordionHeader = <span></span>;
+        let checkboxList = <span></span>;
+
+        const { accordionList } = this.props;
+        const accordions = accordionList.map(accordion => {
+            if (accordion.accordionHeader === "genres") {
+                if (accordion.className === "accordion-content content-sidebar") {
+                    accordionHeader = <AccordionHeader className="filters-title filters-title-sidebar" accordionName="Genres" />;
+                } else {
+                    accordionHeader = <AccordionHeader className="filters-title" accordionName="Genres" />;
+                }
+    
+                checkboxList = (
+                    <ul className="list">
+                        {this.state.genreList.map(genre => {
+                            const id = accordion.namePrefix + "Filter" + genre.id;
+                            return (
+                                <li id="check-box" className="list-item" key={ id }>
+                                    <Checkbox
+                                        id={ id }
+                                        name={ genre.id }
+                                        text={ genre.name }
+                                        isSelected={ this.state.filters[genre.id] }
+                                        onCheckboxChange={ this.handleFiltersChange } />
+                                </li>
+                            );
+                        })}
+                    </ul>
+                );             
+            } else {
+                if (accordion.className === "accordion-content content-sidebar") {
+                    accordionHeader = <AccordionHeader className="filters-title filters-title-sidebar" accordionName="Sorting" />;
+                } else {
+                    accordionHeader = <AccordionHeader className="filters-title" accordionName="Sorting" />;
+                }
+    
+                checkboxList = (
+                    <ul className="list">
                         {(() => {
-                            if (this.props.className === "accordion-content content-sidebar") {
-                                return (<AccordionHeader className="filters-title filters-title-sidebar" accordionName="Genres" />);
-                            } else {
-                                return (<AccordionHeader className="filters-title" accordionName="Genres" />);
-                            }
+                            const sortingName = accordion.namePrefix + "Ascending";
+                            return(
+                                <li id="check-box" className="list-item" key={ sortingName }>
+                                    <Checkbox
+                                        id={ sortingName }
+                                        name="title"
+                                        text="Alphabetical (A-Z)"
+                                        isSelected={ this.state.sorting["title"] }
+                                        onCheckboxChange={ this.handleSortingChange } />
+                                </li>
+                            );
                         })()}
+                        {(() => {
+                            const sortingName = accordion.namePrefix + "Descending";
+                            return(
+                                <li id="check-box" className="list-item" key={ sortingName }>
+                                    <Checkbox
+                                        id={ sortingName }
+                                        name="-title"
+                                        text="Alphabetical (Z-A)"
+                                        isSelected={ this.state.sorting["-title"] }
+                                        onCheckboxChange={ this.handleSortingChange } />
+                                </li>
+                            );
+                        })()}
+                    </ul>
+                );
+            }
+
+            return (
+                <div key={ accordion.namePrefix }>
+                    <div className="accordion-btn .active opened active">
+                        { accordionHeader }
                     </div>
                     <div className="panel" style={{ maxHeight: "1200px" }}>
-                        <div className={ this.props.className }>
+                        <div className={ accordion.className }>
                             <div className="treeview">
                                 <div className="checkbox-section">
                                     <div className="col-6 col-12-small">
-                                        <ul className="list">
-                                            {this.state.data.map(genre => {
-                                                const id = this.props.namePrefix + "Filter" + genre.id;
-                                                return (
-                                                    <li id="check-box" className="list-item" key={ id }>
-                                                        <Checkbox
-                                                            id={ id }
-                                                            name={ genre.id }
-                                                            text={ genre.name }
-                                                            isSelected={ this.state.filters[genre.id] }
-                                                            onCheckboxChange={ this.handleFiltersChange } />
-                                                    </li>
-                                                );
-                                            })}
-                                        </ul>
+                                        { checkboxList }
                                     </div>
                                 </div>
                             </div>
@@ -157,60 +201,11 @@ class Accordion extends Component {
                     </div>
                 </div>
             );
-        }
-        else {
-            return (
-                <div>
-                    <div className="accordion-btn .active">
-                        {(() => {
-                            if (this.props.className === "accordion-content content-sidebar") {
-                                return (<AccordionHeader className="filters-title filters-title-sidebar" accordionName="Sorting" />);
-                            } else {
-                                return (<AccordionHeader className="filters-title" accordionName="Sorting" />);
-                            }
-                        })()}
-                    </div>
-                    <div className="panel">
-                        <div className={ this.props.className }>
-                            <div className="treeview">
-                                <div className="checkbox-section">
-                                    <div className="col-6 col-12-small">
-                                        <ul className="list">
-                                            {(() => {
-                                                const sortingName = this.props.namePrefix + "Ascending";
-                                                return(
-                                                    <li id="check-box" className="list-item" key={ sortingName }>
-                                                        <Checkbox
-                                                            id={ sortingName }
-                                                            name="title"
-                                                            text="Alphabetical (A-Z)"
-                                                            isSelected={ this.state.sorting["title"] }
-                                                            onCheckboxChange={ this.handleSortingChange } />
-                                                    </li>
-                                                );
-                                            })()}
-                                            {(() => {
-                                                const sortingName = this.props.namePrefix + "Descending";
-                                                return(
-                                                    <li id="check-box" className="list-item" key={ sortingName }>
-                                                        <Checkbox
-                                                            id={ sortingName }
-                                                            name="-title"
-                                                            text="Alphabetical (Z-A)"
-                                                            isSelected={ this.state.sorting["-title"] }
-                                                            onCheckboxChange={ this.handleSortingChange } />
-                                                    </li>
-                                                );
-                                            })()}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
+        });
+
+        
+
+		return accordions;
 	}
 }
 

@@ -8,25 +8,49 @@ class SuggestForm extends Component {
         this.state = {
             movie: '',
             rating: '',
-            link: ''
+            link: '',
+
+            movieInputList: [
+                {
+                    type: "text",
+                    name: "movie",
+                    id: "footer-movie",
+                    value: this.movie,
+                    onChange: this.handleInputChange,
+                    placeholder: "Movie We Have To Check Out!",
+                },
+            ],
+
+            ratingInputList: [
+                {
+                    type: "text",
+                    name: "rating",
+                    id: "footer-rating",
+                    value: this.rating,
+                    onChange: this.handleInputChange,
+                    placeholder: "How Much Will We Like It/10?",
+                },
+            ],
+
+            linkInputList: [
+                {
+                    type: "text",
+                    name: "link",
+                    id: "footer-link",
+                    value: this.link,
+                    onChange: this.handleInputChange,
+                    placeholder: "Imdb Link",
+                },
+            ],
         };
     }
 
-    handleMovieChange = event => {
+    handleInputChange = event => {
         this.setState({
-            movie: event.target.value
+            [event.target.name]: event.target.value,
         })
     }
-    handleRatingChange = event => {
-        this.setState({
-            rating: event.target.value
-        })
-    }
-    handleLinkChange = event => {
-        this.setState({
-            link: event.target.value
-        })
-    }
+
     handleSuggestSubmit = event => {
         event.preventDefault();
     }
@@ -38,17 +62,17 @@ class SuggestForm extends Component {
                 <form method="post" action="#">
                     <div className="fields">
                         <div className="field half">
-                            <TextInputField name="footer_movie" id="footer_movie" onChange={this.handleMovieChange} value={this.state.movie} placeholder="Movie We Have To Check Out!" />
+                            <TextInputField textInputList={ this.state.movieInputList } />
                         </div>
                         <div className="field half">
-                            <TextInputField name="footer_rating" id="footer_rating" onChange={this.handleRatingChange} value={this.state.rating} placeholder="How Much Will We Like It/10?" />
+                            <TextInputField textInputList={ this.state.ratingInputList } />
                         </div>
                         <div className="field">
-                            <TextInputField name="footer_link" id="footer_link" onChange={this.handleLinkChange} value={this.state.link} placeholder="Imdb Link" />
+                            <TextInputField textInputList={ this.state.linkInputList } />
                         </div>
                     </div>
                     <ul className="actions">
-                        <li><SendButton buttonName="Submit" onSubmit={this.handleSuggestSubmit} toastMessage="Film submitted successfully" /></li>
+                        <li><SendButton buttonName="Submit" onSubmit={ this.handleSuggestSubmit } toastMessage="Film submitted successfully" /></li>
                     </ul>
                 </form>
             </section>

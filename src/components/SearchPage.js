@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import SearchHeader from "./SearchHeader";
+import Headline from "./Headline";
 import SearchTiles from "./SearchTiles";
 import Accordion from "./Accordion";
 import { closeSidebar } from "../assets/js/sidebar";
@@ -16,6 +16,38 @@ class SearchPage extends Component {
             sortingQuery: [],
             handleFiltersList: null,
             handleSortingList: null,
+
+            filterList: [
+                { 
+                    className: "accordion-content",
+                    accordionHeader: "genres",
+                    namePrefix: "genres",
+                    history: this.props.history,
+                },
+
+                { 
+                    className: "accordion-content",
+                    accordionHeader: "sorting",
+                    namePrefix: "sorting",
+                    history: this.props.history,
+                },
+            ],
+
+            filterSidebarList: [
+                {
+                    className: "accordion-content content-sidebar",
+                    accordionHeader: "genres",
+                    namePrefix: "sidebarGenres",
+                    history: this.props.history,
+                },
+
+                {
+                    className: "accordion-content content-sidebar",
+                    accordionHeader: "sorting",
+                    namePrefix: "sidebarSorting",
+                    history: this.props.history,
+                },
+            ],
         };
     }
 
@@ -53,47 +85,35 @@ class SearchPage extends Component {
                 <div id="filterSidebar" className="filter-sidebar">
                     <a className="closebtn" onClick={closeSidebar}>×</a>
                     <div className="accordion">
-                        <Accordion className="accordion-content content-sidebar"
-                            accordionHeader="genres"
-                            namePrefix="sidebarGenres"
-                            history={this.props.history}
-                            createFiltersList={this.createFiltersList.bind(this)}
-                            formFilterQuery={this.formFilterQuery.bind(this)} />
-                        <Accordion className="accordion-content content-sidebar"
-                            accordionHeader="sorting"
-                            namePrefix="sidebarSorting"
-                            history={this.props.history}
-                            createSortingList={this.createSortingList.bind(this)}
-                            formSortingQuery={this.formSortingQuery.bind(this)} />
+                        <Accordion 
+                            accordionList={ this.state.filterSidebarList }
+                            createFiltersList = { this.createFiltersList.bind(this) }
+                            formFilterQuery = { this.formFilterQuery.bind(this) } />
                     </div>
                 </div>
                 <Header />
                 <div id="main">
                     <div className="inner">
-                        <SearchHeader />
+                        <Headline
+                            heading = "Looking For Something?"
+                            subheading = "Here you can look up something definitely special for your evening" />
+
                         <div className="sections-double">
                             <div id="filters" className="filters-section">
                                 <div id="filter-box" className="accordion">
-                                    <Accordion className="accordion-content"
-                                        accordionHeader="genres"
-                                        namePrefix="genres"
-                                        history={this.props.history}
-                                        createFiltersList={this.createFiltersList.bind(this)}
-                                        formFilterQuery={this.formFilterQuery.bind(this)} />
-                                    <Accordion className="accordion-content"
-                                        accordionHeader="sorting"
-                                        namePrefix="sorting"
-                                        history={this.props.history}
-                                        createSortingList={this.createSortingList.bind(this)}
-                                        formSortingQuery={this.formSortingQuery.bind(this)} />
+                                <Accordion 
+                                    accordionList={ this.state.filterList }
+                                    createFiltersList = { this.createFiltersList.bind(this) }
+                                    formFilterQuery = { this.formFilterQuery.bind(this) } />
                                 </div>
                             </div>
+
                             <SearchTiles
                                 name="searchTiles"
                                 filterQuery={`genre=[${[...this.state.filterQuery]}]`}
                                 sortingQuery={`ordering=${this.state.sortingQuery}`}
-                                handleFiltersList={this.state.handleFiltersList}
-                                handleSortingList={this.state.handleSortingList} />
+                                handleFiltersList={ this.state.handleFiltersList }
+                                handleSortingList={ this.state.handleSortingList } />
                         </div>
                     </div>
                 </div>

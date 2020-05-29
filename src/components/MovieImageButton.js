@@ -1,14 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 
 
-class MovieImageButton extends Component {
-	render() {
-		return (
-			<span className="image left">
-				<img src={ this.props.image } alt={ this.props.alt } />
-			</span>
-		);
-	}
+const MovieImageButton = ({ image, alt }) => {
+	return (
+		<span className="image left">
+			<img src={ image } alt={ alt } />
+		</span>
+	);
 }
 
 export default MovieImageButton;
