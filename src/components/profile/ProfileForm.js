@@ -1,11 +1,12 @@
+/* eslint-disable eqeqeq */
 import React, { Component } from "react";
-import Checkbox from "./Checkbox";
-import TextInputField from "./TextInputField";
-import SendButton from "./SendButton";
+import Checkbox from "../input/Checkbox";
+import TextInputField from "../input/TextInputField";
+import SendButton from "../button/SendButton";
 import InfoText from "./InfoText";
 import WelcomeText from "./WelcomeText";
 
-import host from '../config';
+import host from '../../config';
 
 
 let GENRES = [];

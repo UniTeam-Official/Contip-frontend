@@ -3,7 +3,7 @@ import React, { Component } from "react";
 const STYLES = ["style1", "style2", "style3", "style4", "style5", "style6"];
 
 
-class RecommendFilm extends Component {
+class RecommendFilmSummary extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -82,4 +82,4 @@ class RecommendFilm extends Component {
         );
     }
 }
-export default RecommendFilm;
+export default RecommendFilmSummary;

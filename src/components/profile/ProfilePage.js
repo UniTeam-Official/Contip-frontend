@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "./Header";
+import Header from "../layout/header/Header";
 import ProfileForm from "./ProfileForm";
-import Footer from "./Footer";
+import Footer from "../layout/footer/Footer";
 
 
 const ProfilePage = ({ history }) => {

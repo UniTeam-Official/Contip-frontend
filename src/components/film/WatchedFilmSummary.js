@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import RateButton from "./RateButton";
-import TextInputField from "./TextInputField";
+import RateButton from "../button/RateButton";
+import TextInputField from "../input/TextInputField";
 
 
 class WatchedFilmSummary extends Component {

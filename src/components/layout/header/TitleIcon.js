@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../images/logo_own.png";
+import logo from "../../../images/logo_own.png";
 
 const TitleIcon = ({ className }) => {
     return (

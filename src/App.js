@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import RecommendPage from "./components/RecommendPage";
-import LoginPage from "./components/LoginPage";
-import ProfilePage from "./components/ProfilePage";
-import WatchedFilmsPage from "./components/WatchedFilmsPage";
-import SearchPage from "./components/SearchPage";
-import SignUpPage from "./components/SignUpPage";
-import FilmPage from "./components/FilmPage";
+import RecommendPage from "./components/film/RecommendPage";
+import LoginPage from "./components/auth/LoginPage";
+import ProfilePage from "./components/profile/ProfilePage";
+import WatchedFilmsPage from "./components/film/WatchedFilmsPage";
+import SearchPage from "./components/search/SearchPage";
+import SignUpPage from "./components/auth/SignUpPage";
+import FilmDetails from "./components/film/FilmDetails";
 import "./assets/css/main.css";
 import history from './history';
 
@@ -20,7 +20,7 @@ class App extends Component {
                 <Route exact path="/" component={ RecommendPage } />
                 <Route path="/watched/" component={ WatchedFilmsPage } />
                 <Route path="/search/" component={ SearchPage } />
-                <Route path="/film/:id" component={ FilmPage } />
+                <Route path="/film/:id" component={ FilmDetails } />
             </Router>
         );
     }

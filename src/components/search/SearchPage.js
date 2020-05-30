@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import Headline from "./Headline";
+import Header from "../layout/header/Header";
+import Footer from "../layout/footer/Footer";
+import Headline from "../layout/main/Headline";
 import SearchTiles from "./SearchTiles";
 import Accordion from "./Accordion";
-import { closeSidebar } from "../assets/js/sidebar";
-import { accordionButtonListener } from "../assets/js/accordion";
+import { closeSidebar } from "../../assets/js/sidebar";
+import { accordionButtonListener } from "../../assets/js/accordion";
 
 class SearchPage extends Component {
     constructor(props) {

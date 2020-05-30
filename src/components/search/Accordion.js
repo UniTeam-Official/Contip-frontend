@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import AccordionHeader from "./AccordionHeader";
-import Checkbox from "./Checkbox";
+import Checkbox from "../input/Checkbox";
 
-import host from '../config';
+import host from '../../config';
 
 
 let FILTERS = [];

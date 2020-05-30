@@ -1,8 +1,8 @@
 import React from "react";
-import Headline from "./Headline";
-import RecommendFilmList from "./RecommendFilmList";
-import Header from "./Header";
-import Footer from "./Footer";
+import Headline from "../layout/main/Headline";
+import RecommendFilmList from "../film/RecommendFilmList";
+import Header from "../layout/header/Header";
+import Footer from "../layout/footer/Footer";
 
 
 const RecommendPage = ({ history }) => {

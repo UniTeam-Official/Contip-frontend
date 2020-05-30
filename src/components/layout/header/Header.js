@@ -2,7 +2,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import TitleIcon from "./TitleIcon";
-import { navBarFunc } from "../assets/js/navbar";
+import { navBarFunc } from "../../../assets/js/navbar";
 
 const Header = ({ className }) => {
 	return (

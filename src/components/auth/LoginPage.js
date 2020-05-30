@@ -1,6 +1,6 @@
 import React from "react";
-import LoginHeader from "./LoginHeader";
-import LoginForm from "./LoginForm";
+import LoginHeader from "../auth/LoginHeader";
+import LoginForm from "../auth/LoginForm";
 
 
 const LoginPage = ({ history }) => {

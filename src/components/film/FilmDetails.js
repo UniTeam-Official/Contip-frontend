@@ -1,15 +1,15 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { Component } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import SendButton from "./SendButton";
-import tmdb_logo from "../images/tmdb.svg";
+import Header from "../layout/header/Header";
+import Footer from "../layout/footer/Footer";
+import SendButton from "../button/SendButton";
+import tmdb_logo from "../../images/tmdb.svg";
 
-import host from '../config';
+import host from '../../config';
 
 
-class FilmPage extends Component{
+class FilmDetails extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -343,4 +343,4 @@ class FilmPage extends Component{
     }
 }
 
-export default FilmPage;
+export default FilmDetails;

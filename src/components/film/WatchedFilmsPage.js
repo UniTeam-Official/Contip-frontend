@@ -1,14 +1,14 @@
 import React from "react";
-import Header from "./Header";
-import WatchedFilmList from "./WatchedFilmList";
-import Footer from "./Footer";
+import Header from "../layout/header/Header";
+import WatchedFilmList from "../film/WatchedFilmList";
+import Footer from "../layout/footer/Footer";
 
 
 const WatchedFilmsPage = ({ history }) => {
     return (
         <div id="wrapper">
             <Header />
-            <WatchedFilmList history={ history } />
+                <WatchedFilmList history={ history } />
             <Footer />
         </div>
     );

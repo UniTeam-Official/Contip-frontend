@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
-import { openSidebar } from "../assets/js/sidebar";
-import RecommendFilm from "./RecommendFilm";
+import { openSidebar } from "../../assets/js/sidebar";
+import RecommendFilmSummary from "../film/RecommendFilmSummary";
 
-import host from '../config';
+import host from '../../config';
 
 const WAIT_INTERVAL = 1000;
 const ENTER_KEY = 13;
@@ -105,7 +105,7 @@ class SearchTiles extends Component {
         if (this.state && typeof (this.state.data.results) != 'undefined' && this.state.data.results.length > 0) {
             filteredFilms = this.state.data.results.map(film => {
                 return (
-                    <RecommendFilm href={`/film/${ film.id }`} title={ film.title } key={ film.title } tmdb={ film.tmdb } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => { return (genre.name + '  ') })} />
+                    <RecommendFilmSummary href={`/film/${ film.id }`} title={ film.title } key={ film.title } tmdb={ film.tmdb } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => { return (genre.name + '  ') })} />
                 );
             });
 

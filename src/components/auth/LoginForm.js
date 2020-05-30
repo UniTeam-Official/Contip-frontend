@@ -1,8 +1,10 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
-import TextInputField from "./TextInputField";
-import SendButton from "./SendButton";
+import TextInputField from "../input/TextInputField";
+import SendButton from "../button/SendButton";
 
-import host from '../config';
+import host from '../../config';
 
 
 class LoginForm extends Component {

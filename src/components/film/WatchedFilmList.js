@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import WatchedFilmSummary from "./WatchedFilmSummary";
+import WatchedFilmSummary from "../film/WatchedFilmSummary";
 
-import host from '../config';
+import host from '../../config';
 
 
 class WatchedFilmList extends Component {

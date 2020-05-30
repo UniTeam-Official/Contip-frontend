@@ -1,5 +1,5 @@
 import React from "react";
-import TitleIcon from "./TitleIcon";
+import TitleIcon from "../layout/header/TitleIcon";
 
 
 const LoginHeader = () => {

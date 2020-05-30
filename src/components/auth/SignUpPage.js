@@ -1,8 +1,9 @@
+/* eslint-disable eqeqeq */
 import React, { Component } from "react";
-import TextInputField from "./TextInputField";
-import SendButton from "./SendButton";
+import TextInputField from "../input/TextInputField";
+import SendButton from "../button/SendButton";
 
-import host from '../config';
+import host from '../../config';
 
 
 class SignUpPage extends Component {

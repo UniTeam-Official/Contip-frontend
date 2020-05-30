@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import SendButton from "./SendButton";
-import TextInputField from "./TextInputField";
+import SendButton from "../../button/SendButton";
+import TextInputField from "../../input/TextInputField";
 
 class SuggestForm extends Component {
     constructor(props) {
