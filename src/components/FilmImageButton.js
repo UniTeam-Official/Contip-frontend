@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const MovieImageButton = ({ image, alt }) => {
+const FilmImageButton = ({ image, alt }) => {
 	return (
 		<span className="image left">
 			<img src={ image } alt={ alt } />
@@ -9,4 +9,4 @@ const MovieImageButton = ({ image, alt }) => {
 	);
 }
 
-export default MovieImageButton;
+export default FilmImageButton;

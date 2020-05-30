@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 
-const NavBar = () => {
+const Navbar = () => {
     return (
         <ul id="desktop_menu">
             <li id="desktop_navbarbutton"><Link to='/search'>Search</Link></li>
@@ -13,4 +13,4 @@ const NavBar = () => {
     );
 }
 
-export default NavBar;
+export default Navbar;

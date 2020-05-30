@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import { openSidebar } from "../assets/js/sidebar";
-import RecommendationFilm from "./RecommendationFilm";
+import RecommendFilm from "./RecommendFilm";
 
 import host from '../config';
 
@@ -105,7 +105,7 @@ class SearchTiles extends Component {
         if (this.state && typeof (this.state.data.results) != 'undefined' && this.state.data.results.length > 0) {
             filteredFilms = this.state.data.results.map(film => {
                 return (
-                    <RecommendationFilm href={`/film/${ film.id }`} title={ film.title } key={ film.title } tmdb={ film.tmdb } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => { return (genre.name + '  ') })} />
+                    <RecommendFilm href={`/film/${ film.id }`} title={ film.title } key={ film.title } tmdb={ film.tmdb } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => { return (genre.name + '  ') })} />
                 );
             });
 

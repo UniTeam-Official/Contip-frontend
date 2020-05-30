@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Movie from "./Movie";
+import WatchedFilmSummary from "./WatchedFilmSummary";
 
 import host from '../config';
 
 
-class WatchedMovieList extends Component {
+class WatchedFilmList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -89,7 +89,7 @@ class WatchedMovieList extends Component {
     }
 
     render() {
-        let moviesOnPageAmount = 0;
+        let filmsOnPageAmount = 0;
         let films = <span></span>;
         let emptyWatchlistInfo = (
             <div>
@@ -100,10 +100,10 @@ class WatchedMovieList extends Component {
 
         if (this.state && typeof (this.state.data) != 'undefined' && this.state.data.length > 0) {
             films = this.state.data.map(film => {
-                if (moviesOnPageAmount < 12) {
-                    moviesOnPageAmount++;
+                if (filmsOnPageAmount < 12) {
+                    filmsOnPageAmount++;
                     return (
-                        <Movie film_id={ film.id } tmdb={ film.tmdb } link={ `/film/${ film.id }` } title={ film.title } desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => { return (genre.name + '  ') })} key={ film.id } />
+                        <WatchedFilmSummary film_id={ film.id } tmdb={ film.tmdb } link={ `/film/${ film.id }` } title={ film.title } desc='GET DESCRIPTION FROM IMDB' genre={film.genre.map(genre => { return (genre.name + '  ') })} key={ film.id } />
                     );
                 } else {
                     return null;
@@ -129,4 +129,4 @@ class WatchedMovieList extends Component {
     }
 }
 
-export default WatchedMovieList;
+export default WatchedFilmList;

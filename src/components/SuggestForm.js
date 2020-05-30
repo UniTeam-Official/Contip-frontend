@@ -6,16 +6,16 @@ class SuggestForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            movie: '',
+            film: '',
             rating: '',
             link: '',
 
-            movieInputList: [
+            filmInputList: [
                 {
                     type: "text",
-                    name: "movie",
-                    id: "footer-movie",
-                    value: this.movie,
+                    name: "film",
+                    id: "footer-film",
+                    value: this.film,
                     onChange: this.handleInputChange,
                     placeholder: "Movie We Have To Check Out!",
                 },
@@ -62,7 +62,7 @@ class SuggestForm extends Component {
                 <form method="post" action="#">
                     <div className="fields">
                         <div className="field half">
-                            <TextInputField textInputList={ this.state.movieInputList } />
+                            <TextInputField textInputList={ this.state.filmInputList } />
                         </div>
                         <div className="field half">
                             <TextInputField textInputList={ this.state.ratingInputList } />

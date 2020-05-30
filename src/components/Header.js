@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import NavBar from "./NavBar";
+import Navbar from "./Navbar";
 import TitleIcon from "./TitleIcon";
 import { navBarFunc } from "../assets/js/navbar";
 
@@ -11,7 +11,7 @@ const Header = ({ className }) => {
 				<div className="navbar">
 					<TitleIcon className="logo"/>
 					<nav id="meny" className="meny">
-						<NavBar />
+						<Navbar />
 					</nav>
 					<a className="icon no-border-btm" onClick={ navBarFunc }>
 						<i className="nav-button fa fa-bars"></i>

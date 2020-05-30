@@ -1,17 +1,17 @@
 import React from "react";
 import Header from "./Header";
-import WatchedMovieList from "./WatchedMovieList";
+import WatchedFilmList from "./WatchedFilmList";
 import Footer from "./Footer";
 
 
-const WatchedMoviesPage = ({ history }) => {
+const WatchedFilmsPage = ({ history }) => {
     return (
         <div id="wrapper">
             <Header />
-            <WatchedMovieList history={ history } />
+            <WatchedFilmList history={ history } />
             <Footer />
         </div>
     );
 }
 
-export default WatchedMoviesPage;
+export default WatchedFilmsPage;

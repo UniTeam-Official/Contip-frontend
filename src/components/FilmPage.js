@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { Component } from "react";
 import Header from "./Header";
@@ -214,7 +215,7 @@ class FilmPage extends Component{
     }
 
     render() {
-        let movie = <h1>Film page</h1>
+        let film = <h1>Film page</h1>
 
         if (this.state && this.state.loaded && this.state.loaded_tmdb) {
             let counter = 0;
@@ -246,7 +247,7 @@ class FilmPage extends Component{
                 buttonHandler = this.handleDeleteFromWatched;
             }
 
-            movie = (
+            film = (
                 <div className="info-box">
                     <div className="info-box-container clearfix">
                         <div className="col-sm-8 col-sm-push-4">
@@ -333,7 +334,7 @@ class FilmPage extends Component{
                 <Header />
                 <div id="main">
                     <div className="inner">
-                        { movie }
+                        { film }
                     </div>
                 </div>
                 <Footer />

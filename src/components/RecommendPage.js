@@ -1,11 +1,11 @@
 import React from "react";
 import Headline from "./Headline";
-import MovieList from "./MovieList";
+import RecommendFilmList from "./RecommendFilmList";
 import Header from "./Header";
 import Footer from "./Footer";
 
 
-const MainPage = ({ history }) => {
+const RecommendPage = ({ history }) => {
     return (
         <div id="wrapper">
             <Header />
@@ -14,7 +14,7 @@ const MainPage = ({ history }) => {
                     <Headline
                         heading = "Specially For You..."
                         subheading = "...we sat down and watched thousands of movies, just to find six special ones that you should definitely check out this week" />
-                    <MovieList history={ history } />
+                    <RecommendFilmList history={ history } />
                 </div>
             </div>
             <Footer />
@@ -22,4 +22,4 @@ const MainPage = ({ history }) => {
     );
 }
 
-export default MainPage;
+export default RecommendPage;

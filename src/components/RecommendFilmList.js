@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import RecommendationFilm from "./RecommendationFilm";
+import RecommendFilm from "./RecommendFilm";
 
 import host from '../config';
 
-class MovieList extends Component {
+class RecommendFilmList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -51,7 +51,7 @@ class MovieList extends Component {
         if (this.state.loaded && typeof(this.state.recommendFilms) != 'undefined' && this.state.recommendFilms.length > 0){
             films = this.state.recommendFilms.map(film => {
                 return (
-                    <RecommendationFilm href={`/film/${ film.id }`} title={ film.title } key={ film.title } tmdb={ film.tmdb } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => {return(genre.name + '  ')})} />
+                    <RecommendFilm href={`/film/${ film.id }`} title={ film.title } key={ film.title } tmdb={ film.tmdb } image="https://avatarfiles.alphacoders.com/139/139764.jpg" genre={film.genre.map(genre => {return(genre.name + '  ')})} />
                 );
             })
             return (
@@ -69,4 +69,4 @@ class MovieList extends Component {
     }
 }
 
-export default MovieList;
+export default RecommendFilmList;

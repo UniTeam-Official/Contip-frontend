@@ -4,24 +4,24 @@ import SendButton from "./SendButton";
 import host from '../config';
 
 
-const RateButton = ({ className, movie_rating, film_id }) => {
+const RateButton = ({ className, film_rating, film_id }) => {
 
     const handleClick = async (event, addToast) => {
-        if (isNaN(movie_rating)) {
+        if (isNaN(film_rating)) {
             event.preventDefault();
             addToast("Rating must be a number!", { appearance: 'error', autoDismiss: true, });
         }
-        else if (+movie_rating > 100 || +movie_rating < 0) {
+        else if (+film_rating > 100 || +film_rating < 0) {
             event.preventDefault();
             addToast("Rating must be between 0 and 100!", { appearance: 'error', autoDismiss: true, });
         }
         else {
             event.preventDefault();
-            // Create movie rating
+            // Create film rating
             const access_token = localStorage.getItem('jwt access');
             let options = {
                 method: "POST",
-                body: JSON.stringify({ film: film_id, value: movie_rating }),
+                body: JSON.stringify({ film: film_id, value: film_rating }),
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',

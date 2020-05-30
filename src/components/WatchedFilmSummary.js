@@ -3,11 +3,11 @@ import RateButton from "./RateButton";
 import TextInputField from "./TextInputField";
 
 
-class Movie extends Component {
+class WatchedFilmSummary extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			movie_rating: "",
+			film_rating: "",
 			tmdb: [],
 			loaded_tmdb: false,
 
@@ -16,7 +16,7 @@ class Movie extends Component {
                     type: "text",
                     name: `rating${ this.props.film_id }`,
                     id: `rating${ this.props.film_id }`,
-                    value: this.movie_rating,
+                    value: this.film_rating,
                     onChange: this.handleRatingChange,
                     placeholder: "0-100 points",
                 },
@@ -26,7 +26,7 @@ class Movie extends Component {
 
     handleRatingChange = event => {
         this.setState({
-            movie_rating: event.target.value
+            film_rating: event.target.value
         });
 	}
 	
@@ -96,7 +96,7 @@ class Movie extends Component {
 								</div>
 								<div className="col-12">
 									<ul className="actions">
-										<RateButton film_id={ this.props.film_id } movie_rating={ this.state.movie_rating } className="rating-button" />
+										<RateButton film_id={ this.props.film_id } film_rating={ this.state.film_rating } className="rating-button" />
 									</ul>
 								</div>
 							</div>
@@ -110,4 +110,4 @@ class Movie extends Component {
 	}
 }
 
-export default Movie;
+export default WatchedFilmSummary;

@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const RecommendationHeader = ({ heading, subheading }) => {
+const Headline = ({ heading, subheading }) => {
     return (
         <header>
             <h1>{ heading }</h1>
@@ -10,4 +10,4 @@ const RecommendationHeader = ({ heading, subheading }) => {
     );
 }
 
-export default RecommendationHeader;
+export default Headline;
