@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { openSidebar } from "../../assets/js/sidebar";
 import RecommendFilmSummary from "../film/RecommendFilmSummary";
 
-import host from '../../config';
+import host from '../../configs/hostConfig';
 
 const WAIT_INTERVAL = 1000;
 const ENTER_KEY = 13;

@@ -1,7 +1,7 @@
 import React from "react";
 import SendButton from "./SendButton";
 
-import host from '../../config';
+import host from '../../configs/hostConfig';
 
 
 const RateButton = ({ className, film_rating, film_id }) => {

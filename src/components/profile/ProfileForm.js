@@ -6,7 +6,7 @@ import SendButton from "../button/SendButton";
 import InfoText from "./InfoText";
 import WelcomeText from "./WelcomeText";
 
-import host from '../../config';
+import host from '../../configs/hostConfig';
 
 
 let GENRES = [];

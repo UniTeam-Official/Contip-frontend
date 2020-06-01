@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import TextInputField from "../input/TextInputField";
 import SendButton from "../button/SendButton";
 
-import host from '../../config';
+import host from '../../configs/hostConfig';
 
 
 class SignUpPage extends Component {

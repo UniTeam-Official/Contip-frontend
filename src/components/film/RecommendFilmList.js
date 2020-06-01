@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import RecommendFilmSummary from "../film/RecommendFilmSummary";
 
-import host from '../../config';
+import host from '../../configs/hostConfig';
 
 class RecommendFilmList extends Component {
     constructor(props) {
